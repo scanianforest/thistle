@@ -1,10 +1,5 @@
 godot_version = "4.5.0"
 
-[asset_definitions.1572]
-id = "1572"
-title = "Aseprite Wizard"
-source = "AssetLib"
-
 [asset_definitions.1822]
 id = "1822"
 title = "Phantom Camera"
