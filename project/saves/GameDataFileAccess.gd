@@ -1,6 +1,6 @@
 class_name GameDataFileAccess
 
-const DEFAULT_SAVE_PATH: String = "res://saves/default.sav"
+const DEFAULT_SAVE_PATH: String = "user://default.sav"
 
 static func create_default_save() -> void:
 	if FileAccess.file_exists(DEFAULT_SAVE_PATH): return

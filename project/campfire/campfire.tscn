@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://n4luadymtrl"]
+
+[ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="1_qw3k3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e6u7l"]
+radius = 6.0
+height = 16.0
+
+[node name="Campfire" type="Area2D"]
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_e6u7l")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.11328125, 0.076171875)
+texture = ExtResource("1_qw3k3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]

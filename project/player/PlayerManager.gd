@@ -1,6 +1,6 @@
 extends Node
 
-var _player_scene = preload("res://player/Player.tscn")
+var _player_scene = preload("res://player/player.tscn")
 var _player_node: CharacterBody2D
 
 @export var _local_player_controller: PlayerController

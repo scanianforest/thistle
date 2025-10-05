@@ -36,7 +36,7 @@ func _on_game_loaded() -> void:
 
 func _on_game_saving(data: GameData) -> void:
 	Log.pr("saving", data.to_dict())
-	GameDataFileAccess.save("res://saves/default.sav", data)
+	GameDataFileAccess.save(GameDataFileAccess.DEFAULT_SAVE_PATH, data)
 	GameChannel.saved.emit()
 
 func _on_game_saved() -> void:

@@ -1,24 +1,34 @@
-godot_version = "4.4.0"
+godot_version = "4.5.0"
 
-[asset_infos.1572]
+[asset_definitions.1572]
+id = "1572"
 title = "Aseprite Wizard"
-download_url = "https://github.com/viniciusgerevini/godot-aseprite-wizard/archive/38beaabe4007137df41eab26cd7172b44163fb56.zip"
+source = "AssetLib"
 
-[asset_infos.1822]
+[asset_definitions.1822]
+id = "1822"
 title = "Phantom Camera"
-download_url = "https://github.com/ramokz/phantom-camera/archive/afa0fc6c11b9c24576043e8af7052df27a1ec20e.zip"
+source = "AssetLib"
 
-[asset_infos.2696]
+[asset_definitions.2696]
+id = "2696"
 title = "Log.gd, a GDScript pretty-printer"
-download_url = "https://github.com/russmatney/log.gd/archive/a059b7c8615e0f54632e3dc1b261f5139ab7d88f.zip"
+source = "AssetLib"
 
-[asset_infos.3338]
+[asset_definitions.3338]
+id = "3338"
 title = "LimboConsole: in-game dev console"
-download_url = "https://github.com/limbonaut/limbo_console/releases/download/v0.7.0/limbo_console_v0.7.0.zip"
+source = "AssetLib"
 
-[asset_infos.3787]
+[asset_definitions.3787]
+id = "3787"
 title = "LimboAI: Behavior Trees & State Machines (Godot 4.4)"
-download_url = "https://github.com/limbonaut/limboai/releases/download/v1.4.1/limboai+v1.4.1.gdextension-4.4.zip"
+source = "AssetLib"
+
+[asset_definitions."nilsiker/TileMapDual:fix/66-terraindual-terrains-array-assignment"]
+id = "nilsiker/TileMapDual:fix/66-terraindual-terrains-array-assignment"
+title = "nilsiker.TileMapDual"
+source = "Git"
 
 [install_folders]
 1572 = "AsepriteWizard"
@@ -26,3 +36,4 @@ download_url = "https://github.com/limbonaut/limboai/releases/download/v1.4.1/li
 2696 = "log"
 3338 = "limbo_console"
 3787 = "limboai"
+"nilsiker/TileMapDual:fix/66-terraindual-terrains-array-assignment" = "TileMapDual"
