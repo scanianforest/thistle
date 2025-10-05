@@ -11,7 +11,7 @@ var data: WorldData = WorldData.new():
 			var coord: PackedStringArray = coord_string.split(",")
 			var x = int(coord[0])
 			var y = int(coord[1])
-			ground.draw_cell(Vector2i(x, y), tile)
+			# ground.draw_cell(Vector2i(x, y), tile)
 
 func _ready() -> void:
 	GameChannel.started.connect(_on_game_started)
@@ -19,7 +19,7 @@ func _ready() -> void:
 	GameChannel.loading.connect(_on_game_loading)
 	GameChannel.saving.connect(_on_game_saving)
 
-	ground.tile_changed.connect(_on_ground_tile_changed)
+	# ground.tile_changed.connect(_on_ground_tile_changed)
 
 func _on_game_started() -> void:
 	show()
