@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://dabvnpoxo3xoe"]
+
+[ext_resource type="Script" uid="uid://dbg7cpvypx7u4" path="res://main_menu/MainMenu.gd" id="1_oa53l"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oa53l")
+
+[node name="Margins" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margins"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="GameTitle" type="Label" parent="Margins/VBoxContainer"]
+layout_mode = 2
+text = "THISTLE"
+horizontal_alignment = 1
+
+[node name="Separator" type="HSeparator" parent="Margins/VBoxContainer"]
+layout_mode = 2
+
+[node name="NewGameButton" type="Button" parent="Margins/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "NEW GAME"
+
+[node name="LoadGameButton" type="Button" parent="Margins/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "LOAD GAME"
+
+[node name="QuitButton" type="Button" parent="Margins/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "QUIT"

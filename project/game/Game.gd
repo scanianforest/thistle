@@ -21,10 +21,9 @@ func _ready() -> void:
 
 	GameDataFileAccess.create_default_save()
 
-	GameChannel.load(GameDataFileAccess.load("res://saves/default.sav"))
-
 func _on_game_starting() -> void:
-	Log.pr("starting")
+	Log.pr("starting, startup logic goes here!")
+	GameChannel.on_started()
 
 func _on_game_started() -> void:
 	Log.pr("started")

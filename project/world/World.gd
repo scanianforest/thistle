@@ -14,13 +14,23 @@ var data: WorldData = WorldData.new():
 			ground.draw_cell(Vector2i(x, y), tile)
 
 func _ready() -> void:
+	GameChannel.started.connect(_on_game_started)
+	GameChannel.loaded.connect(_on_game_loaded)
 	GameChannel.loading.connect(_on_game_loading)
 	GameChannel.saving.connect(_on_game_saving)
 
 	ground.tile_changed.connect(_on_ground_tile_changed)
 
+func _on_game_started() -> void:
+	show()
+	process_mode = Node.PROCESS_MODE_INHERIT
+
+func _on_game_loaded() -> void:
+	show()
+	process_mode = Node.PROCESS_MODE_INHERIT
+
 func _on_game_loading(game_data: GameData) -> void:
-	Log.pr("Loaded state: ", game_data.world_data.to_dict())
+	Log.pr("Loading data")
 	self.data = game_data.world_data
 
 func _on_game_saving(game_data: GameData) -> void:
