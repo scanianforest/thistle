@@ -1,11 +1,38 @@
 extends Node
 
+signal starting
+signal started
+signal loading(data: GameData)
+signal loaded
+signal saving(data: GameData)
+signal saved
+signal paused(mode: Game.PauseMode)
+signal quitting
+signal quitted
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func start() -> void:
+	starting.emit()
 
+func on_started() -> void:
+	started.emit()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func load(data: GameData) -> void:
+	loading.emit(data)
+
+func on_loaded() -> void:
+	loaded.emit()
+
+func save(data: GameData) -> void:
+	saving.emit(data)
+
+func on_saved() -> void:
+	saved.emit()
+
+func pause(mode: Game.PauseMode):
+	paused.emit(mode)
+
+func quit() -> void:
+	quitting.emit()
+
+func on_quitted() -> void:
+	quitted.emit()

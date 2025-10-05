@@ -1,11 +1,7 @@
-extends Node
+@abstract class_name Pawn2D extends CharacterBody2D
 
+@abstract func possess() -> void
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+@abstract func unpossess() -> void
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+@abstract func handle_input(event: InputEvent) -> void

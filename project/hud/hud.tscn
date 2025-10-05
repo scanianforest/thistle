@@ -1,0 +1,69 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwbps7xbx2u6l"]
+
+[ext_resource type="Script" uid="uid://bnb3xke3v8kyc" path="res://hud/HUD.gd" id="1_6ca3a"]
+
+[node name="HUD" type="Control" node_paths=PackedStringArray("health_bar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6ca3a")
+health_bar = NodePath("HUDMargins/PlayerHealthBox/ProgressBar")
+
+[node name="HUDMargins" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PlayerHealthBox" type="HBoxContainer" parent="HUDMargins"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="HealthLabel" type="Label" parent="HUDMargins/PlayerHealthBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "HP"
+
+[node name="ProgressBar" type="ProgressBar" parent="HUDMargins/PlayerHealthBox"]
+clip_contents = true
+custom_minimum_size = Vector2(100, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDMargins/PlayerHealthBox/ProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -11.5
+offset_right = 26.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthValue" type="Label" parent="HUDMargins/PlayerHealthBox/ProgressBar/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="Slash" type="Label" parent="HUDMargins/PlayerHealthBox/ProgressBar/HBoxContainer"]
+layout_mode = 2
+text = "/"
+
+[node name="MaxHealthValue" type="Label" parent="HUDMargins/PlayerHealthBox/ProgressBar/HBoxContainer"]
+layout_mode = 2
+text = "100"

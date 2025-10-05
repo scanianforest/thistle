@@ -12,13 +12,20 @@ config_version=5
 
 config/name="thistle"
 run/main_scene="uid://c446o4raiy6f0"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 LimboConsole="*res://addons/limbo_console/limbo_console.gd"
+GameChannel="*res://game/GameChannel.gd"
+WorldChannel="*res://world/WorldChannel.gd"
+PlayerChannel="*res://player/PlayerChannel.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 

@@ -1,24 +1,66 @@
-extends CharacterBody2D
+class_name Player extends Pawn2D
 
-@export var _speed: float = 300.0
-@export var attacker: Attacker
 @export var sprite: PawnSprite
+@export var health: HealthComponent
+@export var movement: MovementComponent
+@export var attacker: AttackComponent
+
+var move_direction: Vector2 = Vector2.ZERO
+
+var _data: PlayerData = PlayerData.new():
+	set(value):
+		Log.pr("Setting player data")
+		_data = value
+		global_position = _data.position
 
 func _ready() -> void:
+	GameChannel.loading.connect(_on_game_loading)
+	GameChannel.saving.connect(_on_game_saving)
+
 	sprite.animation_event.connect(_on_sprite_animation_event)
+	
+	health.died.connect(_on_health_died)
+	health.health_changed.connect(_on_health_changed)
 
 func _physics_process(_delta: float) -> void:
-	var direction := Input.get_vector("left", "right", "up", "down")
-	if direction:
-		velocity = direction * _speed
-	else:
-		velocity = velocity.move_toward(Vector2.ZERO, _speed)
+	movement.move(move_direction)
 
-	move_and_slide()
+#region Base
 
+func possess() -> void:
+	Log.info("Player possessed")
+	PlayerChannel.possess(self)
 
-#region Animation Event Handlers
+func unpossess() -> void:
+	Log.info("Player unpossessed")
+	PlayerChannel.unpossess()
+
+func handle_input(event: InputEvent) -> void:
+	if event.is_action("left") or event.is_action("right") or event.is_action("up") or event.is_action("down"):
+		move_direction = Input.get_vector("left", "right", "up", "down")
+	elif event.is_action_pressed("left_click"):
+		health.take_damage(10)
+
+#endregion
+
+#region Signal Handlers
+
+func _on_game_loading(game_data: GameData) -> void:
+	_data = game_data.player_data
+
+func _on_game_saving(game_data: GameData) -> void:
+	_data.position = global_position
+
+	game_data.player_data = _data	# TODO can this be initialized at start instead? Hook up
+
 func _on_sprite_animation_event(event_name: StringName) -> void:
 	if event_name == "attack":
 		attacker.attack()
+
+func _on_health_died() -> void:
+	Log.info("Player has died")
+
+func _on_health_changed(new_health: int) -> void:
+	print("Player health changed to %d" % new_health)
+
 #endregion

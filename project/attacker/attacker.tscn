@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://b6j5qkam4tqni"]
+[gd_scene load_steps=2 format=3 uid="uid://b6j5qkam4tqni"]
+
+[ext_resource type="Script" uid="uid://bbvg815qtvad3" path="res://attacker/Attacker.gd" id="1_pv82i"]
 
 [node name="Attacker" type="Node2D"]
+script = ExtResource("1_pv82i")
 
 [node name="AttackArea" type="Area2D" parent="."]
 
