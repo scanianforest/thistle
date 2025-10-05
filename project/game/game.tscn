@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c446o4raiy6f0"]
+[gd_scene load_steps=9 format=3 uid="uid://c446o4raiy6f0"]
 
 [ext_resource type="Script" uid="uid://c245vawn22817" path="res://game/Game.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://bwf6mbp1fiqjk" path="res://player/PlayerManager.gd" id="1_vasa2"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_u5opy"]
+[ext_resource type="Script" uid="uid://vimpfw778p7s" path="res://network/NetworkManager.gd" id="2_y36n6"]
 [ext_resource type="Script" uid="uid://i3ure5y75cj2" path="res://player/PlayerController.gd" id="3_y36n6"]
 [ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world.tscn" id="5_dxrkv"]
 [ext_resource type="PackedScene" uid="uid://dwbps7xbx2u6l" path="res://hud/hud.tscn" id="6_dakft"]
@@ -10,6 +11,9 @@
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_h7iqs")
+
+[node name="NetworkManager" type="Node" parent="."]
+script = ExtResource("2_y36n6")
 
 [node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("_local_player_controller", "_player_node_parent")]
 script = ExtResource("1_vasa2")

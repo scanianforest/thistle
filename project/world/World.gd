@@ -30,6 +30,7 @@ func _on_game_loaded() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT
 
 func _on_game_loading(game_data: GameData) -> void:
+	if multiplayer.is_server(): return
 	Log.pr("Loading data")
 	self.data = game_data.world_data
 
