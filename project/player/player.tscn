@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://cbe5o8ii1in3w"]
+[gd_scene load_steps=25 format=4 uid="uid://cbe5o8ii1in3w"]
 
 [ext_resource type="Script" uid="uid://daao54ylb0umw" path="res://player/Player.gd" id="1_rkbax"]
 [ext_resource type="Script" uid="uid://dsv8gc8clg4qj" path="res://player/PawnSprite.gd" id="2_rkbax"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://bvg8jeoi2fbiq" path="res://pawn/HealthComponent.gd" id="4_g6k8r"]
 [ext_resource type="Script" uid="uid://bj5fue7tho57m" path="res://pawn/MovementComponent.gd" id="5_boad6"]
 [ext_resource type="Script" uid="uid://d125ufvtoylyi" path="res://pawn/AttackComponent.gd" id="6_rgyib"]
+[ext_resource type="PackedScene" uid="uid://egvwb1mw2ono" path="res://interactor/interactor_component.tscn" id="7_boad6"]
+[ext_resource type="PackedScene" uid="uid://dwsdlscxbslis" path="res://placer/placer_component.tscn" id="8_rgyib"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rkbax"]
 radius = 5.0
@@ -231,12 +233,13 @@ _data = {
 &"walk": SubResource("Animation_g1dw6")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "health", "movement", "attacker")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "health", "movement", "attacker", "interaction")]
 script = ExtResource("1_rkbax")
 sprite = NodePath("PawnSprite")
 health = NodePath("HealthComponent")
 movement = NodePath("MovementComponent")
 attacker = NodePath("Attacker")
+interaction = NodePath("InteractorComponent")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rkbax")
@@ -292,3 +295,7 @@ script = ExtResource("5_boad6")
 script = ExtResource("6_rgyib")
 attack_area = NodePath("../Attacker")
 metadata/_custom_type_script = "uid://d125ufvtoylyi"
+
+[node name="InteractorComponent" parent="." instance=ExtResource("7_boad6")]
+
+[node name="PlacerComponent" parent="." instance=ExtResource("8_rgyib")]

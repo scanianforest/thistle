@@ -4,6 +4,7 @@ class_name Player extends Pawn2D
 @export var health: HealthComponent
 @export var movement: MovementComponent
 @export var attacker: AttackComponent
+@export var interaction: InteractorComponent
 
 var move_direction: Vector2 = Vector2.ZERO
 
@@ -26,8 +27,13 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	movement.move(move_direction)
 	sprite.get_node("AnimationPlayer").play("walk" if move_direction != Vector2.ZERO else "idle")
+	
+	if not move_direction.is_equal_approx(Vector2.ZERO):
+		interaction.update_direction(move_direction)
+	
 	if move_direction.x != 0:
 		sprite.flip_h = true if move_direction.x < 0 else false
+		
 
 #region Base
 

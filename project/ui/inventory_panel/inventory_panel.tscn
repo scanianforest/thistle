@@ -1,0 +1,129 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvyxea5kvytl1"]
+
+[ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="1_a3r45"]
+[ext_resource type="Script" uid="uid://dk7arl4c7tf7j" path="res://ui/inventory_panel/InventoryPanel.gd" id="1_p663k"]
+
+[node name="InventoryPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 0)
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -308.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_p663k")
+
+[node name="Margins" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margins"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Margins/VBoxContainer"]
+layout_mode = 2
+text = "Inventory"
+horizontal_alignment = 2
+
+[node name="PlayerInventoryGrid" type="GridContainer" parent="Margins/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4
+
+[node name="TextureRect" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect14" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect6" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect7" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect8" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect9" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect10" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect11" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect12" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect13" type="TextureRect" parent="Margins/VBoxContainer/PlayerInventoryGrid"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_a3r45")
+expand_mode = 3
+stretch_mode = 5

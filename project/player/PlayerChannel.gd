@@ -9,6 +9,8 @@ signal health_changed(new_health: int)
 signal max_health_changed(new_max_health: int)
 signal died
 
+signal inventory_updated(items: Array)
+
 func spawn(global_position: Vector2) -> void:
 	spawned.emit(global_position)
 
@@ -29,3 +31,6 @@ func broadcast_max_health_changed(new_max_health: int) -> void:
 
 func broadcast_died() -> void:
 	died.emit()
+
+func on_inventory_updated(items: Array) -> void:
+	inventory_updated.emit(items)

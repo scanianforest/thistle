@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://egvwb1mw2ono"]
+
+[ext_resource type="Script" uid="uid://rmos3cuf1knm" path="res://interactor/InteractorComponent.gd" id="1_4wvfj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g6k8r"]
+
+[node name="InteractorComponent" type="Node2D"]
+script = ExtResource("1_4wvfj")
+
+[node name="InteractorArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(10, 0)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractorArea"]
+shape = SubResource("CircleShape2D_g6k8r")
