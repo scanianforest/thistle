@@ -9,12 +9,13 @@ var move_direction: Vector2 = Vector2.ZERO
 
 var _data: PlayerData = PlayerData.new():
 	set(value):
+		if value == null: return
 		Log.pr("Setting player data")
 		_data = value
 		global_position = _data.position
 
 func _ready() -> void:
-	GameChannel.loading.connect(_on_game_loading)
+	GameChannel.starting.connect(_on_game_starting)
 	GameChannel.saving.connect(_on_game_saving)
 
 	sprite.animation_event.connect(_on_sprite_animation_event)
@@ -24,6 +25,9 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	movement.move(move_direction)
+	sprite.get_node("AnimationPlayer").play("walk" if move_direction != Vector2.ZERO else "idle")
+	if move_direction.x != 0:
+		sprite.flip_h = true if move_direction.x < 0 else false
 
 #region Base
 
@@ -45,7 +49,7 @@ func handle_input(event: InputEvent) -> void:
 
 #region Signal Handlers
 
-func _on_game_loading(game_data: GameData) -> void:
+func _on_game_starting(game_data: GameData) -> void:
 	_data = game_data.player_data
 
 func _on_game_saving(game_data: GameData) -> void:

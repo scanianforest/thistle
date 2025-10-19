@@ -1,26 +1,26 @@
 extends Node
 
-signal starting
+signal starting(data: GameData)
 signal started
-signal loading(data: GameData)
-signal loaded
+signal joining(data: GameData)
+signal joined
 signal saving(data: GameData)
 signal saved
 signal paused(mode: Game.PauseMode)
 signal quitting
 signal quitted
 
-func start() -> void:
-	starting.emit()
+func start(data: GameData) -> void:
+	starting.emit(data)
 
 func on_started() -> void:
 	started.emit()
 
-func load(data: GameData) -> void:
-	loading.emit(data)
+func join(data: GameData) -> void:
+	joining.emit(data)
 
-func on_loaded() -> void:
-	loaded.emit()
+func on_joined() -> void:
+	joined.emit()
 
 func save(data: GameData) -> void:
 	saving.emit(data)

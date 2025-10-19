@@ -247,6 +247,7 @@ texture = SubResource("PortableCompressedTexture2D_oul6g")
 offset = Vector2(0, -11)
 hframes = 7
 vframes = 7
+frame = 23
 script = ExtResource("2_rkbax")
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": false,

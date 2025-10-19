@@ -14,25 +14,28 @@ var data: WorldData = WorldData.new():
 			ground.draw_cell(Vector2i(x, y), tile)
 
 func _ready() -> void:
+	GameChannel.starting.connect(_on_game_starting)
 	GameChannel.started.connect(_on_game_started)
-	GameChannel.loaded.connect(_on_game_loaded)
-	GameChannel.loading.connect(_on_game_loading)
+	GameChannel.joined.connect(_on_game_joined)
+	GameChannel.joining.connect(_on_game_joining)
 	GameChannel.saving.connect(_on_game_saving)
 
 	ground.tile_changed.connect(_on_ground_tile_changed)
+
+func _on_game_starting(game_data: GameData) -> void:
+	self.data = game_data.world_data
 
 func _on_game_started() -> void:
 	show()
 	process_mode = Node.PROCESS_MODE_INHERIT
 
-func _on_game_loaded() -> void:
+
+func _on_game_joined() -> void:
 	show()
 	process_mode = Node.PROCESS_MODE_INHERIT
 
-func _on_game_loading(game_data: GameData) -> void:
-	if multiplayer.is_server(): return
-	Log.pr("Loading data")
-	self.data = game_data.world_data
+func _on_game_joining(_game_data: GameData) -> void:
+	Log.pr("TODO implement joining logic")
 
 func _on_game_saving(game_data: GameData) -> void:
 	Log.pr("Storing world data: ", self.data.to_dict())

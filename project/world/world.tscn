@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://gx2ryayaffn8"]
+[gd_scene load_steps=8 format=4 uid="uid://gx2ryayaffn8"]
 
 [ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/World.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
@@ -6,6 +6,10 @@
 [ext_resource type="Script" uid="uid://dh8wyajr7wh3" path="res://terrain/Terrain.gd" id="3_mmdvd"]
 [ext_resource type="TileSet" uid="uid://btgqaahxoijxp" path="res://terrain/ground.tres" id="3_sc4t8"]
 [ext_resource type="Script" uid="uid://ckfkcenlc2vj6" path="res://terrain/TerrainCursor.gd" id="5_mmdvd"]
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_fn3g3"]
+_data = PackedByteArray("AAADAAUAAAABAAAAEAAAABAAAACYAAAAUklGRpAAAABXRUJQVlA4TIMAAAAvD8ADEDegkG0EOHUCr8VRHWG2cW4EAxjMEZ2itm3gXNX/CWJAJiAoes70AADwdlGp8z9FcFXbtlItJIDz7f8MdgEsgB4acPt3eBohov8TwB/HdQ1fJC1AL0kh6HWFWoO0QF3XnQIoa7OBV7t53R73ZneuAKL9cYUHUWwWe0AcxzFfAgA=")
+size_override = Vector2(16, 16)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_mmdvd")
@@ -29,3 +33,31 @@ tilemap_dual = NodePath("..")
 metadata/_custom_type_script = "uid://c6m630v880okx"
 
 [node name="Entities" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities"]
+texture_filter = 1
+position = Vector2(8, 36)
+texture = SubResource("PortableCompressedTexture2D_fn3g3")
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://aseprite/mushroom_1.aseprite",
+"source_uid": 5494190184669986656
+}
+metadata/_aseprite_wizard_source_file_hash_ = "fa1bffe3426cb7a92730c47ece1f5f54"

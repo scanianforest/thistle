@@ -1,30 +1,27 @@
 class_name GameDataFileAccess
 
-const DEFAULT_SAVE_PATH: String = "user://default.sav"
+static func save_exists(save_name: String) -> bool:
+	var path = "user://%s.sav" % save_name.to_lower()
+	return FileAccess.file_exists(path)
 
-static func create_default_save() -> void:
-	if FileAccess.file_exists(DEFAULT_SAVE_PATH): return
+static func save(save_name: String, data: GameData) -> void:
+	var path = "user://%s.sav" % save_name.to_lower()
 
-	var file = FileAccess.open(DEFAULT_SAVE_PATH, FileAccess.WRITE_READ)
-	if file:
-		var default_data = GameData.new()
-		file.store_var(default_data.to_dict())
-		file.close()
-	else:
-		Log.err("Failed to open file for creating default save: %s" % DEFAULT_SAVE_PATH)
-
-static func save(path: String, data: GameData) -> void:
 	var file = FileAccess.open(path, FileAccess.WRITE_READ)
 	if file:
 		file.store_var(data.to_dict())
 		file.close()
 	else:
-		push_error("Failed to open file for saving: %s" % path)
+		Log.err("Failed to open file for saving: %s" % path)
 
 
-static func load(path: String) -> GameData:
+static func load(save_name: String) -> GameData:
+	var path = "user://%s.sav" % save_name.to_lower()
+
 	var file = FileAccess.open(path, FileAccess.READ)
-	if not file: return null
+	if not file: 
+		Log.err("Failed to open save file: %s" % path)
+		return null
 
 	var game_data_dict: Dictionary = file.get_var()
 	if game_data_dict == null:

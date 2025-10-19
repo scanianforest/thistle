@@ -9,7 +9,6 @@ func to_dict() -> Dictionary:
 		"metadata": metadata.to_dict(),
 		"player_data": player_data.to_dict(),
 		"world_data": world_data.to_dict()
-
 	}
 
 static func from_dict(dict: Dictionary) -> GameData:
