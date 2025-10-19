@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=4 uid="uid://dg6htjj423ta0"]
+[gd_scene load_steps=5 format=4 uid="uid://dg6htjj423ta0"]
 
 [ext_resource type="Script" uid="uid://08i3my4n1oj5" path="res://interaction/pickup/PickupInteraction.gd" id="1_44aka"]
+[ext_resource type="Resource" uid="uid://whcosaepl1e" path="res://itemization/items/item_penny_bun.tres" id="2_44aka"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_fn3g3"]
 _data = PackedByteArray("AAADAAUAAAABAAAAEAAAABAAAACYAAAAUklGRpAAAABXRUJQVlA4TIMAAAAvD8ADEDegkG0EOHUCr8VRHWG2cW4EAxjMEZ2itm3gXNX/CWJAJiAoes70AADwdlGp8z9FcFXbtlItJIDz7f8MdgEsgB4acPt3eBohov8TwB/HdQ1fJC1AL0kh6HWFWoO0QF3XnQIoa7OBV7t53R73ZneuAKL9cYUHUWwWe0AcxzFfAgA=")
@@ -12,6 +13,7 @@ radius = 6.0827627
 [node name="ItemPickupArea" type="Area2D"]
 collision_layer = 8
 script = ExtResource("1_44aka")
+item = ExtResource("2_44aka")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

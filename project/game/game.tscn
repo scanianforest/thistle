@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://c446o4raiy6f0"]
+[gd_scene load_steps=9 format=3 uid="uid://c446o4raiy6f0"]
 
 [ext_resource type="Script" uid="uid://c245vawn22817" path="res://game/Game.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://bwf6mbp1fiqjk" path="res://player/PlayerManager.gd" id="1_vasa2"]
-[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_u5opy"]
 [ext_resource type="Script" uid="uid://vimpfw778p7s" path="res://network/NetworkManager.gd" id="2_y36n6"]
 [ext_resource type="Script" uid="uid://i3ure5y75cj2" path="res://player/PlayerController.gd" id="3_y36n6"]
 [ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world.tscn" id="5_dxrkv"]
@@ -45,16 +44,6 @@ render_target_update_mode = 4
 
 [node name="CameraManager" type="Node" parent="CanvasLayer/WorldViewportContainer/WorldViewport"]
 
-[node name="MainCamera" type="Camera2D" parent="CanvasLayer/WorldViewportContainer/WorldViewport/CameraManager"]
-physics_interpolation_mode = 1
-zoom = Vector2(4, 4)
-
-[node name="PhantomCameraHost" type="Node" parent="CanvasLayer/WorldViewportContainer/WorldViewport/CameraManager/MainCamera"]
-process_priority = 300
-process_physics_priority = 300
-script = ExtResource("2_u5opy")
-metadata/_custom_type_script = "uid://bd046eokvcnu2"
-
 [node name="World" parent="CanvasLayer/WorldViewportContainer/WorldViewport" instance=ExtResource("5_dxrkv")]
 process_mode = 4
 visible = false
@@ -69,12 +58,12 @@ stretch = true
 
 [node name="UIViewport" type="SubViewport" parent="CanvasLayer/UIContainer"]
 transparent_bg = true
+handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="HUD" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("6_dakft")]
-visible = false
 
 [node name="MainMenu" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("7_u5opy")]
 

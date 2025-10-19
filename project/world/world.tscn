@@ -23,6 +23,7 @@ godot_4_3_compatibility = false
 metadata/_custom_type_script = "uid://dh8wyajr7wh3"
 
 [node name="GroundCursor" type="Sprite2D" parent="TileLayers/Ground" node_paths=PackedStringArray("tilemap_dual")]
+visible = false
 z_index = 1
 texture = ExtResource("3_fn3g3")
 script = ExtResource("5_mmdvd")

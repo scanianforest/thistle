@@ -12,6 +12,14 @@ func _ready() -> void:
 	_area.area_entered.connect(_on_area_entered)
 	_area.area_exited.connect(_on_area_exited)
 
+func get_sibling_component(component_type) -> Node:
+	for sibling in _parent.get_children():
+		if sibling.get_script() == null: continue
+		print(sibling.get_script().get_global_name())
+		if sibling.get_script().get_global_name() == component_type:
+			return sibling
+	return null
+
 func get_parent_global_position() -> Vector2:
 	return _parent.global_position
 

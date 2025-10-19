@@ -6,10 +6,11 @@
 [node name="PlacerComponent" type="Node2D"]
 script = ExtResource("1_vokdu")
 
-[node name="PlaceOrigin" type="Node2D" parent="."]
-position = Vector2(10, 0)
+[node name="PlacerOrigin" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(16, 0)
 
-[node name="Cursor" type="Sprite2D" parent="PlaceOrigin"]
-modulate = Color(1, 1, 1, 0.48235294)
+[node name="Sprite2D" type="Sprite2D" parent="PlacerOrigin"]
+modulate = Color(1, 1, 1, 0.5764706)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_nr6pg")

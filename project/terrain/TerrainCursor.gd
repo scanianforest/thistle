@@ -23,8 +23,8 @@ func _process(_delta: float) -> void:
 	if Input.is_action_pressed("quick_action_0"):
 		terrain = 0
 
-	if Input.is_action_pressed("left_click"):
-		WorldChannel.change_ground_tile(cell.x, cell.y, terrain)
+	# if Input.is_action_pressed("left_click"):
+	# 	WorldChannel.change_ground_tile(cell.x, cell.y, terrain)
 
-	elif Input.is_action_pressed("right_click"):
-		WorldChannel.change_ground_tile(cell.x, cell.y, 0)
+	# elif Input.is_action_pressed("right_click"):
+	# 	WorldChannel.change_ground_tile(cell.x, cell.y, 0)

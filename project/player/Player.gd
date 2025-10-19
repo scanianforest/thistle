@@ -5,6 +5,7 @@ class_name Player extends Pawn2D
 @export var movement: MovementComponent
 @export var attacker: AttackComponent
 @export var interaction: InteractorComponent
+@export var placer: PlacerComponent
 
 var move_direction: Vector2 = Vector2.ZERO
 
@@ -30,6 +31,7 @@ func _physics_process(_delta: float) -> void:
 	
 	if not move_direction.is_equal_approx(Vector2.ZERO):
 		interaction.update_direction(move_direction)
+		placer.face(move_direction)
 	
 	if move_direction.x != 0:
 		sprite.flip_h = true if move_direction.x < 0 else false
@@ -48,8 +50,6 @@ func unpossess() -> void:
 func handle_input(event: InputEvent) -> void:
 	if event.is_action("left") or event.is_action("right") or event.is_action("up") or event.is_action("down"):
 		move_direction = Input.get_vector("left", "right", "up", "down")
-	elif event.is_action_pressed("left_click"):
-		health.take_damage(10)
 
 #endregion
 

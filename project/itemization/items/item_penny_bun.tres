@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://whcosaepl1e"]
+
+[ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="1_jlg7u"]
+[ext_resource type="Texture2D" uid="uid://ckjorlerj8lwq" path="res://aseprite/mushroom_1.aseprite" id="2_6bxqw"]
+
+[resource]
+script = ExtResource("1_jlg7u")
+item_name = "Penny Bun"
+texture = ExtResource("2_6bxqw")
+metadata/_custom_type_script = "uid://dgdru8sn2myct"

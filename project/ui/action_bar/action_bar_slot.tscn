@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://kg7ju7f63mak"]
+
+[ext_resource type="Script" uid="uid://cuds1y5wcauui" path="res://ui/action_bar/ActionBarSlot.gd" id="1_glmah"]
+
+[node name="ActionBarSlot" type="PanelContainer"]
+offset_right = 64.0
+offset_bottom = 64.0
+script = ExtResource("1_glmah")
+
+[node name="Background" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+color = Color(1, 1, 1, 0.49803922)
+
+[node name="Margins" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Texture" type="TextureRect" parent="Margins"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+expand_mode = 2

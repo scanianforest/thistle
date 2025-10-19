@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwbps7xbx2u6l"]
+[gd_scene load_steps=3 format=3 uid="uid://dwbps7xbx2u6l"]
 
 [ext_resource type="Script" uid="uid://bnb3xke3v8kyc" path="res://hud/HUD.gd" id="1_6ca3a"]
+[ext_resource type="PackedScene" uid="uid://clmkfdsfpboj7" path="res://ui/action_bar/action_bar.tscn" id="2_2gk58"]
 
 [node name="HUD" type="Control" node_paths=PackedStringArray("health_bar")]
 layout_mode = 3
@@ -67,3 +68,6 @@ text = "/"
 [node name="MaxHealthValue" type="Label" parent="HUDMargins/PlayerHealthBox/ProgressBar/HBoxContainer"]
 layout_mode = 2
 text = "100"
+
+[node name="ActionBar" parent="HUDMargins" instance=ExtResource("2_2gk58")]
+layout_mode = 2

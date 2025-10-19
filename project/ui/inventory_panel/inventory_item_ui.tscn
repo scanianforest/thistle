@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn4fk26m0qm2q"]
+
+[ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="1_ie7wm"]
+[ext_resource type="Script" uid="uid://ctl02owkgi514" path="res://ui/inventory_panel/InventoryItemUI.gd" id="1_wkthc"]
+
+[node name="InventoryItemUI" type="PanelContainer"]
+script = ExtResource("1_wkthc")
+
+[node name="Margins" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Texture" type="TextureRect" parent="Margins"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_ie7wm")
+expand_mode = 1
