@@ -1,8 +1,13 @@
+@tool
 extends InteractionComponent
+
+@export var item: ItemResource
+@onready var sprite: Sprite2D = $Sprite2D
 
 var tween: Tween
 
-@export var item: ItemResource
+func _ready() -> void:
+	sprite.texture = item.sprite
 
 func interact(interactor: InteractorComponent) -> void:
 	if tween and tween.is_running():

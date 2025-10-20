@@ -15,7 +15,6 @@ func _ready() -> void:
 func get_sibling_component(component_type) -> Node:
 	for sibling in _parent.get_children():
 		if sibling.get_script() == null: continue
-		print(sibling.get_script().get_global_name())
 		if sibling.get_script().get_global_name() == component_type:
 			return sibling
 	return null

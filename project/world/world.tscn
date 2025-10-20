@@ -34,4 +34,3 @@ metadata/_custom_type_script = "uid://c6m630v880okx"
 y_sort_enabled = true
 
 [node name="ItemPickupArea" parent="Entities" instance=ExtResource("7_sc4t8")]
-position = Vector2(8, 40)

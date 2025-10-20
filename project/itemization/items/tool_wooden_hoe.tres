@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://bw1abpv267qbg"]
+
+[ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="1_2km8l"]
+[ext_resource type="Script" uid="uid://do2pbgjtlupyo" path="res://itemization/item_components/ItemComponent.gd" id="1_dfgfl"]
+[ext_resource type="Texture2D" uid="uid://bcqd6w7b1x6ga" path="res://aseprite/wooden_hoe.aseprite" id="1_nctnf"]
+
+[resource]
+script = ExtResource("1_2km8l")
+item_name = "Wooden Hoe"
+icon = ExtResource("1_nctnf")
+sprite = ExtResource("1_nctnf")
+components = Array[ExtResource("1_dfgfl")]([])
+metadata/_custom_type_script = "uid://dgdru8sn2myct"

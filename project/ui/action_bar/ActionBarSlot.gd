@@ -6,9 +6,10 @@ class_name ActionBarSlot extends PanelContainer
 var item: ItemResource = null:
 	set(value):
 		if item == value: return
-
+		
+		item = value
 		if value != null:
-			_texture.texture = value.texture
+			_texture.texture = value.icon
 		else:
 			_texture.texture = null
 

@@ -10,7 +10,7 @@ func _ready() -> void:
 	_texture = %Texture
 	if not item: return
 
-	_texture.texture = item.texture
+	_texture.texture = item.icon
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("secondary_action"):
