@@ -6,6 +6,7 @@ class_name Player extends Pawn2D
 @export var attacker: AttackComponent
 @export var interaction: InteractorComponent
 @export var placer: PlacerComponent
+@export var inventory: InventoryComponent
 
 var move_direction: Vector2 = Vector2.ZERO
 
@@ -24,6 +25,11 @@ func _ready() -> void:
 	
 	health.died.connect(_on_health_died)
 	health.health_changed.connect(_on_health_changed)
+
+	inventory.item_added.connect(_on_inventory_item_added)
+	inventory.item_removed.connect(_on_inventory_item_removed)
+	inventory.inventory_updated.connect(_on_inventory_updated)
+	inventory.item_rejected.connect(_on_inventory_item_rejected)
 
 func _physics_process(_delta: float) -> void:
 	movement.move(move_direction)
@@ -73,4 +79,15 @@ func _on_health_died() -> void:
 func _on_health_changed(new_health: int) -> void:
 	print("Player health changed to %d" % new_health)
 
+func _on_inventory_item_added(item: Item) -> void:
+	PlayerChannel.on_inventory_item_added(item)
+
+func _on_inventory_item_removed(item: Item) -> void:
+	PlayerChannel.on_inventory_item_removed(item)
+
+func _on_inventory_updated(items: Array[Item]) -> void:
+	PlayerChannel.on_inventory_updated(items)
+
+func _on_inventory_item_rejected(item: Item) -> void:
+	PlayerChannel.on_inventory_item_rejected(item)
 #endregion

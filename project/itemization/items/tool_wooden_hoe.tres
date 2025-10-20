@@ -1,11 +1,25 @@
-[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://bw1abpv267qbg"]
+[gd_resource type="Resource" script_class="ItemResource" load_steps=8 format=3 uid="uid://bw1abpv267qbg"]
 
 [ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="1_2km8l"]
+[ext_resource type="Script" uid="uid://dtyvn28yerghq" path="res://itemization/components/ItemComponentResource.gd" id="1_7rgkd"]
 [ext_resource type="Texture2D" uid="uid://bcqd6w7b1x6ga" path="res://aseprite/wooden_hoe.aseprite" id="1_nctnf"]
+[ext_resource type="Script" uid="uid://bbu7sjurcdasb" path="res://itemization/components/ItemDurabilityComponent.gd" id="2_dfgfl"]
+[ext_resource type="Script" uid="uid://cclmnd3urakmc" path="res://itemization/components/ItemQualityComponent.gd" id="2_vgcvx"]
+
+[sub_resource type="Resource" id="Resource_7n265"]
+script = ExtResource("2_vgcvx")
+metadata/_custom_type_script = "uid://cclmnd3urakmc"
+
+[sub_resource type="Resource" id="Resource_vgcvx"]
+script = ExtResource("2_dfgfl")
+durability = 100.0
+max_durability = 100.0
+metadata/_custom_type_script = "uid://bbu7sjurcdasb"
 
 [resource]
 script = ExtResource("1_2km8l")
 item_name = "Wooden Hoe"
 icon = ExtResource("1_nctnf")
 sprite = ExtResource("1_nctnf")
+components = Array[ExtResource("1_7rgkd")]([SubResource("Resource_7n265"), SubResource("Resource_vgcvx")])
 metadata/_custom_type_script = "uid://dgdru8sn2myct"

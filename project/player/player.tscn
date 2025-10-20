@@ -236,7 +236,7 @@ _data = {
 &"walk": SubResource("Animation_g1dw6")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "health", "movement", "attacker", "interaction", "placer")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "health", "movement", "attacker", "interaction", "placer", "inventory")]
 script = ExtResource("1_rkbax")
 sprite = NodePath("PawnSprite")
 health = NodePath("HealthComponent")
@@ -244,6 +244,7 @@ movement = NodePath("MovementComponent")
 attacker = NodePath("Attacker")
 interaction = NodePath("InteractorComponent")
 placer = NodePath("PlacerComponent")
+inventory = NodePath("InventoryComponent")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 physics_interpolation_mode = 1

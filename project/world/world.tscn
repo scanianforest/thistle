@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://gx2ryayaffn8"]
+[gd_scene load_steps=11 format=4 uid="uid://gx2ryayaffn8"]
 
 [ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/World.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
@@ -8,6 +8,13 @@
 [ext_resource type="Script" uid="uid://ckfkcenlc2vj6" path="res://terrain/TerrainCursor.gd" id="5_mmdvd"]
 [ext_resource type="PackedScene" uid="uid://dg6htjj423ta0" path="res://interaction/pickup/item_pickup_area.tscn" id="7_sc4t8"]
 [ext_resource type="Resource" uid="uid://bw1abpv267qbg" path="res://itemization/items/tool_wooden_hoe.tres" id="8_ai45w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ai45w"]
+size = Vector2(14, 5)
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_4papg"]
+_data = PackedByteArray("AAADAAUAAAABAAAAEAAAABAAAACcAAAAUklGRpQAAABXRUJQVlA4TIgAAAAvD8ADED+guG0bN5bek/uforaN2FSf4zaGU9O2AVMAmz/VHgKCoudMDwAA8P/1Tl6VBiVvQuAotu22eW77TqAEgSYMlH19FgI9Bs7jP2MFQ0T/JwDlJ0l2wCPGGL/APYQQPsBtXdf1/Q8vgSzZCTht6QCyVPo5oT9tO1V9lqSj6l8kuVQYLlEG")
+size_override = Vector2(16, 16)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_mmdvd")
@@ -39,3 +46,37 @@ y_sort_enabled = true
 [node name="ItemPickupArea2" parent="Entities" instance=ExtResource("7_sc4t8")]
 position = Vector2(17, 0)
 item = ExtResource("8_ai45w")
+
+[node name="Box" type="StaticBody2D" parent="Entities"]
+position = Vector2(-31, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Box"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_ai45w")
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Box"]
+texture_filter = 1
+texture = SubResource("PortableCompressedTexture2D_4papg")
+offset = Vector2(0, -4)
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://aseprite/box.aseprite",
+"source_uid": 1878954019096354841
+}
+metadata/_aseprite_wizard_source_file_hash_ = "6825286c11bb182327da74edb60b8225"
