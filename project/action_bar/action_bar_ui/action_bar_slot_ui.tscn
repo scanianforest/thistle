@@ -1,11 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://kg7ju7f63mak"]
 
-[ext_resource type="Script" uid="uid://cuds1y5wcauui" path="res://ui/action_bar/ActionBarSlot.gd" id="1_glmah"]
+[ext_resource type="Script" uid="uid://cuds1y5wcauui" path="res://action_bar/action_bar_ui/ActionBarSlotUI.gd" id="1_7tx21"]
 
-[node name="ActionBarSlot" type="PanelContainer"]
+[node name="ActionBarSlotUI" type="PanelContainer"]
 offset_right = 64.0
 offset_bottom = 64.0
-script = ExtResource("1_glmah")
+script = ExtResource("1_7tx21")
 
 [node name="Background" type="ColorRect" parent="."]
 unique_name_in_owner = true

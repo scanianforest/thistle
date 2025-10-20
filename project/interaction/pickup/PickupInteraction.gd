@@ -19,7 +19,7 @@ func interact(interactor: InteractorComponent) -> void:
 	tween.set_parallel(false)
 	tween.tween_callback(func():
 		var inventory: InventoryComponent = interactor.get_sibling_component("InventoryComponent")
-		if inventory: inventory.add_item(item)
+		if inventory: inventory.add_item(Item.new(item))
 		else: Log.err("Interacting parent has no InventoryComponent, cannot add item")
 	)
 	tween.tween_callback(queue_free)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://gx2ryayaffn8"]
+[gd_scene load_steps=9 format=4 uid="uid://gx2ryayaffn8"]
 
 [ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/World.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
@@ -7,6 +7,7 @@
 [ext_resource type="TileSet" uid="uid://btgqaahxoijxp" path="res://terrain/ground.tres" id="3_sc4t8"]
 [ext_resource type="Script" uid="uid://ckfkcenlc2vj6" path="res://terrain/TerrainCursor.gd" id="5_mmdvd"]
 [ext_resource type="PackedScene" uid="uid://dg6htjj423ta0" path="res://interaction/pickup/item_pickup_area.tscn" id="7_sc4t8"]
+[ext_resource type="Resource" uid="uid://bw1abpv267qbg" path="res://itemization/items/tool_wooden_hoe.tres" id="8_ai45w"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_mmdvd")
@@ -34,3 +35,7 @@ metadata/_custom_type_script = "uid://c6m630v880okx"
 y_sort_enabled = true
 
 [node name="ItemPickupArea" parent="Entities" instance=ExtResource("7_sc4t8")]
+
+[node name="ItemPickupArea2" parent="Entities" instance=ExtResource("7_sc4t8")]
+position = Vector2(17, 0)
+item = ExtResource("8_ai45w")

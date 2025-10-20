@@ -15,12 +15,12 @@ func _ready() -> void:
 	visible = false
 
 
-func _on_player_inventory_item_added(item: ItemResource) -> void:
+func _on_player_inventory_item_added(item: Item) -> void:
 	var item_ui: InventoryItemUI = itemUI.instantiate()
 	item_ui.item = item
 	_player_inventory_grid.add_child(item_ui)
 
-func _on_player_inventory_item_removed(item: ItemResource) -> void:
+func _on_player_inventory_item_removed(item: Item) -> void:
 	for child in _player_inventory_grid.get_children():
 		if child is InventoryItemUI:
 			if child.item == item:

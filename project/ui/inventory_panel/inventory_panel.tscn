@@ -36,3 +36,42 @@ columns = 4
 
 [node name="InventoryItemUI" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
 layout_mode = 2
+
+[node name="InventoryItemUI2" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI3" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI4" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI5" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI6" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI7" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI8" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI9" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI10" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI11" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI12" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI13" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2
+
+[node name="InventoryItemUI14" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+layout_mode = 2

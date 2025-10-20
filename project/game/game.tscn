@@ -33,6 +33,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 0
 stretch = true
 
 [node name="WorldViewport" type="SubViewport" parent="CanvasLayer/WorldViewportContainer"]
