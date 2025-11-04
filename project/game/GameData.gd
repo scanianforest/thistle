@@ -4,12 +4,14 @@ var metadata: SaveMetadata = SaveMetadata.new()
 var player_data: PlayerData = PlayerData.new()
 var world_data: WorldData = WorldData.new()
 
+
 func to_dict() -> Dictionary:
 	return {
 		"metadata": metadata.to_dict(),
 		"player_data": player_data.to_dict(),
 		"world_data": world_data.to_dict()
 	}
+
 
 static func from_dict(dict: Dictionary) -> GameData:
 	var data: GameData = GameData.new()

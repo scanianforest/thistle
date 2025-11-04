@@ -1,8 +1,10 @@
 class_name GameDataFileAccess
 
+
 static func save_exists(save_name: String) -> bool:
 	var path = "user://%s.sav" % save_name.to_lower()
 	return FileAccess.file_exists(path)
+
 
 static func save(save_name: String, data: GameData) -> void:
 	var path = "user://%s.sav" % save_name.to_lower()
@@ -19,7 +21,7 @@ static func load(save_name: String) -> GameData:
 	var path = "user://%s.sav" % save_name.to_lower()
 
 	var file = FileAccess.open(path, FileAccess.READ)
-	if not file: 
+	if not file:
 		Log.err("Failed to open save file: %s" % path)
 		return null
 
@@ -31,9 +33,9 @@ static func load(save_name: String) -> GameData:
 	var game_data: GameData = GameData.from_dict(game_data_dict)
 
 	file.close()
-	
+
 	if game_data == null:
 		Log.warn("Loaded game data is null, returning default GameData")
 		return GameData.new()
-	
+
 	return game_data

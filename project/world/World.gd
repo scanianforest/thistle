@@ -13,6 +13,7 @@ var data: WorldData = WorldData.new():
 			var y = int(coord[1])
 			ground.draw_cell(Vector2i(x, y), tile)
 
+
 func _ready() -> void:
 	GameChannel.starting.connect(_on_game_starting)
 	GameChannel.started.connect(_on_game_started)
@@ -22,8 +23,10 @@ func _ready() -> void:
 
 	ground.tile_changed.connect(_on_ground_tile_changed)
 
+
 func _on_game_starting(game_data: GameData) -> void:
 	self.data = game_data.world_data
+
 
 func _on_game_started() -> void:
 	show()
@@ -34,12 +37,15 @@ func _on_game_joined() -> void:
 	show()
 	process_mode = Node.PROCESS_MODE_INHERIT
 
+
 func _on_game_joining(_game_data: GameData) -> void:
 	Log.pr("TODO implement joining logic")
+
 
 func _on_game_saving(game_data: GameData) -> void:
 	Log.pr("Storing world data: ", self.data.to_dict())
 	game_data.world_data = self.data
+
 
 func _on_ground_tile_changed(x: int, y: int, new_tile: int) -> void:
 	var coord = "%d,%d" % [x, y]

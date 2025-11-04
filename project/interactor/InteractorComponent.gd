@@ -5,6 +5,7 @@ class_name InteractorComponent extends Node2D
 
 var _interactables_in_area: Array = []
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_area.body_entered.connect(_on_body_entered)
@@ -12,15 +13,19 @@ func _ready() -> void:
 	_area.area_entered.connect(_on_area_entered)
 	_area.area_exited.connect(_on_area_exited)
 
+
 func get_sibling_component(component_type) -> Node:
 	for sibling in _parent.get_children():
-		if sibling.get_script() == null: continue
+		if sibling.get_script() == null:
+			continue
 		if sibling.get_script().get_global_name() == component_type:
 			return sibling
 	return null
 
+
 func get_parent_global_position() -> Vector2:
 	return _parent.global_position
+
 
 func update_direction(direction: Vector2) -> void:
 	rotation = lerp_angle(rotation, direction.angle(), get_process_delta_time() * 50)
@@ -30,13 +35,16 @@ func _on_body_entered(body: Node) -> void:
 	Log.pr("Body entered interaction area: ", body.name)
 	_interactables_in_area.push_back(body)
 
+
 func _on_body_exited(body: Node) -> void:
 	Log.pr("Body exited interaction area: ", body.name)
 	_interactables_in_area.erase(body)
 
+
 func _on_area_entered(area: Area2D) -> void:
 	Log.pr("Area entered interaction area: ", area.name)
 	_interactables_in_area.push_back(area)
+
 
 func _on_area_exited(area: Area2D) -> void:
 	Log.pr("Area exited interaction area: ", area.name)

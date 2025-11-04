@@ -41,12 +41,6 @@ metadata/_custom_type_script = "uid://c6m630v880okx"
 [node name="Entities" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="ItemPickupArea" parent="Entities" instance=ExtResource("7_sc4t8")]
-
-[node name="ItemPickupArea2" parent="Entities" instance=ExtResource("7_sc4t8")]
-position = Vector2(17, 0)
-item = ExtResource("8_ai45w")
-
 [node name="Box" type="StaticBody2D" parent="Entities"]
 position = Vector2(-31, 0)
 
@@ -80,3 +74,9 @@ metadata/_aseprite_wizard_config_ = {
 "source_uid": 1878954019096354841
 }
 metadata/_aseprite_wizard_source_file_hash_ = "6825286c11bb182327da74edb60b8225"
+
+[node name="ItemPickupArea" parent="Entities" instance=ExtResource("7_sc4t8")]
+
+[node name="ItemPickupArea2" parent="Entities" instance=ExtResource("7_sc4t8")]
+position = Vector2(17, 0)
+item = ExtResource("8_ai45w")

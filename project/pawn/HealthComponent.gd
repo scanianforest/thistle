@@ -17,11 +17,14 @@ signal died
 		if current_health <= 0:
 			died.emit()
 
+
 func _ready() -> void:
 	current_health = max_health
 
+
 func take_damage(amount: int) -> void:
 	current_health -= amount
+
 
 func heal(amount: int) -> void:
 	current_health += amount

@@ -1,3 +1,3 @@
 @tool
-@abstract 
+@abstract
 class_name ItemComponentResource extends Resource

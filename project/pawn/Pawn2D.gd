@@ -1,4 +1,5 @@
-@abstract class_name Pawn2D extends CharacterBody2D
+@abstract
+class_name Pawn2D extends CharacterBody2D
 
 @abstract func possess() -> void
 

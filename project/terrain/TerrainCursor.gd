@@ -1,5 +1,6 @@
 class_name TerrainCursor extends CursorDual
 
+
 func _ready() -> void:
 	if tilemap_dual != null:
 		tile_size = tilemap_dual.tile_set.tile_size

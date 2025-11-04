@@ -35,6 +35,7 @@ LimboConsole="*res://addons/limbo_console/limbo_console.gd"
 GameChannel="*res://game/GameChannel.gd"
 WorldChannel="*res://world/WorldChannel.gd"
 PlayerChannel="*res://player/PlayerChannel.gd"
+UIChannel="*res://ui/UIChannel.gd"
 
 [display]
 

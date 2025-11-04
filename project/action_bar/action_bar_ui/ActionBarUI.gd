@@ -13,18 +13,21 @@ extends PanelContainer
 	%Slot9,
 ]
 
+
 func _ready() -> void:
 	PlayerChannel.action_bar_slot_selected.connect(_on_action_bar_slot_selected)
 	PlayerChannel.action_bar_slot_updated.connect(_on_action_bar_slot_updated)
 
 	for i in range(slots.size()):
 		var slot = slots[i]
-		slot.clicked.connect(func() -> void:
-			PlayerChannel.on_action_bar_slot_selection_requested(i)
+		slot.clicked.connect(
+			func() -> void: PlayerChannel.on_action_bar_slot_selection_requested(i)
 		)
+
 
 func get_slot(index: int) -> ActionBarSlotUI:
 	return slots[index]
+
 
 #region Signal Handlers
 func _on_action_bar_slot_selected(index: int) -> void:
