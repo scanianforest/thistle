@@ -106,7 +106,7 @@ func _on_inventory_item_removed(item: Item) -> void:
 
 
 func _on_inventory_item_dropped(item: Item) -> void:
-	PlayerChannel.on_inventory_item_dropped(item)
+	ItemSpawner.spawn_item(item, get_parent(), global_position)
 
 
 func _on_inventory_updated(items: Array[Item]) -> void:

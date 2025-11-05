@@ -5,9 +5,12 @@ var _inventory: InventoryComponent:
 		if _inventory:
 			_inventory.item_added.disconnect(_on_player_inventory_item_added)
 			_inventory.item_removed.disconnect(_on_player_inventory_item_removed)
+			_inventory.inventory_updated.disconnect(_on_inventory_updated)
 		_inventory = value
 		_inventory.item_added.connect(_on_player_inventory_item_added)
 		_inventory.item_removed.connect(_on_player_inventory_item_removed)
+		_inventory.inventory_updated.connect(_on_inventory_updated)
+		_on_inventory_updated(_inventory.items)
 	get:
 		return _inventory
 
@@ -28,6 +31,13 @@ func _ready() -> void:
 
 func _on_inventory_set(inventory: InventoryComponent) -> void:
 	_inventory = inventory
+
+
+func _on_inventory_updated(items: Array) -> void:
+	for child in _player_inventory_grid.get_children():
+		child.queue_free()
+	for item in items:
+		_on_player_inventory_item_added(item)
 
 
 func _on_player_inventory_item_added(item: Item) -> void:

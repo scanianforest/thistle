@@ -9,7 +9,11 @@ signal inventory_updated(items: Array[Item])
 var weight: float = 0.0
 var max_weight: float = 100.0
 
-var items: Array[Item] = []
+var items: Array[Item] = [Item.new(preload("res://itemization/items/tool_wooden_hoe.tres"))]
+
+
+func _ready() -> void:
+	inventory_updated.emit.call_deferred(items)
 
 
 func add_item(item: Item) -> void:

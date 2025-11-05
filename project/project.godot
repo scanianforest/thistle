@@ -36,6 +36,7 @@ GameChannel="*res://game/GameChannel.gd"
 WorldChannel="*res://world/WorldChannel.gd"
 PlayerChannel="*res://player/PlayerChannel.gd"
 UIChannel="*res://ui/UIChannel.gd"
+ItemSpawner="*res://item_spawner/ItemSpawner.gd"
 
 [display]
 

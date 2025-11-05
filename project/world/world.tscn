@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://gx2ryayaffn8"]
+[gd_scene load_steps=9 format=4 uid="uid://gx2ryayaffn8"]
 
 [ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/World.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
@@ -6,8 +6,6 @@
 [ext_resource type="Script" uid="uid://dh8wyajr7wh3" path="res://terrain/Terrain.gd" id="3_mmdvd"]
 [ext_resource type="TileSet" uid="uid://btgqaahxoijxp" path="res://terrain/ground.tres" id="3_sc4t8"]
 [ext_resource type="Script" uid="uid://ckfkcenlc2vj6" path="res://terrain/TerrainCursor.gd" id="5_mmdvd"]
-[ext_resource type="PackedScene" uid="uid://dg6htjj423ta0" path="res://interaction/pickup/item_pickup_area.tscn" id="7_sc4t8"]
-[ext_resource type="Resource" uid="uid://bw1abpv267qbg" path="res://itemization/items/tool_wooden_hoe.tres" id="8_ai45w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ai45w"]
 size = Vector2(14, 5)
@@ -74,9 +72,3 @@ metadata/_aseprite_wizard_config_ = {
 "source_uid": 1878954019096354841
 }
 metadata/_aseprite_wizard_source_file_hash_ = "6825286c11bb182327da74edb60b8225"
-
-[node name="ItemPickupArea" parent="Entities" instance=ExtResource("7_sc4t8")]
-
-[node name="ItemPickupArea2" parent="Entities" instance=ExtResource("7_sc4t8")]
-position = Vector2(17, 0)
-item = ExtResource("8_ai45w")

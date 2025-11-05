@@ -1,29 +1,15 @@
-@tool
-extends InteractionComponent
+class_name ItemPickupArea extends InteractionComponent
 
-var _item: ItemResource
+var item: Item
 
-@export var item: ItemResource:
-	set(v):
-		_item = v
-		item_updated.emit(v)
-	get:
-		return _item
-
-@onready var sprite: Sprite2D = $Sprite2D
-
-signal item_updated
+@export var sprite: Sprite2D
 
 var tween: Tween
 var bob: Tween
 
 
-func _init() -> void:
-	item_updated.connect(_on_item_updated)
-
-
 func _ready() -> void:
-	item = item
+	sprite.texture = item.resource.sprite
 
 
 func interact(interactor: InteractorComponent) -> void:
@@ -40,15 +26,8 @@ func interact(interactor: InteractorComponent) -> void:
 				"InventoryComponent"
 			)
 			if inventory:
-				inventory.add_item(Item.new(item))
+				inventory.add_item(item)
 			else:
 				Log.err("Interacting parent has no InventoryComponent, cannot add item")
 	)
 	tween.tween_callback(queue_free)
-
-
-func _on_item_updated(updated_item: ItemResource) -> void:
-	if not is_inside_tree():
-		return
-
-	sprite.texture = updated_item.sprite
