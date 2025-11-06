@@ -9,7 +9,12 @@ signal inventory_updated(items: Array[Item])
 var weight: float = 0.0
 var max_weight: float = 100.0
 
-var items: Array[Item] = [Item.new(preload("res://itemization/items/tool_wooden_hoe.tres"))]
+var items: Array[Item] = [Item.new(preload("res://itemization/items/tool_wooden_hoe.tres"))]:
+	set(value):
+		items = value
+		inventory_updated.emit(items)
+	get:
+		return items
 
 
 func _ready() -> void:

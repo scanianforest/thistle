@@ -1,17 +1,23 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvyxea5kvytl1"]
 
 [ext_resource type="Script" uid="uid://dk7arl4c7tf7j" path="res://ui/inventory_panel/InventoryPanel.gd" id="1_p663k"]
-[ext_resource type="PackedScene" uid="uid://dn4fk26m0qm2q" path="res://ui/inventory_panel/inventory_item_ui.tscn" id="2_p663k"]
+[ext_resource type="PackedScene" uid="uid://caok1c4w0g7lh" path="res://ui/inventory_panel/inventory_component_ui.tscn" id="2_0mjcg"]
 
 [node name="InventoryPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(300, 0)
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -308.0
-grow_horizontal = 0
-grow_vertical = 2
+offset_left = -194.0
+offset_top = -234.0
+offset_right = 194.0
+offset_bottom = -83.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 8
 script = ExtResource("1_p663k")
 
 [node name="Margins" type="MarginContainer" parent="."]
@@ -21,57 +27,17 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margins"]
+[node name="VBoxContainer" type="HBoxContainer" parent="Margins"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="Margins/VBoxContainer"]
-layout_mode = 2
-text = "Inventory"
-horizontal_alignment = 2
-
-[node name="PlayerInventoryGrid" type="GridContainer" parent="Margins/VBoxContainer"]
+[node name="PlayerInventory" parent="Margins/VBoxContainer" instance=ExtResource("2_0mjcg")]
 unique_name_in_owner = true
 layout_mode = 2
-columns = 4
 
-[node name="InventoryItemUI" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+[node name="VSeparator" type="VSeparator" parent="Margins/VBoxContainer"]
 layout_mode = 2
 
-[node name="InventoryItemUI2" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI3" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI4" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI5" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI6" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI7" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI8" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI9" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI10" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI11" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI12" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI13" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
-layout_mode = 2
-
-[node name="InventoryItemUI14" parent="Margins/VBoxContainer/PlayerInventoryGrid" instance=ExtResource("2_p663k")]
+[node name="ContainerInventory" parent="Margins/VBoxContainer" instance=ExtResource("2_0mjcg")]
+unique_name_in_owner = true
 layout_mode = 2

@@ -16,6 +16,7 @@ var _data: PlayerData = PlayerData.new():
 		Log.pr("Setting player data")
 		_data = value
 		global_position = _data.position
+		inventory.items = _data.items
 
 
 func _ready() -> void:
@@ -80,6 +81,7 @@ func _on_game_starting(game_data: GameData) -> void:
 
 func _on_game_saving(game_data: GameData) -> void:
 	_data.position = global_position
+	_data.items = inventory.items
 
 	game_data.player_data = _data  # TODO can this be initialized at start instead? Hook up
 

@@ -1,4 +1,4 @@
 @abstract
-class_name InteractionComponent extends Node2D
+class_name InteractionComponent extends Node
 
 @abstract func interact(interactor: InteractorComponent) -> void

@@ -1,0 +1,1 @@
+class_name ItemContainer extends StaticBody2D

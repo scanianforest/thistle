@@ -15,7 +15,7 @@ theme_override_constants/margin_bottom = 4
 
 [node name="Texture" type="TextureRect" parent="Margins"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("1_ie7wm")
 expand_mode = 1

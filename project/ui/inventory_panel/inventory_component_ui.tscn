@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://caok1c4w0g7lh"]
+
+[ext_resource type="PackedScene" uid="uid://dn4fk26m0qm2q" path="res://ui/inventory_panel/inventory_item_ui.tscn" id="1_eyk4t"]
+[ext_resource type="Script" uid="uid://md4mek4w2xay" path="res://ui/inventory_panel/InventoryComponentUI.gd" id="1_tufe0"]
+
+[node name="InventoryComponentUI" type="VBoxContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_tufe0")
+
+[node name="OwnerName" type="Label" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Inventory"
+horizontal_alignment = 2
+
+[node name="ItemGrid" type="GridContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 8
+
+[node name="InventoryItemUI" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI2" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI3" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI4" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI5" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI6" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI7" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI8" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI9" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI10" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI11" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI12" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI13" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI14" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
