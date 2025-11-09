@@ -9,20 +9,19 @@ class_name Player extends Pawn2D
 
 var move_direction: Vector2 = Vector2.ZERO
 
-var _data: PlayerData = PlayerData.new():
+var data: PlayerData = PlayerData.new():
 	set(value):
 		if value == null:
 			return
 		Log.pr("Setting player data")
-		_data = value
-		global_position = _data.position
-		inventory.data = _data.inventory_data
+		data = value
+		global_position = data.position
+		inventory.data = data.inventory_data
 
 
 func _ready() -> void:
 	print("Player ready")
-	GameChannel.starting.connect(_on_game_starting)
-	GameChannel.saving.connect(_on_game_saving)
+	GameChannel.loaded_player.connect(_on_loaded_player)
 
 	sprite.animation_event.connect(_on_sprite_animation_event)
 
@@ -75,15 +74,15 @@ func handle_input(event: InputEvent) -> void:
 
 
 #region Signal Handlers
-func _on_game_starting(game_data: GameData) -> void:
-	_data = game_data.player_data
+func _on_loaded_player(player_data: PlayerData) -> void:
+	data = player_data
 
 
 func _on_game_saving(game_data: GameData) -> void:
-	_data.position = global_position
-	_data.inventory_data = inventory.data
+	data.position = global_position
+	data.inventory_data = inventory.data
 
-	game_data.player_data = _data  # TODO can this be initialized at start instead? Hook up
+	game_data.player_data = data  # TODO can this be initialized at start instead? Hook up
 
 
 func _on_sprite_animation_event(event_name: StringName) -> void:

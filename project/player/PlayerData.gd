@@ -1,11 +1,35 @@
 class_name PlayerData extends SaveData
 
+
+class Metadata:
+	var name: String = "Unnamed Player"
+	var version: String = "1"
+
+	func to_dict() -> Dictionary:
+		return {
+			"name": name,
+			"version": version,
+		}
+
+	static func from_dict(dict: Dictionary) -> Metadata:
+		var metadata = Metadata.new()
+		metadata.name = dict.get("name", "Unnamed Player")
+		metadata.version = dict.get("version", "1")
+		return metadata
+
+
+var metadata: Metadata = Metadata.new()
 var position: Vector2 = Vector2.ZERO
 var inventory_data: InventoryData = InventoryData.new()
+
+var name:
+	get:
+		return metadata.name
 
 
 func to_dict() -> Dictionary:
 	return {
+		"metadata": metadata.to_dict(),
 		"position": position,
 		"inventory_data": inventory_data.to_dict(),
 	}
@@ -14,6 +38,7 @@ func to_dict() -> Dictionary:
 static func from_dict(dict: Dictionary) -> PlayerData:
 	var data = PlayerData.new()
 
+	data.metadata = Metadata.from_dict(dict.get("metadata", Metadata.new().to_dict()))
 	data.position = dict.get("position", Vector2.ZERO)
 	data.inventory_data = InventoryData.from_dict(
 		dict.get("inventory_data", InventoryData.new().to_dict())

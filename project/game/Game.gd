@@ -2,29 +2,42 @@ class_name Game extends Node2D
 
 enum PauseMode { PAUSED_BY_GAME, PAUSED_BY_PLAYER, UNPAUSED }
 
-var _data: GameData = GameData.new()
+@onready var world: World = %World
+@onready var player_manager: PlayerManager = %PlayerManager
 
 
 func _ready() -> void:
-	GameDataFileAccess.create_directories()
+	WorldSaveFileAccess.create_world_save_directory()
+	PlayerSaveFileAccess.create_player_save_directory()
 
-	GameChannel.starting.connect(_on_game_starting)
 	GameChannel.started.connect(_on_game_started)
 	GameChannel.joining.connect(_on_game_joining)
-	GameChannel.joined.connect(_on_game_joined)
-	GameChannel.saving.connect(_on_game_saving)
-	GameChannel.saved.connect(_on_game_saved)
 	GameChannel.paused.connect(_on_game_paused)
 	GameChannel.quitting.connect(_on_game_quitting)
 	GameChannel.quitted.connect(_on_game_quitted)
 
+	# new
+	GameChannel.saving_player.connect(_on_saving_player)
+	GameChannel.saved_player.connect(_on_saved_player)
+	GameChannel.saving_world.connect(_on_saving_world)
+	GameChannel.saved_world.connect(_on_saved_world)
+	GameChannel.loaded_player.connect(_on_loaded_player)
+	GameChannel.loading_world.connect(_on_loading_world)
+	GameChannel.loaded_world.connect(_on_loaded_world)
 
-func _on_game_starting(data: GameData) -> void:
-	if data != null:
-		_data = data
 
-	Log.pr("starting, startup logic goes here!")
-	GameChannel.on_started()
+func start_game(world_name: String, player_name: String) -> void:
+	Log.pr("Starting local game with world:", world_name, "and player:", player_name)
+
+	if World.exists(world_name):
+		world.load_existing(world_name)
+	else:
+		world.start_new(world_name)
+
+
+func quit_game() -> void:
+	Log.pr("Quitting game...")
+	get_tree().quit()
 
 
 func _on_game_started() -> void:
@@ -35,8 +48,36 @@ func _on_game_joining(__data: GameData) -> void:
 	GameChannel.joined.emit()
 
 
-func _on_game_joined() -> void:
-	Log.pr("Loaded save with metadata:", _data.metadata.to_dict())
+func _on_saving_player(data: PlayerData) -> void:
+	Log.pr("saving player", data.to_dict())
+	player_manager.save_local_player()
+	GameChannel.saved_player.emit()
+
+
+func _on_saving_world(data: WorldData) -> void:
+	Log.pr("saving world", data.to_dict())
+	world.save()
+	GameChannel.saved_world.emit()
+
+
+func _on_saved_player() -> void:
+	Log.pr("player saved")
+
+
+func _on_saved_world() -> void:
+	Log.pr("world saved")
+
+
+func _on_loaded_player(data: PlayerData) -> void:
+	Log.pr("player loaded", data.metadata.to_dict())
+
+
+func _on_loading_world(world_name: String) -> void:
+	world.load_existing(world_name)
+
+
+func _on_loaded_world(data: WorldData) -> void:
+	Log.pr("world loaded", data.metadata.to_dict())
 
 
 func _on_game_saving(data: GameData) -> void:
@@ -45,23 +86,19 @@ func _on_game_saving(data: GameData) -> void:
 	GameChannel.saved.emit()
 
 
-func _on_game_saved() -> void:
-	Log.pr("saved", _data.metadata.name)
-
-
 func _on_game_paused() -> void:
 	Log.pr("paused")
 
 
 func _on_game_quitting() -> void:
 	Log.pr("autosaving before quit")
-	GameChannel.save(_data)
-	GameChannel.on_quitted()
+	player_manager.save_local_player()
+	world.save()
+	quit_game()
 
 
 func _on_game_quitted() -> void:
-	Log.pr("quitting game")
-	get_tree().quit()
+	quit_game()
 
 
 func _unhandled_input(event: InputEvent) -> void:

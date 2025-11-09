@@ -14,22 +14,57 @@ var data: WorldData = WorldData.new():
 			ground.draw_cell(Vector2i(x, y), tile)
 
 
+static func exists(world_name: String) -> bool:
+	return WorldSaveFileAccess.exists(world_name)
+
+
+static func create_world(world_name: String) -> WorldData:
+	var new_world_data = WorldData.new()
+	new_world_data.metadata.name = world_name
+	return new_world_data
+
+
+static func load_existing_world(world_name: String) -> WorldData:
+	var loaded_data = WorldSaveFileAccess.load_world_data(world_name)
+	if loaded_data != null:
+		return loaded_data
+	else:
+		Log.pr("No saved world found with name: ", world_name)
+		return null
+
+
 func _ready() -> void:
-	GameChannel.starting.connect(_on_game_starting)
-	GameChannel.started.connect(_on_game_started)
 	GameChannel.joined.connect(_on_game_joined)
 	GameChannel.joining.connect(_on_game_joining)
-	GameChannel.saving.connect(_on_game_saving)
 
 	ground.tile_changed.connect(_on_ground_tile_changed)
 
 
-func _on_game_starting(game_data: GameData) -> void:
-	self.data = game_data.world_data
+func start_new(world_name: String) -> void:
+	data = WorldData.new()
+	data.metadata.name = world_name
+	Log.pr("New world started: ", data.to_dict())
 
 
-func _on_game_started() -> void:
-	show()
+func load_existing(world_name: String) -> void:
+	var loaded_data = WorldSaveFileAccess.load_world_data(world_name)
+	if loaded_data != null:
+		data = loaded_data
+		Log.pr("World loaded: ", data.to_dict())
+	else:
+		Log.pr("No saved world found with name: ", world_name)
+
+
+func save() -> void:
+	WorldSaveFileAccess.save(data.metadata.name, data)
+	Log.pr("World saved: ", data.to_dict())
+
+
+func pause() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+
+
+func unpause() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT
 
 

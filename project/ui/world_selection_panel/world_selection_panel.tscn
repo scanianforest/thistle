@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0c20iavbquqp"]
+
+[ext_resource type="Script" uid="uid://ijs3hjxg1sgh" path="res://ui/world_selection_panel/WorldSelectionPanel.gd" id="1_5ehf3"]
+
+[node name="WorldSelectionPanel" type="PanelContainer"]
+script = ExtResource("1_5ehf3")
+
+[node name="Margins" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margins"]
+layout_mode = 2
+
+[node name="WorldSelectionLabel" type="Label" parent="Margins/VBoxContainer"]
+layout_mode = 2
+text = "Start World"
+horizontal_alignment = 1
+
+[node name="WorldOptionButton" type="OptionButton" parent="Margins/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="WorldCreationBox" type="HBoxContainer" parent="Margins/VBoxContainer"]
+layout_mode = 2
+
+[node name="CreateWorldInput" type="LineEdit" parent="Margins/VBoxContainer/WorldCreationBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter world name..."
+alignment = 1
+
+[node name="CreateWorldButton" type="Button" parent="Margins/VBoxContainer/WorldCreationBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "CREATE"
+
+[node name="StartButton" type="Button" parent="Margins/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "START"
+
+[node name="HSeparator" type="HSeparator" parent="Margins/VBoxContainer"]
+layout_mode = 2
+
+[node name="JoinWorldLabel" type="Label" parent="Margins/VBoxContainer"]
+modulate = Color(1, 1, 1, 0.8156863)
+layout_mode = 2
+text = "Join World"
+horizontal_alignment = 1
+
+[node name="IPInput" type="LineEdit" parent="Margins/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "127.0.0.1"
+placeholder_text = "Enter IP address..."
+alignment = 1
+
+[node name="JoinButton" type="Button" parent="Margins/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "JOIN"
