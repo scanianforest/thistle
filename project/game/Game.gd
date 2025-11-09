@@ -6,6 +6,8 @@ var _data: GameData = GameData.new()
 
 
 func _ready() -> void:
+	GameDataFileAccess.create_directories()
+
 	GameChannel.starting.connect(_on_game_starting)
 	GameChannel.started.connect(_on_game_started)
 	GameChannel.joining.connect(_on_game_joining)

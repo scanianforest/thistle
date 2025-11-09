@@ -246,6 +246,8 @@ interaction = NodePath("InteractorComponent")
 placer = NodePath("PlacerComponent")
 inventory = NodePath("InventoryComponent")
 
+[node name="LimboHSM" type="LimboHSM" parent="."]
+
 [node name="MainCamera" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 zoom = Vector2(4, 4)
@@ -322,6 +324,7 @@ metadata/_custom_type_script = "uid://d125ufvtoylyi"
 [node name="InteractorComponent" parent="." instance=ExtResource("7_boad6")]
 
 [node name="PlacerComponent" parent="." instance=ExtResource("8_rgyib")]
+visible = false
 
 [node name="ItemSpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("12_ebec5")

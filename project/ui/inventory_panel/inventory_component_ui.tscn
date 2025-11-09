@@ -3,60 +3,76 @@
 [ext_resource type="PackedScene" uid="uid://dn4fk26m0qm2q" path="res://ui/inventory_panel/inventory_item_ui.tscn" id="1_eyk4t"]
 [ext_resource type="Script" uid="uid://md4mek4w2xay" path="res://ui/inventory_panel/InventoryComponentUI.gd" id="1_tufe0"]
 
-[node name="InventoryComponentUI" type="VBoxContainer"]
-size_flags_horizontal = 3
-size_flags_vertical = 3
+[node name="InventoryComponentUI" type="PanelContainer"]
+custom_minimum_size = Vector2(240, 0)
+offset_right = 364.0
+offset_bottom = 127.0
 script = ExtResource("1_tufe0")
 
-[node name="OwnerName" type="Label" parent="."]
+[node name="Margins" type="MarginContainer" parent="."]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="Margins"]
+layout_mode = 2
+
+[node name="OwnerName" type="Label" parent="Margins/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
 text = "Inventory"
 horizontal_alignment = 2
 
-[node name="ItemGrid" type="GridContainer" parent="."]
+[node name="ItemGrid" type="GridContainer" parent="Margins/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
 columns = 8
 
-[node name="InventoryItemUI" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="InventoryItemUI2" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI2" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI3" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI3" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI4" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI4" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI5" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI5" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI6" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI6" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI7" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI7" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI8" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI8" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI9" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI9" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI10" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI10" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI11" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI11" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI12" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI12" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI13" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI13" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
-layout_mode = 2
-
-[node name="InventoryItemUI14" parent="ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI14" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2

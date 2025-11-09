@@ -1,6 +1,6 @@
 class_name ActionBarComponent extends Node
 
-var slots: Array[Item] = []
+var slots: Array[ItemData] = []
 var selected_slot_index: int
 
 
@@ -19,7 +19,7 @@ func _ready() -> void:
 	select_slot.call_deferred(1)
 
 
-func set_slot(index: int, item: Item) -> void:
+func set_slot(index: int, item: ItemData) -> void:
 	slots[index] = item
 	PlayerChannel.on_action_bar_slot_updated(index, item)
 
@@ -49,7 +49,7 @@ func _get_first_empty_slot() -> int:
 
 
 #region Signal Handlers
-func _on_action_bar_slot_update_requested(index: int, item: Item) -> void:
+func _on_action_bar_slot_update_requested(index: int, item: ItemData) -> void:
 	set_slot(index, item)
 
 
@@ -59,13 +59,13 @@ func _on_action_bar_slot_selection_requested(index: int) -> void:
 	select_slot(index)
 
 
-func _on_inventory_item_added(item: Item) -> void:
+func _on_inventory_item_added(item: ItemData) -> void:
 	var empty_slot_index = _get_first_empty_slot()
 	if empty_slot_index != -1:
 		set_slot(empty_slot_index, item)
 
 
-func _on_inventory_item_removed(item: Item) -> void:
+func _on_inventory_item_removed(item: ItemData) -> void:
 	for i in len(slots):
 		if slots[i] == item:
 			set_slot(i, null)

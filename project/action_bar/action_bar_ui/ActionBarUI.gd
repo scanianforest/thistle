@@ -38,6 +38,6 @@ func _on_action_bar_slot_selected(index: int) -> void:
 			slots[i].deactivate()
 
 
-func _on_action_bar_slot_updated(index: int, item: Item) -> void:
+func _on_action_bar_slot_updated(index: int, item: ItemData) -> void:
 	slots[index].item = item
 #endregion

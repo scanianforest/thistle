@@ -46,10 +46,10 @@ func broadcast_died() -> void:
 #endregion
 
 #region Inventory
-signal inventory_item_added(item: Item)
-signal inventory_item_removed(item: Item)
-signal inventory_item_dropped(item: Item)
-signal inventory_updated(items: Array[Item])
+signal inventory_item_added(item: ItemData)
+signal inventory_item_removed(item: ItemData)
+signal inventory_item_dropped(item: ItemData)
+signal inventory_updated(items: Array[ItemData])
 
 
 func on_inventory_item_added(item) -> void:
@@ -64,7 +64,7 @@ func on_inventory_item_dropped(item) -> void:
 	inventory_item_dropped.emit(item)
 
 
-func on_inventory_updated(items: Array[Item]) -> void:
+func on_inventory_updated(items: Array[ItemData]) -> void:
 	inventory_updated.emit(items)
 
 
@@ -73,8 +73,8 @@ func on_inventory_updated(items: Array[Item]) -> void:
 #region Action Bar
 signal action_bar_slot_selection_requested(index: int)
 signal action_bar_slot_selected(index: int)
-signal action_bar_slot_update_requested(index: int, item: Item)
-signal action_bar_slot_updated(index: int, item: Item)
+signal action_bar_slot_update_requested(index: int, item: ItemData)
+signal action_bar_slot_updated(index: int, item: ItemData)
 
 
 func on_action_bar_slot_selection_requested(index: int) -> void:
@@ -85,10 +85,10 @@ func on_action_bar_slot_selected(index: int) -> void:
 	action_bar_slot_selected.emit(index)
 
 
-func on_action_bar_slot_update_requested(index: int, item: Item) -> void:
+func on_action_bar_slot_update_requested(index: int, item: ItemData) -> void:
 	action_bar_slot_update_requested.emit(index, item)
 
 
-func on_action_bar_slot_updated(index: int, item: Item) -> void:
+func on_action_bar_slot_updated(index: int, item: ItemData) -> void:
 	action_bar_slot_updated.emit(index, item)
 #endregion

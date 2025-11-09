@@ -5,7 +5,7 @@ signal clicked
 @onready var _texture: TextureRect = %Texture
 @onready var _background: ColorRect = %Background
 
-var item: Item = null:
+var item: ItemData = null:
 	set(value):
 		if item == value:
 			return
@@ -18,12 +18,10 @@ var item: Item = null:
 
 
 func activate() -> void:
-	Log.pr("ActionBarSlotUI activated - override this method in subclasses")
 	_background.visible = true
 
 
 func deactivate() -> void:
-	Log.pr("ActionBarSlotUI deactivated - override this method in subclasses")
 	_background.visible = false
 
 

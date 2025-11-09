@@ -16,7 +16,7 @@ var _data: PlayerData = PlayerData.new():
 		Log.pr("Setting player data")
 		_data = value
 		global_position = _data.position
-		inventory.items = _data.items
+		inventory.data = _data.inventory_data
 
 
 func _ready() -> void:
@@ -81,7 +81,7 @@ func _on_game_starting(game_data: GameData) -> void:
 
 func _on_game_saving(game_data: GameData) -> void:
 	_data.position = global_position
-	_data.items = inventory.items
+	_data.inventory_data = inventory.data
 
 	game_data.player_data = _data  # TODO can this be initialized at start instead? Hook up
 
@@ -99,22 +99,22 @@ func _on_health_changed(new_health: int) -> void:
 	print("Player health changed to %d" % new_health)
 
 
-func _on_inventory_item_added(item: Item) -> void:
+func _on_inventory_item_added(item: ItemData) -> void:
 	PlayerChannel.on_inventory_item_added(item)
 
 
-func _on_inventory_item_removed(item: Item) -> void:
+func _on_inventory_item_removed(item: ItemData) -> void:
 	PlayerChannel.on_inventory_item_removed(item)
 
 
-func _on_inventory_item_dropped(item: Item) -> void:
+func _on_inventory_item_dropped(item: ItemData) -> void:
 	ItemSpawner.spawn_item(item, get_parent(), global_position)
 
 
-func _on_inventory_updated(items: Array[Item]) -> void:
+func _on_inventory_updated(items: Array[ItemData]) -> void:
 	PlayerChannel.on_inventory_updated(items)
 
 
-func _on_inventory_item_rejected(item: Item) -> void:
+func _on_inventory_item_rejected(item: ItemData) -> void:
 	PlayerChannel.on_inventory_item_rejected(item)
 #endregion

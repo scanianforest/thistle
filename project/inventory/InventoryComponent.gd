@@ -1,15 +1,22 @@
 class_name InventoryComponent extends Node
 
-signal item_added(item: Item)
-signal item_removed(item: Item)
-signal item_rejected(item: Item)
-signal item_dropped(item: Item)
-signal inventory_updated(items: Array[Item])
+signal item_added(item: ItemData)
+signal item_removed(item: ItemData)
+signal item_rejected(item: ItemData)
+signal item_dropped(item: ItemData)
+signal inventory_updated(items: Array[ItemData])
 
 var weight: float = 0.0
 var max_weight: float = 100.0
 
-var items: Array[Item] = [Item.new(preload("res://itemization/items/tool_wooden_hoe.tres"))]:
+var data: InventoryData = InventoryData.new():
+	set(value):
+		data = value
+		items = data.items
+	get:
+		return data
+
+var items: Array[ItemData] = [ItemData.new(preload("res://itemization/items/tool_wooden_hoe.tres"))]:
 	set(value):
 		items = value
 		inventory_updated.emit(items)
@@ -21,7 +28,7 @@ func _ready() -> void:
 	inventory_updated.emit.call_deferred(items)
 
 
-func add_item(item: Item) -> void:
+func add_item(item: ItemData) -> void:
 	if false:  # Placeholder for weight check
 		item_rejected.emit(item)
 		return

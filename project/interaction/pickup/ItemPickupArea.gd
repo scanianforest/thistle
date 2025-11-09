@@ -1,6 +1,6 @@
 class_name ItemPickupArea extends InteractionComponent
 
-var item: Item
+var item: ItemData
 
 @export var sprite: Sprite2D
 
