@@ -1,7 +1,8 @@
 class_name InventoryPanelUI extends PanelContainer
 ## Inventory panel UI that shows player and container inventories.
 ##
-## Its main responsibility is handling inventory display visibility.
+## Its main responsibility is handling inventory display visibility and handling
+## top-level item actions, such as moving items between player and container inventories.
 
 @onready var _player_inventory: InventoryComponentUI = %PlayerInventory
 @onready var _container_inventory: InventoryComponentUI = %ContainerInventory
