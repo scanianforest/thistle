@@ -7,6 +7,9 @@ signal paused(mode: Game.PauseMode)
 signal quitting
 signal quitted
 
+signal player_set(data: PlayerData)
+signal world_set(data: WorldData)
+
 signal saving_world(world: String)
 signal saved_world(world: WorldData)
 signal loading_world(world: String)
@@ -22,6 +25,14 @@ func start(world: String, player: String) -> void:
 	loading_world.emit(world)
 	loading_player.emit(player)
 	on_started()
+
+
+func set_player(data: PlayerData) -> void:
+	player_set.emit(data)
+
+
+func set_world(data: WorldData) -> void:
+	world_set.emit(data)
 
 
 func on_started() -> void:

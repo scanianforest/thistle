@@ -3,6 +3,8 @@ class_name PlayerManager extends Node
 var _player_scene = preload("res://player/player.tscn")
 var _player_node: CharacterBody2D
 
+var local_player_data: PlayerData
+
 @export var _local_player_controller: PlayerController
 @export var _player_node_parent: Node
 

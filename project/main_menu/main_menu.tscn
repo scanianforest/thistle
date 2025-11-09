@@ -1,11 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dabvnpoxo3xoe"]
+[gd_scene load_steps=4 format=3 uid="uid://dabvnpoxo3xoe"]
 
 [ext_resource type="Script" uid="uid://dbg7cpvypx7u4" path="res://main_menu/MainMenu.gd" id="1_oa53l"]
 [ext_resource type="PackedScene" uid="uid://b5mu1wl02n1ki" path="res://ui/character_selection_panel/character_selection_panel.tscn" id="2_d3a7t"]
 [ext_resource type="PackedScene" uid="uid://d0c20iavbquqp" path="res://ui/world_selection_panel/world_selection_panel.tscn" id="3_3shxk"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oa53l"]
-bg_color = Color(0.23392546, 0.23392549, 0.23392531, 1)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -51,66 +48,14 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="StartButton" type="Button" parent="Margins/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+disabled = true
+text = "START"
+
 [node name="QuitButton" type="Button" parent="Margins/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "QUIT"
-
-[node name="WorldSelectionPanel" type="PanelContainer" parent="Margins"]
-visible = false
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_oa53l")
-
-[node name="MarginContainer" type="MarginContainer" parent="Margins/WorldSelectionPanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Margins/WorldSelectionPanel/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="LineEdit" type="LineEdit" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "Enter new world name..."
-
-[node name="CreateButton" type="Button" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Create"
-
-[node name="Label" type="Label" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "EXISTING WORLDS"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "World 1"
-
-[node name="Button2" type="Button" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "World 2"
-
-[node name="Button3" type="Button" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "World 3
-"
-
-[node name="HSeparator2" type="HSeparator" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CancelButton" type="Button" parent="Margins/WorldSelectionPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "CANCEL"

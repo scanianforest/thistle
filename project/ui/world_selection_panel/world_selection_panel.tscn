@@ -17,52 +17,35 @@ layout_mode = 2
 
 [node name="WorldSelectionLabel" type="Label" parent="Margins/VBoxContainer"]
 layout_mode = 2
-text = "Start World"
+text = "World"
 horizontal_alignment = 1
 
-[node name="WorldOptionButton" type="OptionButton" parent="Margins/VBoxContainer"]
+[node name="ExistingWorldBox" type="HBoxContainer" parent="Margins/VBoxContainer"]
+layout_mode = 2
+
+[node name="WorldOptionButton" type="OptionButton" parent="Margins/VBoxContainer/ExistingWorldBox"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DeleteWorldButton" type="Button" parent="Margins/VBoxContainer/ExistingWorldBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "DELETE"
 
 [node name="WorldCreationBox" type="HBoxContainer" parent="Margins/VBoxContainer"]
 layout_mode = 2
 
-[node name="CreateWorldInput" type="LineEdit" parent="Margins/VBoxContainer/WorldCreationBox"]
+[node name="NewWorldNameInput" type="LineEdit" parent="Margins/VBoxContainer/WorldCreationBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Enter world name..."
 alignment = 1
 
-[node name="CreateWorldButton" type="Button" parent="Margins/VBoxContainer/WorldCreationBox"]
+[node name="NewWorldButton" type="Button" parent="Margins/VBoxContainer/WorldCreationBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "CREATE"
-
-[node name="StartButton" type="Button" parent="Margins/VBoxContainer"]
-custom_minimum_size = Vector2(0, 60)
-layout_mode = 2
-text = "START"
-
-[node name="HSeparator" type="HSeparator" parent="Margins/VBoxContainer"]
-layout_mode = 2
-
-[node name="JoinWorldLabel" type="Label" parent="Margins/VBoxContainer"]
-modulate = Color(1, 1, 1, 0.8156863)
-layout_mode = 2
-text = "Join World"
-horizontal_alignment = 1
-
-[node name="IPInput" type="LineEdit" parent="Margins/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "127.0.0.1"
-placeholder_text = "Enter IP address..."
-alignment = 1
-
-[node name="JoinButton" type="Button" parent="Margins/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 60)
-layout_mode = 2
-text = "JOIN"

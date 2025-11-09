@@ -69,7 +69,8 @@ render_target_update_mode = 4
 [node name="HUD" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("6_dakft")]
 visible = false
 
-[node name="MainMenu" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("7_u5opy")]
+[node name="MainMenu" parent="CanvasLayer/UIContainer/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
+_game = NodePath("../../../..")
 
 [node name="PauseMenu" type="Control" parent="CanvasLayer/UIContainer/UIViewport"]
 layout_mode = 3

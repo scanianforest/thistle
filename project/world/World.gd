@@ -25,7 +25,7 @@ static func create_world(world_name: String) -> WorldData:
 
 
 static func load_existing_world(world_name: String) -> WorldData:
-	var loaded_data = WorldSaveFileAccess.load_world_data(world_name)
+	var loaded_data = WorldSaveFileAccess.load(world_name)
 	if loaded_data != null:
 		return loaded_data
 	else:
@@ -47,7 +47,7 @@ func start_new(world_name: String) -> void:
 
 
 func load_existing(world_name: String) -> void:
-	var loaded_data = WorldSaveFileAccess.load_world_data(world_name)
+	var loaded_data = WorldSaveFileAccess.load(world_name)
 	if loaded_data != null:
 		data = loaded_data
 		Log.pr("World loaded: ", data.to_dict())

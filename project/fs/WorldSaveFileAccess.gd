@@ -24,7 +24,7 @@ static func save(world_name: String, data: WorldData) -> void:
 		Log.err("Failed to open file for saving: %s" % path)
 
 
-static func load_world_data(world_name: String) -> WorldData:
+static func load(world_name: String) -> WorldData:
 	var path = WORLD_SAVE_DIR + world_name.to_lower()
 
 	if not exists(world_name):
@@ -38,3 +38,27 @@ static func load_world_data(world_name: String) -> WorldData:
 	file.close()
 
 	return world_data
+
+
+static func delete(world_name: String) -> bool:
+	var path = WORLD_SAVE_DIR + world_name.to_lower()
+	var dir = DirAccess.open(WORLD_SAVE_DIR)
+	if exists(world_name):
+		dir.remove(path)
+		return true
+	else:
+		Log.warn("Cannot delete non-existent world save: %s" % world_name)
+		return false
+
+
+static func get_saves() -> Array[WorldData]:
+	var dir = DirAccess.open(WORLD_SAVE_DIR)
+	var files = dir.get_files()
+
+	var saves: Array[WorldData] = []
+	for file_name in files:
+		var world_name = file_name
+		var world_data = WorldSaveFileAccess.load(world_name)
+		if world_data != null:
+			saves.append(world_data)
+	return saves

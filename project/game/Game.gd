@@ -5,6 +5,9 @@ enum PauseMode { PAUSED_BY_GAME, PAUSED_BY_PLAYER, UNPAUSED }
 @onready var world: World = %World
 @onready var player_manager: PlayerManager = %PlayerManager
 
+var player_data: PlayerData
+var world_data: WorldData
+
 
 func _ready() -> void:
 	WorldSaveFileAccess.create_world_save_directory()
@@ -26,18 +29,34 @@ func _ready() -> void:
 	GameChannel.loaded_world.connect(_on_loaded_world)
 
 
-func start_game(world_name: String, player_name: String) -> void:
-	Log.pr("Starting local game with world:", world_name, "and player:", player_name)
+func start_game() -> void:
+	if player_data == null:
+		Log.err("Cannot start game: player_data is null")
+		return
+	if world_data == null:
+		Log.err("Cannot start game: world_data is null")
 
-	if World.exists(world_name):
-		world.load_existing(world_name)
-	else:
-		world.start_new(world_name)
+	world.data = world_data
+	player_manager.local_player_data = player_data
 
 
 func quit_game() -> void:
 	Log.pr("Quitting game...")
 	get_tree().quit()
+
+
+func _on_player_set(data: PlayerData) -> void:
+	player_data = data
+	if _is_player_and_world_set():
+		GameChannel.on_joined()
+
+
+func _on_world_set(data: WorldData) -> void:
+	world_data = data
+
+
+func _is_player_and_world_set() -> bool:
+	return player_data != null and world_data != null
 
 
 func _on_game_started() -> void:
