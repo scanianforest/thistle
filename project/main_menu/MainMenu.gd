@@ -3,38 +3,49 @@ extends Control
 @onready var _start_button: Button = %StartButton
 @onready var _quit_button: Button = %QuitButton
 
-@onready var _character_selection_panel: CharacterSelectionPanel = %CharacterSelectionPanel
-@onready var _world_selection_panel: WorldSelectionPanel = %WorldSelectionPanel
-
 @export var _game: Game
+
+@onready var character_name_edit: LineEdit = %CharacterNameEdit
+@onready var world_name_edit: LineEdit = %WorldNameEdit
 
 
 func _ready() -> void:
-	_character_selection_panel.character_selected.connect(_on_character_selected)
-	_world_selection_panel.world_selected.connect(_on_world_selected)
-
+	_start_button.pressed.connect(_on_start_button_pressed)
 	_quit_button.pressed.connect(_on_quit_button_pressed)
 
+	character_name_edit.text_changed.connect(_on_character_name_edit_text_changed)
+	world_name_edit.text_changed.connect(_on_world_name_edit_text_changed)
 
-func _on_character_selected(player_data: PlayerData) -> void:
-	_game.player_data = player_data
-	_start_button.disabled = _is_start_disabled()
+	_on_character_name_edit_text_changed(character_name_edit.text)
+	_on_world_name_edit_text_changed(world_name_edit.text)
 
-	if player_data:
-		Log.pr("Selected character:", player_data.metadata.name)
+
+func _update_start_button_state() -> void:
+	_start_button.disabled = _game.player_data == null or _game.world_data == null
+
+
+func _on_character_name_edit_text_changed(new_text: String) -> void:
+	if PlayerSaveFileAccess.exists(new_text):
+		_game.player_data = PlayerSaveFileAccess.load(new_text)
 	else:
-		Log.pr("No character selected")
+		_game.player_data = PlayerData.new()
+		_game.player_data.metadata.name = new_text
+	_update_start_button_state()
 
 
-func _on_world_selected(world_data: WorldData) -> void:
-	_game.world_data = world_data
-	Log.pr("Selected world:", world_data.metadata.name)
-	_start_button.disabled = _is_start_disabled()
+func _on_world_name_edit_text_changed(new_text: String) -> void:
+	if WorldSaveFileAccess.exists(new_text):
+		_game.world_data = WorldSaveFileAccess.load(new_text)
+	else:
+		_game.world_data = WorldData.new()
+		_game.world_data.metadata.name = new_text
+	_update_start_button_state()
 
 
-func _is_start_disabled() -> bool:
-	return not (_game.player_data and _game.world_data)
+func _on_start_button_pressed() -> void:
+	_game.start_game()
+	hide()
 
 
 func _on_quit_button_pressed() -> void:
-	GameChannel.quit()
+	_game.quit_game()

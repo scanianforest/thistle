@@ -1,7 +1,12 @@
 class_name PlayerManager extends Node
 
+signal possessed(pawn: Pawn2D)
+signal unpossessed
+signal spawned(player: PlayerData)
+signal despawned
+
 var _player_scene = preload("res://player/player.tscn")
-var _player_node: CharacterBody2D
+var _player_node: Player
 
 var local_player_data: PlayerData
 
@@ -9,17 +14,15 @@ var local_player_data: PlayerData
 @export var _player_node_parent: Node
 
 
-func spawn_local_player(player_name: String) -> Pawn2D:
-	var player_data = PlayerSaveFileAccess.load(player_name)
-	if player_data == null:
-		Log.info("No saved player found with name: %s, creating new player data" % player_name)
-		player_data = PlayerData.new()
-		player_data.metadata.name = player_name
+func spawn_local_player() -> Pawn2D:
+	if local_player_data == null:
+		Log.err("No local player data to spawn player from")
+		return null
 
-	var pawn = _spawn_player(player_data)
-	_possess_player(pawn)
+	var pawn = spawn_player(local_player_data)
+	possess_player(pawn)
 
-	Log.pr("Local player %s spawned and possessed" % player_name)
+	Log.pr("Local player %s spawned and possessed" % local_player_data.metadata.name)
 	return pawn
 
 
@@ -28,12 +31,12 @@ func save_local_player() -> void:
 		Log.warn("No local player to save")
 		return
 
-	var player_data = _player_node.data
-	PlayerSaveFileAccess.save(player_data.metadata.name, player_data)
-	Log.info("Local player %s saved" % player_data.metadata.name)
+	var saved_data = _player_node.save_to_data()
+	PlayerSaveFileAccess.save(saved_data.metadata.name, saved_data)
+	Log.info("Local player %s saved" % saved_data.metadata.name)
 
 
-func _spawn_player(player: PlayerData) -> Pawn2D:
+func spawn_player(player: PlayerData) -> Pawn2D:
 	_player_node = _player_scene.instantiate()
 	_player_node.data = player
 
@@ -43,28 +46,24 @@ func _spawn_player(player: PlayerData) -> Pawn2D:
 		Log.warn("No parent node set, spawning as child of self")
 		add_child(_player_node)
 
+	spawned.emit(player)
 	return _player_node
 
 
-func _possess_player(pawn: Pawn2D) -> void:
-	Log.info("Player possessed %s" % pawn)
-	_local_player_controller.possessed_pawn = pawn
-
-
-func _on_player_spawned(player: PlayerData) -> void:
-	_spawn_player(player)
-
-
-func _on_player_despawned() -> void:
-	if _player_node and _player_node.is_inside_tree():
+func despawn_player() -> void:
+	if _player_node:
 		_player_node.queue_free()
 		_player_node = null
+		despawned.emit()
 
 
-func _on_player_possessed(pawn: Pawn2D) -> void:
-	_possess_player(pawn)
+func possess_player(pawn: Pawn2D) -> void:
+	Log.info("Player possessed %s" % pawn)
+	_local_player_controller.possessed_pawn = pawn
+	possessed.emit(pawn)
 
 
-func _on_player_unpossessed() -> void:
+func unpossess_player() -> void:
 	Log.info("Player unpossessed")
 	_local_player_controller.possessed_pawn = null
+	unpossessed.emit()

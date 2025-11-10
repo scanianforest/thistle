@@ -13,21 +13,6 @@ func _ready() -> void:
 	WorldSaveFileAccess.create_world_save_directory()
 	PlayerSaveFileAccess.create_player_save_directory()
 
-	GameChannel.started.connect(_on_game_started)
-	GameChannel.joining.connect(_on_game_joining)
-	GameChannel.paused.connect(_on_game_paused)
-	GameChannel.quitting.connect(_on_game_quitting)
-	GameChannel.quitted.connect(_on_game_quitted)
-
-	# new
-	GameChannel.saving_player.connect(_on_saving_player)
-	GameChannel.saved_player.connect(_on_saved_player)
-	GameChannel.saving_world.connect(_on_saving_world)
-	GameChannel.saved_world.connect(_on_saved_world)
-	GameChannel.loaded_player.connect(_on_loaded_player)
-	GameChannel.loading_world.connect(_on_loading_world)
-	GameChannel.loaded_world.connect(_on_loaded_world)
-
 
 func start_game() -> void:
 	if player_data == null:
@@ -39,6 +24,10 @@ func start_game() -> void:
 	world.data = world_data
 	player_manager.local_player_data = player_data
 
+	world.show()
+	world.unpause()
+	player_manager.spawn_local_player()
+
 
 func quit_game() -> void:
 	Log.pr("Quitting game...")
@@ -47,16 +36,10 @@ func quit_game() -> void:
 
 func _on_player_set(data: PlayerData) -> void:
 	player_data = data
-	if _is_player_and_world_set():
-		GameChannel.on_joined()
 
 
 func _on_world_set(data: WorldData) -> void:
 	world_data = data
-
-
-func _is_player_and_world_set() -> bool:
-	return player_data != null and world_data != null
 
 
 func _on_game_started() -> void:
@@ -122,4 +105,4 @@ func _on_game_quitted() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		GameChannel.quit()
+		_on_game_quitting()

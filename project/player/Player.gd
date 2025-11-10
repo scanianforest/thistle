@@ -21,7 +21,6 @@ var data: PlayerData = PlayerData.new():
 
 func _ready() -> void:
 	print("Player ready")
-	GameChannel.loaded_player.connect(_on_loaded_player)
 
 	sprite.animation_event.connect(_on_sprite_animation_event)
 
@@ -74,15 +73,14 @@ func handle_input(event: InputEvent) -> void:
 
 
 #region Signal Handlers
-func _on_loaded_player(player_data: PlayerData) -> void:
+func load_from_data(player_data: PlayerData) -> void:
 	data = player_data
 
 
-func _on_game_saving(game_data: GameData) -> void:
+func save_to_data() -> PlayerData:
 	data.position = global_position
 	data.inventory_data = inventory.data
-
-	game_data.player_data = data  # TODO can this be initialized at start instead? Hook up
+	return data
 
 
 func _on_sprite_animation_event(event_name: StringName) -> void:
