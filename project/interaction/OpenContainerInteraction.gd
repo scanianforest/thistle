@@ -1,4 +1,4 @@
-extends InteractionComponent
+class_name OpenContainerInteration extends InteractionComponent
 
 @export var inventory: InventoryComponent
 

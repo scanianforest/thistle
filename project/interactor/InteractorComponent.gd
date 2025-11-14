@@ -1,5 +1,7 @@
 class_name InteractorComponent extends Node2D
 
+signal interacted(interaction: InteractionComponent)
+
 @onready var _area: Area2D = %InteractorArea
 @onready var _parent: Node2D = get_parent()
 
@@ -51,9 +53,8 @@ func _on_area_exited(area: Area2D) -> void:
 	_interactables_in_area.erase(area)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
-		for interactable in _interactables_in_area:
-			if interactable.has_method("interact"):
-				Log.pr("Interacting with: ", interactable.name)
-				interactable.interact(self)
+func interact() -> void:
+	for interactable in _interactables_in_area:
+		if interactable.interaction:
+			interacted.emit(interactable.interaction)
+			return

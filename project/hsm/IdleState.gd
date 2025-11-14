@@ -1,10 +1,14 @@
 class_name IdleState extends LimboState
 
 var sprite: PawnSprite
+var interactor: InteractorComponent
 
 
 func _setup() -> void:
 	sprite = blackboard.get_var("sprite")
+	interactor = blackboard.get_var("interactor")
+
+	interactor.interacted.connect(_on_interacted)
 
 	add_event_handler("input", _on_input)
 
@@ -13,6 +17,11 @@ func _enter() -> void:
 	sprite.animate("idle")
 	if Input.get_vector("left", "right", "up", "down") != Vector2.ZERO:
 		dispatch("to_moving")
+
+
+func _on_interacted(interaction: InteractionComponent) -> void:
+	blackboard.set_var("interaction", interaction)
+	dispatch("to_interacting")
 
 
 func _on_input(event: InputEvent) -> bool:
@@ -27,7 +36,10 @@ func _on_input(event: InputEvent) -> bool:
 
 	if event.is_action_pressed("toggle_inventory"):
 		dispatch("to_inventory")
+		return true
 
+	if event.is_action_pressed("interact"):
+		interactor.interact()
 		return true
 
 	return false

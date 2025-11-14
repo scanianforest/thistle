@@ -12,6 +12,7 @@ class_name Player extends Pawn2D
 @onready var idle_state: IdleState = $HSM/Idle
 @onready var moving_state: MovingState = $HSM/Moving
 @onready var inventory_state: InventoryState = $HSM/Inventory
+@onready var interacting_state: InteractingState = $HSM/Interacting
 
 var data: PlayerData = PlayerData.new():
 	set(value):
@@ -39,12 +40,16 @@ func _ready() -> void:
 
 	hsm.add_transition(idle_state, moving_state, &"to_moving")
 	hsm.add_transition(idle_state, inventory_state, &"to_inventory")
+	hsm.add_transition(idle_state, interacting_state, &"to_interacting")
 
 	hsm.add_transition(moving_state, idle_state, &"to_idle")
 	hsm.add_transition(moving_state, inventory_state, &"to_inventory")
+	hsm.add_transition(moving_state, interacting_state, &"to_interacting")
 
 	hsm.add_transition(inventory_state, idle_state, &"to_idle")
 	hsm.add_transition(inventory_state, moving_state, &"to_moving")
+
+	hsm.add_transition(interacting_state, idle_state, &"to_idle")
 
 	hsm.initialize(self)
 	hsm.set_active(true)
