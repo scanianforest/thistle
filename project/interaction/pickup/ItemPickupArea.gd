@@ -31,3 +31,7 @@ func interact(interactor: InteractorComponent) -> void:
 				Log.err("Interacting parent has no InventoryComponent, cannot add item")
 	)
 	tween.tween_callback(queue_free)
+
+
+func get_animation_name() -> StringName:
+	return "pickup_item"
