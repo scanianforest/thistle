@@ -1,4 +1,4 @@
-extends Node
+class_name ItemSpawnerComponent extends Node
 
 var item_pickup_area_scene: PackedScene = preload("res://interaction/pickup/item_pickup_area.tscn")
 

@@ -14,7 +14,6 @@ func _ready() -> void:
 		_on_action_bar_slot_selection_requested
 	)
 	PlayerChannel.inventory_item_added.connect(_on_inventory_item_added)
-	PlayerChannel.inventory_item_removed.connect(_on_inventory_item_removed)
 
 	select_slot.call_deferred(1)
 
@@ -27,6 +26,13 @@ func set_slot(index: int, item: ItemData) -> void:
 func select_slot(index: int) -> void:
 	selected_slot_index = index
 	PlayerChannel.on_action_bar_slot_selected(index)
+
+
+func find_item(item: ItemData) -> int:
+	for i in len(slots):
+		if slots[i] == item:
+			return i
+	return -1
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -1,5 +1,7 @@
 class_name InventoryComponent extends Node
 
+signal opened
+signal closed
 signal item_added(item: ItemData)
 signal item_removed(item: ItemData)
 signal item_rejected(item: ItemData)
@@ -26,6 +28,14 @@ var items: Array[ItemData] = [ItemData.new(preload("res://itemization/items/tool
 
 func _ready() -> void:
 	inventory_updated.emit.call_deferred(items)
+
+
+func open() -> void:
+	opened.emit()
+
+
+func close() -> void:
+	closed.emit()
 
 
 func add_item(item: ItemData) -> void:

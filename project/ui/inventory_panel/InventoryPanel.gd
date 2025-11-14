@@ -10,16 +10,36 @@ class_name InventoryPanelUI extends PanelContainer
 
 func _ready() -> void:
 	UIChannel.inventory_set.connect(_on_inventory_set)
-	UIChannel.container_opened.connect(_on_container_opened)
 
 	_player_inventory.item_ui_secondary_requested.connect(_on_player_item_secondary_requested)
+	_player_inventory.component_opened.connect(_on_player_component_opened)
+	_player_inventory.component_closed.connect(_on_player_component_closed)
 	_container_inventory.item_ui_secondary_requested.connect(_on_container_item_secondary_requested)
+	_container_inventory.component_opened.connect(_on_container_component_opened)
+	_container_inventory.component_closed.connect(_on_container_component_closed)
 
 	visible = false
 
 
 func _on_inventory_set(inventory: InventoryComponent) -> void:
 	_player_inventory.inventory_comp = inventory
+
+
+func _on_player_component_opened() -> void:
+	visible = true
+
+
+func _on_player_component_closed() -> void:
+	visible = false
+
+
+func _on_container_component_opened() -> void:
+	visible = true
+
+
+func _on_container_component_closed() -> void:
+	if not _player_inventory.inventory_comp:
+		visible = false
 
 
 func _on_container_opened(inventory_comp: InventoryComponent) -> void:
@@ -47,6 +67,10 @@ func _on_container_closed() -> void:
 	_container_inventory.visible = false
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("toggle_inventory"):
-		visible = not visible
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	return data is InventoryItemUI
+
+
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	var item_ui: InventoryItemUI = data as InventoryItemUI
+	_player_inventory.inventory_comp.drop_item(item_ui.item)

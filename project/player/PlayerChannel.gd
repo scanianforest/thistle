@@ -47,17 +47,12 @@ func broadcast_died() -> void:
 
 #region Inventory
 signal inventory_item_added(item: ItemData)
-signal inventory_item_removed(item: ItemData)
 signal inventory_item_dropped(item: ItemData)
 signal inventory_updated(items: Array[ItemData])
 
 
 func on_inventory_item_added(item) -> void:
 	inventory_item_added.emit(item)
-
-
-func on_inventory_item_removed(item) -> void:
-	inventory_item_removed.emit(item)
 
 
 func on_inventory_item_dropped(item) -> void:

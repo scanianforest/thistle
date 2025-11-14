@@ -20,9 +20,8 @@ func _ready() -> void:
 
 	for i in range(slots.size()):
 		var slot = slots[i]
-		slot.clicked.connect(
-			func() -> void: PlayerChannel.on_action_bar_slot_selection_requested(i)
-		)
+		slot.dropped_on.connect(func(item: ItemData): _on_slot_dropped_on(i, item))
+		slot.clicked.connect(func(): PlayerChannel.on_action_bar_slot_selection_requested(i))
 
 
 func get_slot(index: int) -> ActionBarSlotUI:
@@ -40,4 +39,8 @@ func _on_action_bar_slot_selected(index: int) -> void:
 
 func _on_action_bar_slot_updated(index: int, item: ItemData) -> void:
 	slots[index].item = item
+
+
+func _on_slot_dropped_on(index: int, item: ItemData) -> void:
+	PlayerChannel.on_action_bar_slot_update_requested(index, item)
 #endregion

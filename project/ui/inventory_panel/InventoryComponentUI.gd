@@ -2,15 +2,22 @@ class_name InventoryComponentUI extends Control
 
 signal item_ui_secondary_requested(item_ui: InventoryItemUI)
 
+signal component_opened
+signal component_closed
+
 var inventory_comp: InventoryComponent:
 	set(value):
 		if inventory_comp:
+			inventory_comp.opened.disconnect(_on_component_opened)
+			inventory_comp.closed.disconnect(_on_component_closed)
 			inventory_comp.item_added.disconnect(_on_inventory_item_added)
 			inventory_comp.item_removed.disconnect(_on_inventory_item_removed)
 			inventory_comp.inventory_updated.disconnect(_on_inventory_updated)
 		if value:
 			visible = true
 			inventory_comp = value
+			inventory_comp.opened.connect(_on_component_opened)
+			inventory_comp.closed.connect(_on_component_closed)
 			inventory_comp.item_added.connect(_on_inventory_item_added)
 			inventory_comp.item_removed.connect(_on_inventory_item_removed)
 			inventory_comp.inventory_updated.connect(_on_inventory_updated)
@@ -39,6 +46,14 @@ func _add_item_ui(item: ItemData) -> void:
 	item_ui.secondary_requested.connect(_on_item_ui_secondary_requested)
 	item_ui.remove_requested.connect(_on_item_ui_remove_requested)
 	%ItemGrid.add_child(item_ui)
+
+
+func _on_component_opened() -> void:
+	component_opened.emit()
+
+
+func _on_component_closed() -> void:
+	component_closed.emit()
 
 
 func _on_inventory_item_added(item: ItemData) -> void:

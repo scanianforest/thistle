@@ -8,8 +8,7 @@ var _peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 
 func _ready() -> void:
 	_peer.peer_connected.connect(_on_peer_connected)
-
-	host()
+	_peer.peer_disconnected.connect(_on_peer_disconnected)
 
 
 func host(port: int = 7890, max_clients = 32) -> void:
@@ -20,7 +19,12 @@ func host(port: int = 7890, max_clients = 32) -> void:
 
 func join(address: String, port: int) -> void:
 	_peer.create_client(address, port)
+	multiplayer.multiplayer_peer = _peer
 
 
 func _on_peer_connected(id: int) -> void:
 	Log.pr("Peer connected with ID: %d" % id)
+
+
+func _on_peer_disconnected(id: int) -> void:
+	Log.pr("Peer disconnected with ID: %d" % id)

@@ -1,6 +1,7 @@
 class_name ActionBarSlotUI extends PanelContainer
 
 signal clicked
+signal dropped_on(item: ItemData)
 
 @onready var _texture: TextureRect = %Texture
 @onready var _background: ColorRect = %Background
@@ -23,6 +24,15 @@ func activate() -> void:
 
 func deactivate() -> void:
 	_background.visible = false
+
+
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	return data is InventoryItemUI
+
+
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	var item_ui: InventoryItemUI = data
+	dropped_on.emit(item_ui.item)
 
 
 func _gui_input(event: InputEvent) -> void:
