@@ -29,10 +29,6 @@ func get_parent_global_position() -> Vector2:
 	return _parent.global_position
 
 
-func update_direction(direction: Vector2) -> void:
-	rotation = lerp_angle(rotation, direction.angle(), get_process_delta_time() * 50)
-
-
 func _on_body_entered(body: Node) -> void:
 	Log.pr("Body entered interaction area: ", body.name)
 	_interactables_in_area.push_back(body)

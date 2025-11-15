@@ -50,6 +50,7 @@ func _ready() -> void:
 	hsm.add_transition(inventory_state, moving_state, &"to_moving")
 
 	hsm.add_transition(interacting_state, idle_state, &"to_idle")
+	hsm.add_transition(interacting_state, inventory_state, &"to_inventory")
 
 	hsm.initialize(self)
 	hsm.set_active(true)

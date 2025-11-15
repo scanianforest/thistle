@@ -1,6 +1,11 @@
-class_name OpenContainerInteration extends InteractionComponent
+class_name OpenContainerInteraction extends InteractionComponent
 
 @export var inventory: InventoryComponent
+
+
+func _ready() -> void:
+	animation_name = "open_container"
+	interaction_type = InteractionType.INSTANT
 
 
 func interact(_interactor: Node) -> void:

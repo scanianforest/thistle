@@ -10,6 +10,8 @@ var bob: Tween
 
 func _ready() -> void:
 	sprite.texture = item.resource.sprite
+	interaction_type = InteractionType.INSTANT
+	animation_name = ""
 
 
 func interact(interactor: InteractorComponent) -> void:
