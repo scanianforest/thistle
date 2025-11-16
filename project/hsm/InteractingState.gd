@@ -1,24 +1,33 @@
 class_name InteractingState extends LimboState
 
 var sprite: PawnSprite
+var interactor: InteractorComponent
 
 
 func _setup() -> void:
 	sprite = blackboard.get_var("sprite")
+	interactor = blackboard.get_var("interactor")
+
+	add_event_handler("input", _on_input)
 	pass
 
 
 func _enter() -> void:
-	var interaction: InteractionComponent = blackboard.get_var("interaction")
+	Log.pr("Entering InteractingState")
+	var interaction: Interaction = blackboard.get_var("interaction")
 
-	sprite.animate(interaction.animation_name)
+	interaction.start(interactor)
 
-	match interaction.interaction_type:
-		InteractionComponent.InteractionType.INSTANT:
+	sprite.animate(interaction.interaction_resource.animation_name)
+
+	match interaction.interaction_resource.type:
+		InteractionResource.Type.INSTANT:
 			_resolve_interaction(interaction)
-		InteractionComponent.InteractionType.TIMED:
+		InteractionResource.Type.TIMED:
 			_timed_interaction(interaction)
-		InteractionComponent.InteractionType.CONTINUOUS:
+		InteractionResource.Type.ANIMATION:
+			_timed_interaction(interaction)  # TODO make animation-specific handling
+		InteractionResource.Type.CONTINUOUS:
 			_continuous_interaction(interaction)
 	pass
 
@@ -27,27 +36,34 @@ func _exit() -> void:
 	pass
 
 
-func _timed_interaction(interaction: InteractionComponent) -> void:
+func _timed_interaction(interaction: Interaction) -> void:
 	Log.pr("Starting timed interaction: %s" % interaction)
-	var animation_length: float = sprite.get_animation_length(interaction.animation_name)
+	var animation_length: float = sprite.get_animation_length(
+		interaction.interaction_resource.animation_name
+	)
 	await get_tree().create_timer(animation_length).timeout
 	_resolve_interaction(interaction)
 
 
-func _continuous_interaction(interaction: InteractionComponent) -> void:
+func _continuous_interaction(interaction: Interaction) -> void:
 	Log.pr("Starting continuous interaction: %s" % interaction)
+	await interactor.stopped
+	dispatch("to_idle")
 
 
-func _resolve_interaction(interaction: InteractionComponent) -> void:
-	match interaction:
-		_ when interaction is ItemPickupArea:
-			dispatch("to_pickup_item")
-			Log.pr("Resolving item pickup interaction")
-			return
-		_ when interaction is OpenContainerInteraction:
-			dispatch("to_inventory")
-			Log.pr("Resolving open container interaction")
-			return
-		_:
-			Log.pr("Resolving generic interaction %s" % interaction)
-			dispatch("to_idle")
+func _resolve_interaction(interaction: Interaction) -> void:
+	Log.pr("Resolving interaction: %s" % interaction)
+	interactor.resolve()
+	dispatch("to_idle")
+
+
+func _on_input(event: InputEvent) -> bool:
+	if (
+		event.is_action_pressed("left")
+		or event.is_action_pressed("right")
+		or event.is_action_pressed("up")
+		or event.is_action_pressed("down")
+	):
+		interactor.stop_interaction()
+		return true
+	return false

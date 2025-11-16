@@ -8,8 +8,6 @@ func _setup() -> void:
 	sprite = blackboard.get_var("sprite")
 	interactor = blackboard.get_var("interactor")
 
-	interactor.interacted.connect(_on_interacted)
-
 	add_event_handler("input", _on_input)
 
 
@@ -19,7 +17,7 @@ func _enter() -> void:
 		dispatch("to_moving")
 
 
-func _on_interacted(interaction: InteractionComponent) -> void:
+func _on_interacted(interaction: Interaction) -> void:
 	blackboard.set_var("interaction", interaction)
 	dispatch("to_interacting")
 
@@ -39,7 +37,9 @@ func _on_input(event: InputEvent) -> bool:
 		return true
 
 	if event.is_action_pressed("interact"):
-		interactor.interact()
-		return true
+		var interaction: Interaction = interactor.interact()
+		if interaction != null:
+			_on_interacted(interaction)
+			return true
 
 	return false

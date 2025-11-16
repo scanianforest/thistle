@@ -395,4 +395,5 @@ script = ExtResource("14_32hag")
 
 [node name="AttackerComponent" parent="DirectionRotationComponent" instance=ExtResource("13_yllr7")]
 
-[node name="InteractorComponent" parent="DirectionRotationComponent" instance=ExtResource("7_boad6")]
+[node name="InteractorComponent" parent="DirectionRotationComponent" node_paths=PackedStringArray("_parent") instance=ExtResource("7_boad6")]
+_parent = NodePath("../..")

@@ -49,6 +49,7 @@ func _add_item_ui(item: ItemData) -> void:
 
 
 func _on_component_opened() -> void:
+	Log.pr("Component opened")
 	component_opened.emit()
 
 

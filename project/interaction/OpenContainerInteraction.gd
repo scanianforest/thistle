@@ -1,16 +1,54 @@
-class_name OpenContainerInteraction extends InteractionComponent
+class_name OpenContainerInteraction extends Interaction
+
+signal started
+signal stopped
 
 @export var inventory: InventoryComponent
 
 
-func _ready() -> void:
-	animation_name = "open_container"
-	interaction_type = InteractionType.INSTANT
+func start(interactor: InteractorComponent) -> void:
+	var interactor_inventory: InventoryComponent = interactor.get_sibling_component(
+		"InventoryComponent"
+	)
 
+	if inventory == null:
+		Log.err("ItemContainer has no InventoryComponent, cannot open container")
+		return
 
-func interact(_interactor: Node) -> void:
+	if interactor_inventory == null:
+		Log.err("Interacting parent has no InventoryComponent, cannot open container")
+		return
+
 	UIChannel.open_container(inventory)
+	interactor_inventory.open()
+
+	started.emit()
 
 
-func get_animation_name() -> StringName:
-	return "open_container"
+func stop(interactor: InteractorComponent) -> void:
+	Log.pr("Stopping OpenContainerInteraction")
+	var interactor_inventory: InventoryComponent = interactor.get_sibling_component(
+		"InventoryComponent"
+	)
+
+	if inventory == null:
+		Log.err("ItemContainer has no InventoryComponent, cannot open container")
+		return
+
+	if interactor_inventory == null:
+		Log.err(
+			(
+				"Interacting parent %s has no InventoryComponent, cannot open container"
+				% interactor._parent.name
+			)
+		)
+		return
+
+	UIChannel.close_container()
+	interactor_inventory.close()
+
+	stopped.emit()
+
+
+func resolve(_interactor: InteractorComponent) -> void:
+	pass

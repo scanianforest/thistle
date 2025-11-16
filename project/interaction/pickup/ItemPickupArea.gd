@@ -1,4 +1,4 @@
-class_name ItemPickupArea extends InteractionComponent
+class_name ItemPickupArea extends InteractionArea2D
 
 var item: ItemData
 
@@ -10,11 +10,9 @@ var bob: Tween
 
 func _ready() -> void:
 	sprite.texture = item.resource.sprite
-	interaction_type = InteractionType.INSTANT
-	animation_name = ""
 
 
-func interact(interactor: InteractorComponent) -> void:
+func resolve_interaction(interactor: InteractorComponent) -> void:
 	if tween and tween.is_running():
 		return
 	tween = create_tween()

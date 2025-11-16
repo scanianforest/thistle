@@ -10,13 +10,12 @@ class_name InventoryPanelUI extends PanelContainer
 
 func _ready() -> void:
 	UIChannel.inventory_set.connect(_on_inventory_set)
+	UIChannel.container_opened.connect(_on_container_opened)
+	UIChannel.container_closed.connect(_on_container_closed)
 
 	_player_inventory.item_ui_secondary_requested.connect(_on_player_item_secondary_requested)
 	_player_inventory.component_opened.connect(_on_player_component_opened)
 	_player_inventory.component_closed.connect(_on_player_component_closed)
-	_container_inventory.item_ui_secondary_requested.connect(_on_container_item_secondary_requested)
-	_container_inventory.component_opened.connect(_on_container_component_opened)
-	_container_inventory.component_closed.connect(_on_container_component_closed)
 
 	visible = false
 
@@ -34,6 +33,7 @@ func _on_player_component_closed() -> void:
 
 
 func _on_container_component_opened() -> void:
+	Log.pr("Container component opened")
 	visible = true
 
 

@@ -1,11 +1,15 @@
 class_name InteractorComponent extends Node2D
 
-signal interacted(interaction: InteractionComponent)
+signal started(interaction: InteractionResource)
+signal resolved
+signal stopped
 
 @onready var _area: Area2D = %InteractorArea
-@onready var _parent: Node2D = get_parent()
+@export var _parent: Node2D = get_parent()
 
 var _interactables_in_area: Array = []
+
+var current_interaction: Interaction = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -49,8 +53,29 @@ func _on_area_exited(area: Area2D) -> void:
 	_interactables_in_area.erase(area)
 
 
-func interact() -> void:
+func interact() -> Interaction:
 	for interactable in _interactables_in_area:
 		if interactable.interaction:
-			interacted.emit(interactable.interaction)
-			return
+			started.emit(interactable.interaction)
+			current_interaction = interactable.interaction
+			return interactable.interaction
+	return null
+
+
+func resolve() -> void:
+	if current_interaction == null:
+		Log.err("No current interactable to resolve interaction with")
+		return
+	resolved.emit()
+	current_interaction.resolve(self)
+	current_interaction = null
+
+
+func stop_interaction() -> void:
+	Log.pr("Stopping interaction", current_interaction)
+	if current_interaction == null:
+		Log.err("No current interactable to stop interaction with")
+		return
+	current_interaction.stop(self)
+	stopped.emit()
+	current_interaction = null
