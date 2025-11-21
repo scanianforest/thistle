@@ -17,6 +17,8 @@ func _ready() -> void:
 	_player_inventory.component_opened.connect(_on_player_component_opened)
 	_player_inventory.component_closed.connect(_on_player_component_closed)
 
+	_container_inventory.item_ui_secondary_requested.connect(_on_container_item_secondary_requested)
+
 	visible = false
 
 
@@ -58,6 +60,7 @@ func _on_player_item_secondary_requested(item: ItemData) -> void:
 
 
 func _on_container_item_secondary_requested(item: ItemData) -> void:
+	Log.pr("Moving item from container to player inventory: %s" % item)
 	_container_inventory.inventory_comp.remove_item(item)
 	_player_inventory.inventory_comp.add_item(item)
 

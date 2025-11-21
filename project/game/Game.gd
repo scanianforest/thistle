@@ -101,8 +101,3 @@ func _on_game_quitting() -> void:
 
 func _on_game_quitted() -> void:
 	quit_game()
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		_on_game_quitting()

@@ -58,6 +58,8 @@ func _resolve_interaction(interaction: Interaction) -> void:
 
 
 func _on_input(event: InputEvent) -> bool:
+	var interaction: Interaction = blackboard.get_var("interaction")
+
 	if (
 		event.is_action_pressed("left")
 		or event.is_action_pressed("right")
@@ -66,4 +68,10 @@ func _on_input(event: InputEvent) -> bool:
 	):
 		interactor.stop_interaction()
 		return true
+
+	for action in interaction.interaction_resource.cancel_actions:
+		if event.is_action_pressed(action):
+			interactor.stop_interaction()
+			return true
+
 	return false

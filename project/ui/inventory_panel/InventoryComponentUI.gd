@@ -8,6 +8,7 @@ signal component_closed
 var inventory_comp: InventoryComponent:
 	set(value):
 		if inventory_comp:
+			Log.pr("Disconnecting from previous inventory component signals")
 			inventory_comp.opened.disconnect(_on_component_opened)
 			inventory_comp.closed.disconnect(_on_component_closed)
 			inventory_comp.item_added.disconnect(_on_inventory_item_added)
@@ -25,6 +26,7 @@ var inventory_comp: InventoryComponent:
 			set_owner_name(inventory_comp.get_parent().name)
 		else:
 			visible = false
+		inventory_comp = value
 	get:
 		return inventory_comp
 
@@ -88,7 +90,6 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var item_ui := data as InventoryItemUI
-	print("Transfering item: ", item_ui.item)
 	item_ui.remove()
 	inventory_comp.add_item(item_ui.item)
 

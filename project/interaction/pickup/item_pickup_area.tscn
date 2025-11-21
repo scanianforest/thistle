@@ -1,22 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://dg6htjj423ta0"]
+[gd_scene load_steps=7 format=3 uid="uid://dg6htjj423ta0"]
 
 [ext_resource type="Script" uid="uid://08i3my4n1oj5" path="res://interaction/pickup/ItemPickupArea.gd" id="1_44aka"]
 [ext_resource type="Script" uid="uid://rm7q0mclgm65" path="res://interaction/InteractionResource.gd" id="2_wdm75"]
+[ext_resource type="Script" uid="uid://ced3wal67d62" path="res://interaction/ItemPickupInteraction.gd" id="3_dfm2s"]
 [ext_resource type="Texture2D" uid="uid://ckjorlerj8lwq" path="res://aseprite/mushroom_1.aseprite" id="3_wdm75"]
-
-[sub_resource type="Resource" id="Resource_dfm2s"]
-script = ExtResource("2_wdm75")
-animation_name = &"inventory"
-metadata/_custom_type_script = "uid://rm7q0mclgm65"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4u41u"]
 radius = 6.0827627
 
-[node name="ItemPickupArea" type="Area2D" node_paths=PackedStringArray("sprite")]
+[sub_resource type="Resource" id="Resource_dfm2s"]
+script = ExtResource("2_wdm75")
+cancel_actions = []
+metadata/_custom_type_script = "uid://rm7q0mclgm65"
+
+[node name="ItemPickupArea" type="Area2D" node_paths=PackedStringArray("sprite", "interaction")]
 collision_layer = 8
 script = ExtResource("1_44aka")
 sprite = NodePath("Sprite2D")
-interaction = SubResource("Resource_dfm2s")
+interaction = NodePath("ItemPickupInteraction")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -48,3 +49,8 @@ metadata/_aseprite_wizard_source_file_hash_ = "fa1bffe3426cb7a92730c47ece1f5f54"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4u41u")
+
+[node name="ItemPickupInteraction" type="Node" parent="."]
+script = ExtResource("3_dfm2s")
+interaction_resource = SubResource("Resource_dfm2s")
+metadata/_custom_type_script = "uid://ced3wal67d62"

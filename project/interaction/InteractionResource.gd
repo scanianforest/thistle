@@ -9,5 +9,6 @@ enum Type {
 }
 
 @export var interaction_action: StringName = "interact"
+@export var cancel_actions: PackedStringArray = ["ui_cancel"]
 @export var type: Type = Type.INSTANT
 @export var animation_name: StringName = ""
