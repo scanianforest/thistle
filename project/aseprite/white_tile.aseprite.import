@@ -2,13 +2,13 @@
 
 importer="aseprite_wizard.plugin.static-texture"
 type="PortableCompressedTexture2D"
-uid="uid://11gdlqx8ut66"
-path="res://.godot/imported/box.aseprite-5a91e43364ce79ea3a390f794253de79.res"
+uid="uid://bxpdibs6v5n8o"
+path="res://.godot/imported/white_tile.aseprite-7ba60a0ae9f400b930fb594728d0e44b.res"
 
 [deps]
 
-source_file="res://aseprite/box.aseprite"
-dest_files=["res://.godot/imported/box.aseprite-5a91e43364ce79ea3a390f794253de79.res"]
+source_file="res://aseprite/white_tile.aseprite"
+dest_files=["res://.godot/imported/white_tile.aseprite-7ba60a0ae9f400b930fb594728d0e44b.res"]
 
 [params]
 

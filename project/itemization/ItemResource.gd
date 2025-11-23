@@ -6,6 +6,7 @@ class_name ItemResource extends Resource
 @export var icon: Texture2D
 @export var sprite: Texture2D
 @export var components: Array[ItemComponentResource] = []
+@export var weight: float = 1.0
 
 var id: String:
 	get:

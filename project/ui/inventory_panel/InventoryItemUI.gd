@@ -25,7 +25,6 @@ func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	_tooltip.hide()
-	Log.pr(item)
 	_tooltip.item = item
 
 

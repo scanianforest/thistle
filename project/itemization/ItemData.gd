@@ -2,6 +2,10 @@ class_name ItemData
 
 var resource: ItemResource
 
+var weight: float:
+	get:
+		return resource.weight if resource else 0.0
+
 
 func _init(res: ItemResource):
 	resource = res

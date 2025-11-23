@@ -38,15 +38,20 @@ func close() -> void:
 	closed.emit()
 
 
-func add_item(item: ItemData) -> void:
+func can_add_item(item: ItemData) -> bool:
+	return item.weight + weight <= max_weight
+
+
+func add_item(item: ItemData) -> bool:
 	if false:  # Placeholder for weight check
 		item_rejected.emit(item)
-		return
+		return false
 
 	items.append(item)
 
 	item_added.emit(item)
 	inventory_updated.emit(items)
+	return true
 
 
 func drop_item(item) -> void:
