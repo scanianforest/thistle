@@ -19,6 +19,9 @@ metadata/_custom_type_script = "uid://bbu7sjurcdasb"
 [resource]
 script = ExtResource("1_2km8l")
 item_name = "Wooden Hoe"
+description = "A flimsy wooden hoe.
+
+Great for tilling the ground!"
 icon = ExtResource("4_vgcvx")
 sprite = ExtResource("4_vgcvx")
 components = Array[ExtResource("1_7rgkd")]([SubResource("Resource_7n265"), SubResource("Resource_vgcvx")])

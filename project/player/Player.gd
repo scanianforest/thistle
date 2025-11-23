@@ -30,8 +30,6 @@ func _ready() -> void:
 
 	inventory.item_added.connect(_on_inventory_item_added)
 	inventory.item_removed.connect(_on_inventory_item_removed)
-	inventory.inventory_updated.connect(_on_inventory_updated)
-	inventory.item_rejected.connect(_on_inventory_item_rejected)
 	inventory.item_dropped.connect(_on_inventory_item_dropped)
 
 	UIChannel.set_inventory.call_deferred(inventory)
@@ -67,7 +65,8 @@ func unpossess() -> void:
 
 
 func handle_input(event: InputEvent) -> void:
-	hsm.dispatch("input", event)
+	if hsm.dispatch("input", event):
+		get_viewport().set_input_as_handled()
 
 
 #endregion
@@ -93,7 +92,9 @@ func _on_health_changed(new_health: int) -> void:
 
 
 func _on_inventory_item_added(item: ItemData) -> void:
-	PlayerChannel.on_inventory_item_added(item)
+	var empty_slot = actionbar._get_first_empty_slot()
+	if empty_slot != -1:
+		actionbar.set_slot(empty_slot, item)
 
 
 func _on_inventory_item_removed(item: ItemData) -> void:
@@ -104,12 +105,4 @@ func _on_inventory_item_removed(item: ItemData) -> void:
 
 func _on_inventory_item_dropped(item: ItemData) -> void:
 	ItemSpawner.spawn_item(item, get_parent(), global_position)
-
-
-func _on_inventory_updated(items: Array[ItemData]) -> void:
-	PlayerChannel.on_inventory_updated(items)
-
-
-func _on_inventory_item_rejected(item: ItemData) -> void:
-	PlayerChannel.on_inventory_item_rejected(item)
 #endregion
