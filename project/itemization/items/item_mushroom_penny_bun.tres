@@ -7,6 +7,9 @@
 [resource]
 script = ExtResource("2_c8k2j")
 item_name = "Penny Bun"
+description = "An edible mushroom.
+
+It smells earthy."
 icon = ExtResource("1_ucrax")
 sprite = ExtResource("1_ucrax")
 metadata/_custom_type_script = "uid://dgdru8sn2myct"

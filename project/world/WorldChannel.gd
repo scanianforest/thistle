@@ -2,7 +2,6 @@ extends Node
 
 signal grass_requested(global_position: Vector2)
 signal dirt_requested(global_position: Vector2)
-
 signal ground_tile_changed(x: int, y: int, new_tile: int)
 
 

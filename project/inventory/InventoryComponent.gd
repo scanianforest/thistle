@@ -1,3 +1,4 @@
+@tool
 class_name InventoryComponent extends Node
 
 signal opened
@@ -7,6 +8,8 @@ signal item_removed(item: ItemData)
 signal item_rejected(item: ItemData)
 signal item_dropped(item: ItemData)
 signal inventory_updated(items: Array[ItemData])
+
+@export var starting_items: Array[ItemResource] = []
 
 var weight: float = 0.0
 var max_weight: float = 100.0
@@ -18,7 +21,7 @@ var data: InventoryData = InventoryData.new():
 	get:
 		return data
 
-var items: Array[ItemData] = [ItemData.new(preload("res://itemization/items/tool_wooden_hoe.tres"))]:
+var items: Array[ItemData] = []:
 	set(value):
 		items = value
 		inventory_updated.emit(items)
@@ -27,6 +30,9 @@ var items: Array[ItemData] = [ItemData.new(preload("res://itemization/items/tool
 
 
 func _ready() -> void:
+	for item_res in starting_items:
+		var item_data = ItemData.new(item_res)
+		items.append(item_data)
 	inventory_updated.emit.call_deferred(items)
 
 

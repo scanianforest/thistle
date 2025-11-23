@@ -1,3 +1,4 @@
+@tool
 class_name ItemContainer extends StaticBody2D
 
 @export var resource: ItemContainerResource
@@ -7,5 +8,7 @@ class_name ItemContainer extends StaticBody2D
 
 
 func _ready() -> void:
-	inventory.max_weight = resource.weight_capacity
 	sprite.offset = resource.sprite_offset
+	sprite.texture = resource.sprite
+
+	inventory.max_weight = resource.weight_capacity

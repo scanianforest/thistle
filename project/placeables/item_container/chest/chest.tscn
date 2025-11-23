@@ -1,0 +1,82 @@
+[gd_scene load_steps=16 format=3 uid="uid://dlc0gxmo2fimf"]
+
+[ext_resource type="Script" uid="uid://juqhuw2yrjkb" path="res://placeables/item_container/ItemContainer.gd" id="1_hdi32"]
+[ext_resource type="Resource" uid="uid://bonop1da8r3gt" path="res://placeables/item_container/chest/chest.tres" id="2_56wfx"]
+[ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="3_awq1n"]
+[ext_resource type="Script" uid="uid://b2me08syjg2mv" path="res://inventory/InventoryComponent.gd" id="3_b6162"]
+[ext_resource type="Texture2D" uid="uid://q46g763pm21q" path="res://aseprite/chest.aseprite" id="4_56wfx"]
+[ext_resource type="Resource" uid="uid://bw1abpv267qbg" path="res://itemization/items/item_wooden_hoe.tres" id="4_cjfc3"]
+[ext_resource type="Script" uid="uid://bmhgqwj6rw8m1" path="res://interaction/InteractionArea2D.gd" id="4_eyue5"]
+[ext_resource type="Script" uid="uid://ds1yaff75y3lg" path="res://interaction/OpenContainerInteraction.gd" id="5_awq1n"]
+[ext_resource type="Resource" uid="uid://dxiyj6eqhir7e" path="res://itemization/items/item_campfire.tres" id="5_pe136"]
+[ext_resource type="Script" uid="uid://rm7q0mclgm65" path="res://interaction/InteractionResource.gd" id="6_cjfc3"]
+[ext_resource type="Resource" uid="uid://whcosaepl1e" path="res://itemization/items/item_mushroom_penny_bun.tres" id="7_cjfc3"]
+[ext_resource type="Resource" uid="uid://cfh7ewb1arcf1" path="res://itemization/items/item_tent.tres" id="8_pe136"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ai45w"]
+size = Vector2(14, 5)
+
+[sub_resource type="Resource" id="Resource_a3541"]
+script = ExtResource("6_cjfc3")
+cancel_actions = ["ui_cancel", "toggle_inventory", "interact"]
+type = 2
+animation_name = &"inventory"
+metadata/_custom_type_script = "uid://rm7q0mclgm65"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dqjgx"]
+radius = 7.0
+
+[node name="Chest" type="StaticBody2D" node_paths=PackedStringArray("inventory")]
+script = ExtResource("1_hdi32")
+resource = ExtResource("2_56wfx")
+inventory = NodePath("InventoryComponent")
+
+[node name="InventoryComponent" type="Node" parent="."]
+script = ExtResource("3_b6162")
+starting_items = Array[ExtResource("3_awq1n")]([ExtResource("5_pe136"), ExtResource("4_cjfc3"), ExtResource("7_cjfc3"), ExtResource("8_pe136")])
+metadata/_custom_type_script = "uid://b2me08syjg2mv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_ai45w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("4_56wfx")
+offset = Vector2(0, -4)
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://aseprite/box.aseprite",
+"source_uid": 1878954019096354841
+}
+metadata/_aseprite_wizard_source_file_hash_ = "6825286c11bb182327da74edb60b8225"
+
+[node name="InteractionArea" type="Area2D" parent="." node_paths=PackedStringArray("interaction")]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("4_eyue5")
+interaction = NodePath("OpenContainerInteraction")
+
+[node name="OpenContainerInteraction" type="Node" parent="InteractionArea" node_paths=PackedStringArray("inventory")]
+script = ExtResource("5_awq1n")
+inventory = NodePath("../../InventoryComponent")
+interaction_resource = SubResource("Resource_a3541")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_dqjgx")

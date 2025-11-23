@@ -1,7 +1,7 @@
 class_name EntitiesManager extends Node2D
 
 @onready
-var box_container_scene: PackedScene = preload("res://placeables/item_container/box/box.tscn")
+var chest_container_scene: PackedScene = preload("res://placeables/item_container/chest/chest.tscn")
 
 
 func _ready() -> void:
@@ -32,13 +32,13 @@ func load(world_data: WorldData) -> void:
 
 
 func spawn_container(container_data: ContainerData) -> void:
-	var container: ItemContainer = box_container_scene.instantiate()
+	var container: ItemContainer = chest_container_scene.instantiate()
 	add_child(container)
 	container.global_position = container_data.position
 	container.inventory.items = container_data.items
 
 
 func _command_spawn_container(spawn_pos: Vector2) -> void:
-	var container: ItemContainer = box_container_scene.instantiate()
+	var container: ItemContainer = chest_container_scene.instantiate()
 	add_child(container)
 	container.global_position = spawn_pos

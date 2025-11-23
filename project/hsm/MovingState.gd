@@ -3,7 +3,7 @@ class_name MovingState extends LimboState
 var movement: MovementComponent
 var sprite: PawnSprite
 var interactor: InteractorComponent
-var placer: PlacerComponent
+var placer: TileSelectorComponent
 var direction_rotator: DirectionRotatorComponent
 
 var direction: Vector2 = Vector2.ZERO

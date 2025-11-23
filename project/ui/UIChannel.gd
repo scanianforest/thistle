@@ -3,6 +3,7 @@ extends Node
 signal inventory_set(inventory: InventoryComponent)
 signal container_opened(inventory: InventoryComponent)
 signal container_closed
+signal input_event(event: InputEvent)
 
 
 func set_inventory(inventory: InventoryComponent) -> void:
@@ -15,3 +16,7 @@ func open_container(inventory: InventoryComponent) -> void:
 
 func close_container() -> void:
 	container_closed.emit()
+
+
+func on_input_event(event: InputEvent) -> void:
+	input_event.emit(event)

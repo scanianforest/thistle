@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwsdlscxbslis"]
+
+[ext_resource type="Script" uid="uid://gmt77p0617as" path="res://tile_selector/TileSelectorComponent.gd" id="1_oyugb"]
+[ext_resource type="Script" uid="uid://c3oewq226fxqj" path="res://tile_selector/TileHighlighter.gd" id="2_x1iaq"]
+
+[node name="PlacerComponent" type="Node2D"]
+script = ExtResource("1_oyugb")
+
+[node name="TileHighlighter" type="Control" parent="."]
+top_level = true
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("2_x1iaq")

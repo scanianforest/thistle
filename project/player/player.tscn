@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://bj5fue7tho57m" path="res://pawn/MovementComponent.gd" id="5_boad6"]
 [ext_resource type="Script" uid="uid://deemyexy8pnk7" path="res://action_bar/ActionBarComponent.gd" id="7_2ieo8"]
 [ext_resource type="PackedScene" uid="uid://egvwb1mw2ono" path="res://interactor/interactor_component.tscn" id="7_boad6"]
-[ext_resource type="PackedScene" uid="uid://dwsdlscxbslis" path="res://placer/placer_component.tscn" id="8_rgyib"]
+[ext_resource type="PackedScene" uid="uid://dwsdlscxbslis" path="res://tile_selector/tile_selector_component.tscn" id="8_rgyib"]
 [ext_resource type="Script" uid="uid://b2me08syjg2mv" path="res://inventory/InventoryComponent.gd" id="10_8t03j"]
 [ext_resource type="Script" uid="uid://drvye4jjikvfs" path="res://item_spawner/ItemSpawnerComponent.gd" id="12_ebec5"]
 [ext_resource type="PackedScene" uid="uid://b6j5qkam4tqni" path="res://attacker/attacker_component.tscn" id="13_yllr7"]
@@ -60,7 +60,7 @@ var/sprite/hint = 26
 var/sprite/hint_string = "PawnSprite"
 var/placer/name = &"placer"
 var/placer/type = 22
-var/placer/value = NodePath("../PlacerComponent")
+var/placer/value = NodePath("../TileSelectorComponent")
 var/placer/hint = 26
 var/placer/hint_string = "PlacerComponent"
 var/direction_rotator/name = &"direction_rotator"
@@ -300,7 +300,7 @@ health = NodePath("HealthComponent")
 movement = NodePath("MovementComponent")
 attacker = NodePath("DirectionRotationComponent/AttackerComponent")
 interaction = NodePath("DirectionRotationComponent/InteractorComponent")
-placer = NodePath("PlacerComponent")
+placer = NodePath("TileSelectorComponent")
 inventory = NodePath("InventoryComponent")
 actionbar = NodePath("ActionBarComponent")
 
@@ -384,9 +384,7 @@ script = ExtResource("10_8t03j")
 
 [node name="EquipmentComponent" type="Node" parent="."]
 
-[node name="PlacerComponent" parent="." instance=ExtResource("8_rgyib")]
-visible = false
-top_level = true
+[node name="TileSelectorComponent" parent="." instance=ExtResource("8_rgyib")]
 
 [node name="ItemSpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("12_ebec5")

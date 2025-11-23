@@ -7,7 +7,7 @@ signal dropped_item(item: ItemData)
 @export var movement: MovementComponent
 @export var attacker: AttackerComponent
 @export var interaction: InteractorComponent
-@export var placer: PlacerComponent
+@export var placer: TileSelectorComponent
 @export var inventory: InventoryComponent
 @export var actionbar: ActionBarComponent
 

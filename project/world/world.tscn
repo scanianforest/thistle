@@ -7,7 +7,7 @@
 [ext_resource type="TileSet" uid="uid://btgqaahxoijxp" path="res://terrain/ground.tres" id="3_sc4t8"]
 [ext_resource type="Script" uid="uid://ckfkcenlc2vj6" path="res://terrain/TerrainCursor.gd" id="5_mmdvd"]
 [ext_resource type="Script" uid="uid://cf3vta2qbef4s" path="res://entities_manager/EntitiesManager.gd" id="7_4papg"]
-[ext_resource type="PackedScene" uid="uid://dlc0gxmo2fimf" path="res://placeables/item_container/box/box.tscn" id="7_sc4t8"]
+[ext_resource type="PackedScene" uid="uid://dlc0gxmo2fimf" path="res://placeables/item_container/chest/chest.tscn" id="7_sc4t8"]
 [ext_resource type="Script" uid="uid://cnlkitvwdtavd" path="res://pickups_manager/PickupsManager.gd" id="8_ai45w"]
 [ext_resource type="Script" uid="uid://bed3t8w2on2gs" path="res://placeables/PlaceablesManager.gd" id="10_fyhu2"]
 
