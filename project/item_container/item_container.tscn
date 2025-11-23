@@ -23,8 +23,9 @@ metadata/_custom_type_script = "uid://rm7q0mclgm65"
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqjgx"]
 radius = 7.0
 
-[node name="ItemContainer" type="StaticBody2D"]
+[node name="ItemContainer" type="StaticBody2D" node_paths=PackedStringArray("inventory")]
 script = ExtResource("3_xu5vq")
+inventory = NodePath("InventoryComponent")
 
 [node name="InventoryComponent" type="Node" parent="."]
 script = ExtResource("2_xu5vq")

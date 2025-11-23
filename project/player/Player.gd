@@ -1,4 +1,7 @@
 class_name Player extends Pawn2D
+
+signal dropped_item(item: ItemData)
+
 @export var sprite: PawnSprite
 @export var health: HealthComponent
 @export var movement: MovementComponent
@@ -104,5 +107,5 @@ func _on_inventory_item_removed(item: ItemData) -> void:
 
 
 func _on_inventory_item_dropped(item: ItemData) -> void:
-	ItemSpawner.spawn_item(item, get_parent(), global_position)
+	dropped_item.emit(item)
 #endregion

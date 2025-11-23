@@ -1,5 +1,7 @@
 class_name ItemPickupInteraction extends Interaction
 
+signal resolved
+
 var item: ItemData
 
 var tween: Tween
@@ -15,9 +17,9 @@ func resolve(interactor: InteractorComponent) -> void:
 	tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(
-		get_parent(), "global_position", interactor.get_parent_global_position(), 0.1
+		get_parent().get_parent(), "global_position", interactor.get_parent_global_position(), 0.1
 	)
-	tween.tween_property(get_parent(), "modulate:a", 0.0, 0.1)
+	tween.tween_property(get_parent().get_parent(), "modulate:a", 0.0, 0.1)
 	tween.set_parallel(false)
 	tween.tween_callback(
 		func():
@@ -29,7 +31,7 @@ func resolve(interactor: InteractorComponent) -> void:
 			else:
 				Log.err("Interacting parent has no InventoryComponent, cannot add item")
 	)
-	tween.tween_callback(queue_free)
+	tween.tween_callback(resolved.emit)
 
 
 func stop(_interactor: InteractorComponent) -> void:

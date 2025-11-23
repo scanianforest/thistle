@@ -2,9 +2,13 @@ class_name WorldData extends SaveData
 
 var metadata: Metadata = Metadata.new()
 var ground_tiles: Dictionary = Dictionary()
+var pickups := PickupsData.new()
+var entities := EntitiesData.new()
 
 
 class Metadata:
+	static var key: String = "metadata"
+
 	var name: String = "Unnamed World"
 	var version: String = "1"
 
@@ -22,14 +26,21 @@ class Metadata:
 
 
 func to_dict() -> Dictionary:
-	return {"metadata": metadata.to_dict(), "ground_tiles": ground_tiles}
+	return {
+		Metadata.key: metadata.to_dict(),
+		"ground_tiles": ground_tiles,
+		EntitiesData.key: entities.to_dict(),
+		PickupsData.key: pickups.to_dict()
+	}
 
 
 static func from_dict(dict: Dictionary) -> WorldData:
 	var data = WorldData.new()
 
-	data.metadata = Metadata.from_dict(dict.get("metadata", Metadata.new().to_dict()))
+	data.metadata = Metadata.from_dict(dict.get(Metadata.key, Metadata.new().to_dict()))
 	data.ground_tiles = dict.get("ground_tiles", {})
+	data.pickups = PickupsData.from_dict(dict.get(PickupsData.key, PickupsData.new().to_dict()))
+	data.entities = EntitiesData.from_dict(dict.get(EntitiesData.key, EntitiesData.new().to_dict()))
 
-	Log.pr("Deserialized world data: ", data.to_dict())
+	print("Deserialized world data: ", data.to_dict())
 	return data

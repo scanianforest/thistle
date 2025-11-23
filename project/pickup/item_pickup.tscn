@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://dg6htjj423ta0"]
+
+[ext_resource type="Script" uid="uid://08i3my4n1oj5" path="res://pickup/ItemPickup.gd" id="1_icira"]
+[ext_resource type="Texture2D" uid="uid://ckjorlerj8lwq" path="res://aseprite/mushroom_1.aseprite" id="2_cne2k"]
+[ext_resource type="Script" uid="uid://bmhgqwj6rw8m1" path="res://interaction/InteractionArea2D.gd" id="3_kev1m"]
+[ext_resource type="Script" uid="uid://ced3wal67d62" path="res://interaction/ItemPickupInteraction.gd" id="4_yp8q6"]
+[ext_resource type="Script" uid="uid://rm7q0mclgm65" path="res://interaction/InteractionResource.gd" id="5_utt5g"]
+
+[sub_resource type="Resource" id="Resource_dfm2s"]
+script = ExtResource("5_utt5g")
+cancel_actions = []
+metadata/_custom_type_script = "uid://rm7q0mclgm65"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4u41u"]
+radius = 6.0827627
+
+[node name="ItemPickup" type="Node2D" node_paths=PackedStringArray("sprite", "interaction_area")]
+script = ExtResource("1_icira")
+sprite = NodePath("Sprite2D")
+interaction_area = NodePath("InteractionArea")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_cne2k")
+offset = Vector2(0, -4)
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://aseprite/mushroom_1.aseprite",
+"source_uid": 5494190184669986656
+}
+metadata/_aseprite_wizard_source_file_hash_ = "fa1bffe3426cb7a92730c47ece1f5f54"
+
+[node name="InteractionArea" type="Area2D" parent="." node_paths=PackedStringArray("interaction")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_kev1m")
+interaction = NodePath("ItemPickupInteraction")
+metadata/_custom_type_script = "uid://bmhgqwj6rw8m1"
+
+[node name="ItemPickupInteraction" type="Node" parent="InteractionArea"]
+unique_name_in_owner = true
+script = ExtResource("4_yp8q6")
+interaction_resource = SubResource("Resource_dfm2s")
+metadata/_custom_type_script = "uid://ced3wal67d62"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_4u41u")
+
+[connection signal="resolved" from="InteractionArea/ItemPickupInteraction" to="." method="_on_item_pickup_interaction_resolved"]

@@ -11,7 +11,7 @@ var _player_node: Player
 var local_player_data: PlayerData
 
 @export var _local_player_controller: PlayerController
-@export var _player_node_parent: Node
+@export var _player_world: World
 
 
 func spawn_local_player() -> Pawn2D:
@@ -40,18 +40,22 @@ func spawn_player(player: PlayerData) -> Pawn2D:
 	_player_node = _player_scene.instantiate()
 	_player_node.data = player
 
-	if _player_node_parent:
-		_player_node_parent.add_child(_player_node)
+	if _player_world:
+		_player_world.entities.add_child(_player_node)
 	else:
-		Log.warn("No parent node set, spawning as child of self")
+		Log.warn("No world node set, spawning as child of self")
 		add_child(_player_node)
 
 	spawned.emit(player)
+
+	_player_node.dropped_item.connect(_on_player_dropped_item)
+
 	return _player_node
 
 
 func despawn_player() -> void:
 	if _player_node:
+		_player_node.dropped_items.disconnect(_on_player_dropped_item)
 		_player_node.queue_free()
 		_player_node = null
 		despawned.emit()
@@ -67,3 +71,7 @@ func unpossess_player() -> void:
 	Log.info("Player unpossessed")
 	_local_player_controller.possessed_pawn = null
 	unpossessed.emit()
+
+
+func _on_player_dropped_item(item: ItemData) -> void:
+	ItemSpawner.spawn_item(item, _player_world.pickups, _player_node.global_position)

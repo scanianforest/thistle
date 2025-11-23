@@ -385,6 +385,7 @@ script = ExtResource("10_8t03j")
 [node name="EquipmentComponent" type="Node" parent="."]
 
 [node name="PlacerComponent" parent="." instance=ExtResource("8_rgyib")]
+visible = false
 top_level = true
 
 [node name="ItemSpawnerComponent" type="Node2D" parent="."]

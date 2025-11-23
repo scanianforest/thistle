@@ -1,6 +1,8 @@
 class_name World extends Node2D
 
 @onready var ground: Terrain = %Ground
+@onready var entities: EntitiesManager = %Entities
+@onready var pickups: PickupsManager = %Pickups
 
 var data: WorldData = WorldData.new():
 	set(value):
@@ -12,6 +14,9 @@ var data: WorldData = WorldData.new():
 			var x = int(coord[0])
 			var y = int(coord[1])
 			ground.draw_cell(Vector2i(x, y), tile)
+
+		entities.load(data)
+		pickups.load(data)
 
 
 static func exists(world_name: String) -> bool:
@@ -56,8 +61,11 @@ func load_existing(world_name: String) -> void:
 
 
 func save() -> void:
+	pickups.save(data)
+	entities.save(data)
+
 	WorldSaveFileAccess.save(data.metadata.name, data)
-	Log.pr("World saved: ", data.to_dict())
+	print("World saved: ", data.to_dict())
 
 
 func pause() -> void:
@@ -75,11 +83,6 @@ func _on_game_joined() -> void:
 
 func _on_game_joining(_game_data: GameData) -> void:
 	Log.pr("TODO implement joining logic")
-
-
-func _on_game_saving(game_data: GameData) -> void:
-	Log.pr("Storing world data: ", self.data.to_dict())
-	game_data.world_data = self.data
 
 
 func _on_ground_tile_changed(x: int, y: int, new_tile: int) -> void:

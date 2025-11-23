@@ -15,11 +15,11 @@ script = ExtResource("1_h7iqs")
 [node name="NetworkManager" type="Node" parent="."]
 script = ExtResource("2_y36n6")
 
-[node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("_local_player_controller", "_player_node_parent")]
+[node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("_local_player_controller", "_player_world")]
 unique_name_in_owner = true
 script = ExtResource("1_vasa2")
 _local_player_controller = NodePath("PlayerController")
-_player_node_parent = NodePath("../CanvasLayer/WorldViewportContainer/WorldViewport/World/Entities")
+_player_world = NodePath("../CanvasLayer/WorldViewportContainer/WorldViewport/World")
 
 [node name="PlayerController" type="Node" parent="PlayerManager"]
 script = ExtResource("3_y36n6")
@@ -78,5 +78,3 @@ offset_bottom = 40.0
 [node name="InventoryPanel" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("9_l8g03")]
 
 [node name="HUD" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("6_dakft")]
-
-[editable path="CanvasLayer/WorldViewportContainer/WorldViewport/World"]
