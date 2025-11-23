@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BuildableResource" load_steps=7 format=3 uid="uid://ds5e3cgvwm2q"]
+
+[ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="1_3vbwn"]
+[ext_resource type="Script" uid="uid://ck61207u6t3y8" path="res://placeables/buildables/BuildRecipeResource.gd" id="2_brv0b"]
+[ext_resource type="PackedScene" uid="uid://n4luadymtrl" path="res://campfire/campfire.tscn" id="2_cocgb"]
+[ext_resource type="Resource" uid="uid://5r105pyybowx" path="res://itemization/items/item_stone.tres" id="2_dmwa0"]
+[ext_resource type="Texture2D" uid="uid://es12bba6kadu" path="res://aseprite/campfire.aseprite" id="3_brv0b"]
+[ext_resource type="Resource" uid="uid://b4ir2wycg356t" path="res://itemization/items/item_wood.tres" id="3_nisdp"]
+
+[resource]
+script = ExtResource("2_brv0b")
+recipe = Dictionary[ExtResource("1_3vbwn"), int]({
+ExtResource("2_dmwa0"): 5,
+ExtResource("3_nisdp"): 5
+})
+scene = ExtResource("2_cocgb")
+name = "Campfire"
+sprite = ExtResource("3_brv0b")
+sprite_offset = Vector2(0, -3)
+metadata/_custom_type_script = "uid://ck61207u6t3y8"

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BuildableResource" load_steps=3 format=3 uid="uid://deyq25wp5nmlu"]
+
+[ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="1_vd1vg"]
+[ext_resource type="Script" uid="uid://ck61207u6t3y8" path="res://placeables/buildables/BuildRecipeResource.gd" id="2_bndqt"]
+
+[resource]
+script = ExtResource("2_bndqt")
+metadata/_custom_type_script = "uid://ck61207u6t3y8"

@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlc2ruwf2v73l"]
+
+[ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_15bam"]
+[ext_resource type="Script" uid="uid://btr0kv7wut6xc" path="res://ui/build_menu/BuildMenu.gd" id="1_gtbot"]
+
+[node name="BuildMenu" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_15bam")
+script = ExtResource("1_gtbot")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBox"]
+modulate = Color(1, 1, 1, 0.49803922)
+layout_mode = 2
+text = "Building"
+
+[node name="TabContainer" type="TabContainer" parent="Panel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/side_margin = 0
+current_tab = 0
+
+[node name="Shelters" type="ItemList" parent="Panel/MarginContainer/VBox/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Light" type="ItemList" parent="Panel/MarginContainer/VBox/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1

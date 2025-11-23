@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c446o4raiy6f0"]
+[gd_scene load_steps=10 format=3 uid="uid://c446o4raiy6f0"]
 
 [ext_resource type="Script" uid="uid://c245vawn22817" path="res://game/Game.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://bwf6mbp1fiqjk" path="res://player/PlayerManager.gd" id="1_vasa2"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world.tscn" id="5_dxrkv"]
 [ext_resource type="PackedScene" uid="uid://dwbps7xbx2u6l" path="res://hud/hud.tscn" id="6_dakft"]
 [ext_resource type="PackedScene" uid="uid://dabvnpoxo3xoe" path="res://main_menu/main_menu.tscn" id="7_u5opy"]
+[ext_resource type="PackedScene" uid="uid://dlc2ruwf2v73l" path="res://ui/build_menu/build_menu.tscn" id="9_j8tme"]
 [ext_resource type="PackedScene" uid="uid://bvyxea5kvytl1" path="res://ui/inventory_panel/inventory_panel.tscn" id="9_l8g03"]
 
 [node name="Game" type="Node2D"]
@@ -76,5 +77,16 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="InventoryPanel" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("9_l8g03")]
+offset_bottom = -78.0
 
 [node name="HUD" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("6_dakft")]
+
+[node name="BuildMenu" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("9_j8tme")]
+custom_minimum_size = Vector2(600, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_right = 150.0

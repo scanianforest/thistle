@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://caok1c4w0g7lh"]
+[gd_scene load_steps=4 format=3 uid="uid://caok1c4w0g7lh"]
 
+[ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_3a37t"]
 [ext_resource type="PackedScene" uid="uid://dn4fk26m0qm2q" path="res://ui/inventory_panel/inventory_item_ui.tscn" id="1_eyk4t"]
 [ext_resource type="Script" uid="uid://md4mek4w2xay" path="res://ui/inventory_panel/InventoryComponentUI.gd" id="1_tufe0"]
 
@@ -7,14 +8,11 @@
 custom_minimum_size = Vector2(240, 0)
 offset_right = 364.0
 offset_bottom = 127.0
+theme = ExtResource("1_3a37t")
 script = ExtResource("1_tufe0")
 
 [node name="Margins" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
 
 [node name="VBox" type="VBoxContainer" parent="Margins"]
 layout_mode = 2
