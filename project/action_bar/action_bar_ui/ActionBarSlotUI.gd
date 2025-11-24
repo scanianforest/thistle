@@ -1,6 +1,7 @@
 class_name ActionBarSlotUI extends PanelContainer
 
 signal clicked
+signal secondary
 signal dropped_on(item: ItemData)
 
 @onready var _texture: TextureRect = %Texture
@@ -37,5 +38,6 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("primary_action"):
-		print("ActionBarSlotUI clicked")
 		clicked.emit()
+	elif event.is_action_pressed("secondary_action"):
+		secondary.emit()

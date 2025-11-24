@@ -21,6 +21,7 @@ class Metadata:
 var metadata: Metadata = Metadata.new()
 var position: Vector2 = Vector2.ZERO
 var inventory_data: InventoryData = InventoryData.new()
+var actionbar_data: ActionBarData = ActionBarData.new()
 
 var name:
 	get:
@@ -32,6 +33,7 @@ func to_dict() -> Dictionary:
 		"metadata": metadata.to_dict(),
 		"position": position,
 		"inventory_data": inventory_data.to_dict(),
+		"actionbar_data": actionbar_data.to_dict(),
 	}
 
 
@@ -42,6 +44,9 @@ static func from_dict(dict: Dictionary) -> PlayerData:
 	data.position = dict.get("position", Vector2.ZERO)
 	data.inventory_data = InventoryData.from_dict(
 		dict.get("inventory_data", InventoryData.new().to_dict())
+	)
+	data.actionbar_data = ActionBarData.from_dict(
+		dict.get("actionbar_data", ActionBarData.new().to_dict())
 	)
 
 	Log.pr("Deserialized player data: ", data.to_dict())

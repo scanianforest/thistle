@@ -10,6 +10,7 @@ signal dropped_item(item: ItemData)
 @export var placer: TileSelectorComponent
 @export var inventory: InventoryComponent
 @export var actionbar: ActionBarComponent
+@export var equipment: EquipmentComponent
 
 @onready var hsm: LimboHSM = $HSM
 @onready var idle_state: IdleState = $HSM/Idle
@@ -25,9 +26,12 @@ var data: PlayerData = PlayerData.new():
 		data = value
 		global_position = data.position
 		inventory.data = data.inventory_data
+		actionbar.load(data.actionbar_data)
 
 
 func _ready() -> void:
+	UIChannel.set_inventory.call_deferred(inventory)
+
 	health.died.connect(_on_health_died)
 	health.health_changed.connect(_on_health_changed)
 
@@ -35,7 +39,7 @@ func _ready() -> void:
 	inventory.item_removed.connect(_on_inventory_item_removed)
 	inventory.item_dropped.connect(_on_inventory_item_dropped)
 
-	UIChannel.set_inventory.call_deferred(inventory)
+	actionbar.slot_selected.connect(_on_actionbar_slot_selected)
 
 	hsm.initial_state = idle_state
 
@@ -83,6 +87,7 @@ func load_from_data(player_data: PlayerData) -> void:
 func save_to_data() -> PlayerData:
 	data.position = global_position
 	data.inventory_data = inventory.data
+	data.actionbar_data = actionbar.save()
 	return data
 
 
@@ -108,4 +113,10 @@ func _on_inventory_item_removed(item: ItemData) -> void:
 
 func _on_inventory_item_dropped(item: ItemData) -> void:
 	dropped_item.emit(item)
+
+
+func _on_actionbar_slot_selected(index: int) -> void:
+	var item = actionbar.slots[index]
+	equipment.equip_item(item)
+
 #endregion

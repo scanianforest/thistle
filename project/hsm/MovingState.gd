@@ -25,6 +25,9 @@ func _enter() -> void:
 
 
 func _update(_delta: float) -> void:
+	if direction.is_zero_approx():
+		dispatch("to_idle")
+		return
 	movement.move(direction)
 	direction_rotator.update_direction(direction)
 	placer.face(direction)

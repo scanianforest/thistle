@@ -1,31 +1,42 @@
 class_name ActionBarComponent extends Node
 
+signal slot_selected(index: int)
+signal slot_set(index: int, item: ItemData)
+
 var slots: Array[ItemData] = []
 var selected_slot_index: int
 
 
 func _ready() -> void:
+	UIChannel.set_actionbar(self)
+
 	slots.resize(10)
-	for i in slots.size():
-		slots[i] = null
 
-	PlayerChannel.action_bar_slot_update_requested.connect(_on_action_bar_slot_update_requested)
-	PlayerChannel.action_bar_slot_selection_requested.connect(
-		_on_action_bar_slot_selection_requested
-	)
-	PlayerChannel.inventory_item_added.connect(_on_inventory_item_added)
 
-	select_slot.call_deferred(1)
+func save() -> ActionBarData:
+	var data = ActionBarData.new()
+	data.slots = slots.duplicate()
+	data.selected_slot_index = selected_slot_index
+	return data
+
+
+func load(data: ActionBarData) -> void:
+	slots = data.slots.duplicate()
+	selected_slot_index = data.selected_slot_index
+
+	slot_selected.emit.call_deferred(selected_slot_index)
+	for i in len(slots):
+		slot_set.emit.call_deferred(i, slots[i])
 
 
 func set_slot(index: int, item: ItemData) -> void:
 	slots[index] = item
-	PlayerChannel.on_action_bar_slot_updated(index, item)
+	slot_set.emit(index, item)
 
 
 func select_slot(index: int) -> void:
 	selected_slot_index = index
-	PlayerChannel.on_action_bar_slot_selected(index)
+	slot_selected.emit(index)
 
 
 func find_item(item: ItemData) -> int:
@@ -33,18 +44,6 @@ func find_item(item: ItemData) -> int:
 		if slots[i] == item:
 			return i
 	return -1
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("action_bar"):
-		var slot = int(event.as_text())
-		select_slot(slot)
-	elif event.is_action_pressed("action_bar_next"):
-		var next_index = (selected_slot_index + 1) % slots.size()
-		select_slot(next_index)
-	elif event.is_action_pressed("action_bar_previous"):
-		var previous_index = (selected_slot_index - 1 + slots.size()) % slots.size()
-		select_slot(previous_index)
 
 
 func _get_first_empty_slot() -> int:
