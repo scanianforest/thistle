@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://mn3qeaj6fses"]
+
+[ext_resource type="Texture2D" uid="uid://c1ocwd76npqlu" path="res://aseprite/bush.aseprite" id="1_8vc13"]
+[ext_resource type="Script" uid="uid://bse31gmuf2bou" path="res://bush/Bush.gd" id="1_esmi3"]
+[ext_resource type="Script" uid="uid://bmhgqwj6rw8m1" path="res://interaction/InteractionArea2D.gd" id="3_tytp4"]
+[ext_resource type="Script" uid="uid://iohgn0j0py4u" path="res://interaction/GatherInteraction.gd" id="4_p24jg"]
+[ext_resource type="Resource" uid="uid://cfh7ewb1arcf1" path="res://itemization/items/item_tent.tres" id="5_ihyoc"]
+[ext_resource type="Script" uid="uid://rm7q0mclgm65" path="res://interaction/InteractionResource.gd" id="5_p24jg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ov2xu"]
+radius = 5.0
+height = 17.999996
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihyoc"]
+bg_color = Color(0.11489678, 0.11489683, 0.11489671, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fofbo"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_ihyoc"]
+script = ExtResource("5_p24jg")
+type = 1
+animation_name = &"inventory"
+time = 2.0
+metadata/_custom_type_script = "uid://rm7q0mclgm65"
+
+[node name="Bush" type="Area2D" node_paths=PackedStringArray("interaction")]
+y_sort_enabled = true
+script = ExtResource("1_esmi3")
+interaction = NodePath("InteractionArea2D/GatherInteraction")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ov2xu")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_8vc13")
+offset = Vector2(0, -6)
+
+[node name="Sprite2" type="Sprite2D" parent="."]
+position = Vector2(3, 4)
+texture = ExtResource("1_8vc13")
+offset = Vector2(0, -6)
+
+[node name="Sprite3" type="Sprite2D" parent="."]
+position = Vector2(-4, 3)
+texture = ExtResource("1_8vc13")
+offset = Vector2(0, -6)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -5.0
+offset_top = -16.0
+offset_right = 5.0
+offset_bottom = -14.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ihyoc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fofbo")
+max_value = 1.0
+show_percentage = false
+
+[node name="InteractionArea2D" type="Area2D" parent="." node_paths=PackedStringArray("interaction")]
+collision_layer = 8
+script = ExtResource("3_tytp4")
+interaction = NodePath("GatherInteraction")
+metadata/_custom_type_script = "uid://bmhgqwj6rw8m1"
+
+[node name="GatherInteraction" type="Node" parent="InteractionArea2D"]
+script = ExtResource("4_p24jg")
+item_resource = ExtResource("5_ihyoc")
+interaction_resource = SubResource("Resource_ihyoc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea2D"]
+z_index = 1
+position = Vector2(0, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ov2xu")

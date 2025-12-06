@@ -22,11 +22,9 @@ func _enter() -> void:
 
 	match interaction.interaction_resource.type:
 		InteractionResource.Type.INSTANT:
-			_resolve_interaction(interaction)
+			_instant_interaction(interaction)
 		InteractionResource.Type.TIMED:
 			_timed_interaction(interaction)
-		InteractionResource.Type.ANIMATION:
-			_timed_interaction(interaction)  # TODO make animation-specific handling
 		InteractionResource.Type.CONTINUOUS:
 			_continuous_interaction(interaction)
 	pass
@@ -38,11 +36,10 @@ func _exit() -> void:
 
 func _timed_interaction(interaction: Interaction) -> void:
 	Log.pr("Starting timed interaction: %s" % interaction)
-	var animation_length: float = sprite.get_animation_length(
-		interaction.interaction_resource.animation_name
-	)
-	await get_tree().create_timer(animation_length).timeout
-	_resolve_interaction(interaction)
+
+	await interaction.resolved
+
+	dispatch("to_idle")
 
 
 func _continuous_interaction(interaction: Interaction) -> void:
@@ -51,7 +48,7 @@ func _continuous_interaction(interaction: Interaction) -> void:
 	dispatch("to_idle")
 
 
-func _resolve_interaction(interaction: Interaction) -> void:
+func _instant_interaction(interaction: Interaction) -> void:
 	Log.pr("Resolving interaction: %s" % interaction)
 	interactor.resolve()
 	dispatch("to_idle")

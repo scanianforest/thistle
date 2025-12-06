@@ -12,3 +12,6 @@ enum Type {
 @export var cancel_actions: PackedStringArray = ["ui_cancel"]
 @export var type: Type = Type.INSTANT
 @export var animation_name: StringName = ""
+
+@export_category("Timed Interaction")
+@export var time: float = 1.0

@@ -6,7 +6,7 @@ signal dropped_item(item: ItemData)
 @export var health: HealthComponent
 @export var movement: MovementComponent
 @export var attacker: AttackerComponent
-@export var interaction: InteractorComponent
+@export var interactor: InteractorComponent
 @export var placer: TileSelectorComponent
 @export var inventory: InventoryComponent
 @export var actionbar: ActionBarComponent

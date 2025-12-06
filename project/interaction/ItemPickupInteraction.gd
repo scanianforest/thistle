@@ -1,7 +1,5 @@
 class_name ItemPickupInteraction extends Interaction
 
-signal resolved
-
 var item: ItemData
 
 var tween: Tween

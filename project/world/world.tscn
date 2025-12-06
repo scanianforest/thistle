@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://gx2ryayaffn8"]
+[gd_scene load_steps=12 format=4 uid="uid://gx2ryayaffn8"]
 
 [ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/World.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dlc0gxmo2fimf" path="res://placeables/item_container/chest/chest.tscn" id="7_sc4t8"]
 [ext_resource type="Script" uid="uid://cnlkitvwdtavd" path="res://pickups_manager/PickupsManager.gd" id="8_ai45w"]
 [ext_resource type="Script" uid="uid://bed3t8w2on2gs" path="res://placeables/PlaceablesManager.gd" id="10_fyhu2"]
+[ext_resource type="PackedScene" uid="uid://mn3qeaj6fses" path="res://bush/bush.tscn" id="11_ov2xu"]
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
@@ -51,3 +52,6 @@ script = ExtResource("8_ai45w")
 [node name="Placeables" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("10_fyhu2")
+
+[node name="Bush" parent="." instance=ExtResource("11_ov2xu")]
+position = Vector2(-26, 66)

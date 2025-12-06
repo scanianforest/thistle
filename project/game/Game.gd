@@ -53,42 +53,6 @@ func quit_to_desktop() -> void:
 	get_tree().quit()
 
 
-func _on_player_set(data: PlayerData) -> void:
-	player_data = data
-
-
-func _on_world_set(data: WorldData) -> void:
-	world_data = data
-
-
-func _on_game_started() -> void:
-	Log.pr("started")
-
-
-func _on_game_joining(__data: GameData) -> void:
-	GameChannel.joined.emit()
-
-
-func _on_saving_player(data: PlayerData) -> void:
-	Log.pr("saving player", data.to_dict())
-	player_manager.save_local_player()
-	GameChannel.saved_player.emit()
-
-
-func _on_saving_world(data: WorldData) -> void:
-	Log.pr("saving world", data.to_dict())
-	world.save()
-	GameChannel.saved_world.emit()
-
-
-func _on_saved_player() -> void:
-	Log.pr("player saved")
-
-
-func _on_saved_world() -> void:
-	Log.pr("world saved")
-
-
 func save() -> void:
 	Log.pr("saving game...")
 	player_manager.save_local_player()

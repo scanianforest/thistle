@@ -13,9 +13,6 @@ func clear() -> void:
 
 
 func save(world_data: WorldData) -> void:
-	if not world_data:
-		return
-
 	var pickups_data = PickupsData.new()
 	for pickup in get_children():
 		if pickup is ItemPickup:

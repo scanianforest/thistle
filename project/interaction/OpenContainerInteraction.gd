@@ -1,8 +1,5 @@
 class_name OpenContainerInteraction extends Interaction
 
-signal started
-signal stopped
-
 @export var inventory: InventoryComponent
 
 
