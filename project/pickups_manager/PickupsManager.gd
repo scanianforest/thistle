@@ -3,7 +3,19 @@ class_name PickupsManager extends Node2D
 @onready var _item_pickup_scene: PackedScene = preload("res://pickup/item_pickup.tscn")
 
 
+func _ready() -> void:
+	clear()
+
+
+func clear() -> void:
+	for pickup in get_children():
+		pickup.queue_free()
+
+
 func save(world_data: WorldData) -> void:
+	if not world_data:
+		return
+
 	var pickups_data = PickupsData.new()
 	for pickup in get_children():
 		if pickup is ItemPickup:

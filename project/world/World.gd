@@ -7,6 +7,9 @@ class_name World extends Node2D
 var data: WorldData = WorldData.new():
 	set(value):
 		data = value
+		if not data:
+			return
+
 		Log.pr("Setting ground tiles")
 		for coord_string in data.ground_tiles.keys():
 			var tile = data.ground_tiles[coord_string]
@@ -39,10 +42,22 @@ static func load_existing_world(world_name: String) -> WorldData:
 
 
 func _ready() -> void:
-	GameChannel.joined.connect(_on_game_joined)
-	GameChannel.joining.connect(_on_game_joining)
-
 	ground.tile_changed.connect(_on_ground_tile_changed)
+
+	clear()
+
+
+func clear() -> void:
+	ground.clear_terrain()
+	entities.clear()
+	pickups.clear()
+
+
+func unload() -> void:
+	data = null
+	hide()
+	pause()
+	clear()
 
 
 func start_new(world_name: String) -> void:
@@ -61,6 +76,10 @@ func load_existing(world_name: String) -> void:
 
 
 func save() -> void:
+	if data == null:
+		Log.warn("No world data to save")
+		return
+
 	pickups.save(data)
 	entities.save(data)
 
@@ -74,15 +93,6 @@ func pause() -> void:
 
 func unpause() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT
-
-
-func _on_game_joined() -> void:
-	show()
-	process_mode = Node.PROCESS_MODE_INHERIT
-
-
-func _on_game_joining(_game_data: GameData) -> void:
-	Log.pr("TODO implement joining logic")
 
 
 func _on_ground_tile_changed(x: int, y: int, new_tile: int) -> void:

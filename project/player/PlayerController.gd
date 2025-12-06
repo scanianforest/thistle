@@ -11,3 +11,5 @@ func set_possessed_pawn(pawn: Pawn2D) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if possessed_pawn:
 		possessed_pawn.handle_input(event)
+	if event.is_action_pressed("ui_cancel"):
+		UIChannel.open_pause_menu()

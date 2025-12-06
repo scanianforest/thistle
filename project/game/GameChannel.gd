@@ -4,7 +4,7 @@ signal started
 signal joining(data: GameData)
 signal joined
 signal paused(mode: Game.PauseMode)
-signal quitting
+signal quitting(to_desktop: bool)
 signal quitted
 
 signal player_set(data: PlayerData)
@@ -83,8 +83,8 @@ func pause(mode: Game.PauseMode):
 	paused.emit(mode)
 
 
-func quit() -> void:
-	quitting.emit()
+func quit(to_desktop: bool) -> void:
+	quitting.emit(to_desktop)
 
 
 func on_quitted() -> void:

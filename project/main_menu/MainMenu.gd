@@ -10,6 +10,9 @@ extends Control
 
 
 func _ready() -> void:
+	_game.started.connect(hide)
+	_game.stopped.connect(show)
+
 	_start_button.pressed.connect(_on_start_button_pressed)
 	_quit_button.pressed.connect(_on_quit_button_pressed)
 
@@ -48,4 +51,4 @@ func _on_start_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	_game.quit_game()
+	_game.quit_to_desktop()

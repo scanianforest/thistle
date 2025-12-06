@@ -55,7 +55,7 @@ func spawn_player(player: PlayerData) -> Pawn2D:
 
 func despawn_player() -> void:
 	if _player_node:
-		_player_node.dropped_items.disconnect(_on_player_dropped_item)
+		_player_node.dropped_item.disconnect(_on_player_dropped_item)
 		_player_node.queue_free()
 		_player_node = null
 		despawned.emit()

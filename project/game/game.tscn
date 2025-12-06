@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c446o4raiy6f0"]
+[gd_scene load_steps=11 format=3 uid="uid://c446o4raiy6f0"]
 
 [ext_resource type="Script" uid="uid://c245vawn22817" path="res://game/Game.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://bwf6mbp1fiqjk" path="res://player/PlayerManager.gd" id="1_vasa2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://i3ure5y75cj2" path="res://player/PlayerController.gd" id="3_y36n6"]
 [ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world.tscn" id="5_dxrkv"]
 [ext_resource type="PackedScene" uid="uid://dwbps7xbx2u6l" path="res://hud/hud.tscn" id="6_dakft"]
+[ext_resource type="PackedScene" uid="uid://dofr2shxk3w7y" path="res://pause_menu/pause_menu.tscn" id="7_j8tme"]
 [ext_resource type="PackedScene" uid="uid://dabvnpoxo3xoe" path="res://main_menu/main_menu.tscn" id="7_u5opy"]
 [ext_resource type="PackedScene" uid="uid://dlc2ruwf2v73l" path="res://ui/build_menu/build_menu.tscn" id="9_j8tme"]
 [ext_resource type="PackedScene" uid="uid://bvyxea5kvytl1" path="res://ui/inventory_panel/inventory_panel.tscn" id="9_l8g03"]
@@ -70,11 +71,9 @@ render_target_update_mode = 4
 [node name="MainMenu" parent="CanvasLayer/UIContainer/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
 _game = NodePath("../../../..")
 
-[node name="PauseMenu" type="Control" parent="CanvasLayer/UIContainer/UIViewport"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="PauseMenu" parent="CanvasLayer/UIContainer/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
+visible = false
+_game = NodePath("../../../..")
 
 [node name="InventoryPanel" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("9_l8g03")]
 offset_bottom = -78.0

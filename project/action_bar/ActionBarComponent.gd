@@ -21,12 +21,9 @@ func save() -> ActionBarData:
 
 
 func load(data: ActionBarData) -> void:
-	slots = data.slots.duplicate()
-	selected_slot_index = data.selected_slot_index
-
-	slot_selected.emit.call_deferred(selected_slot_index)
-	for i in len(slots):
-		slot_set.emit.call_deferred(i, slots[i])
+	for i in len(data.slots):
+		set_slot.call_deferred(i, data.slots[i])
+	select_slot.call_deferred(data.selected_slot_index)
 
 
 func set_slot(index: int, item: ItemData) -> void:

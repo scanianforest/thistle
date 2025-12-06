@@ -2,6 +2,9 @@ class_name Game extends Node2D
 
 enum PauseMode { PAUSED_BY_GAME, PAUSED_BY_PLAYER, UNPAUSED }
 
+signal started
+signal stopped
+
 @onready var world: World = %World
 @onready var player_manager: PlayerManager = %PlayerManager
 
@@ -28,9 +31,25 @@ func start_game() -> void:
 	world.unpause()
 	player_manager.spawn_local_player()
 
+	started.emit()
 
-func quit_game() -> void:
+
+func quit_to_main_menu() -> void:
+	Log.pr("Quitting to main menu...")
+	save()
+
+	player_manager.despawn_player()
+	world.unload()
+
+	stopped.emit()
+
+
+func quit_to_desktop() -> void:
 	Log.pr("Quitting game...")
+	save()
+
+	world.unload()
+
 	get_tree().quit()
 
 
@@ -70,39 +89,7 @@ func _on_saved_world() -> void:
 	Log.pr("world saved")
 
 
-func _on_loaded_player(data: PlayerData) -> void:
-	Log.pr("player loaded", data.metadata.to_dict())
-
-
-func _on_loading_world(world_name: String) -> void:
-	world.load_existing(world_name)
-
-
-func _on_loaded_world(data: WorldData) -> void:
-	Log.pr("world loaded", data.metadata.to_dict())
-
-
-func _on_game_saving(data: GameData) -> void:
-	Log.pr("saving", data.to_dict())
-	GameDataFileAccess.save(data.metadata.name, data)
-	GameChannel.saved.emit()
-
-
-func _on_game_paused() -> void:
-	Log.pr("paused")
-
-
-func _on_game_quitting() -> void:
-	Log.pr("autosaving before quit")
+func save() -> void:
+	Log.pr("saving game...")
 	player_manager.save_local_player()
 	world.save()
-	quit_game()
-
-
-func _on_game_quitted() -> void:
-	quit_game()
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		_on_game_quitting()

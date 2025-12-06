@@ -10,8 +10,13 @@ func _ready() -> void:
 		"entities_spawn_container",
 		"Spawns an item container at the player's position."
 	)
-	for node in get_children():
-		node.queue_free()
+
+	clear()
+
+
+func clear() -> void:
+	for entity in get_children():
+		entity.queue_free()
 
 
 func save(world_data: WorldData) -> void:

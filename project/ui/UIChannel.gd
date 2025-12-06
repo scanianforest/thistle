@@ -1,10 +1,16 @@
 extends Node
 
+signal player_set(player: Player)
 signal inventory_set(inventory: InventoryComponent)
 signal actionbar_set(action_bar: ActionBarComponent)
 signal container_opened(inventory: InventoryComponent)
 signal container_closed
 signal input_event(event: InputEvent)
+signal pause_menu_opened
+
+
+func set_player(player: Player) -> void:
+	player_set.emit(player)
 
 
 func set_inventory(inventory: InventoryComponent) -> void:
@@ -25,3 +31,7 @@ func close_container() -> void:
 
 func on_input_event(event: InputEvent) -> void:
 	input_event.emit(event)
+
+
+func open_pause_menu() -> void:
+	pause_menu_opened.emit()

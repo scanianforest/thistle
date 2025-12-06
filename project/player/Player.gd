@@ -31,6 +31,7 @@ var data: PlayerData = PlayerData.new():
 
 func _ready() -> void:
 	UIChannel.set_inventory.call_deferred(inventory)
+	UIChannel.set_player.call_deferred(self)
 
 	health.died.connect(_on_health_died)
 	health.health_changed.connect(_on_health_changed)

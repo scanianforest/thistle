@@ -4,9 +4,13 @@ class_name HUD extends Control
 
 
 func _ready() -> void:
-	PlayerChannel.health_changed.connect(_on_health_changed)
-	PlayerChannel.max_health_changed.connect(_on_max_health_changed)
-	PlayerChannel.died.connect(_on_died)
+	UIChannel.player_set.connect(_on_player_set)
+
+
+func _on_player_set(player: Player) -> void:
+	player.health.health_changed.connect(_on_health_changed)
+	player.health.max_health_changed.connect(_on_max_health_changed)
+	player.health.died.connect(_on_died)
 
 
 func _on_health_changed(new_health: int) -> void:

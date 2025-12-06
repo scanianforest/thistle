@@ -14,6 +14,10 @@ func _ready() -> void:
 	WorldChannel.dirt_requested.connect(_on_dirt_requested)
 
 
+func clear_terrain() -> void:
+	Log.warn("Terrain.clear() is not implemented yet.")
+
+
 func _on_ground_tile_changed(x: int, y: int, new_tile: int) -> void:
 	var coord = Vector2i(x, y)
 
