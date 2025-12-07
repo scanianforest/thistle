@@ -1,7 +1,7 @@
 extends Node
 
 
-func spawn(resource: PlaceableResource, parent: Node, spawn_position: Vector2) -> void:
+func spawn(resource: EntityResource, parent: Node, spawn_position: Vector2) -> void:
 	var placeable_scene: PackedScene = load(resource.scene_path)
 	var node: Node2D = placeable_scene.instantiate()
 	node.resource = resource

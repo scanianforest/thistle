@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dg6htjj423ta0"]
+[gd_scene load_steps=14 format=3 uid="uid://dg6htjj423ta0"]
 
 [ext_resource type="Script" uid="uid://08i3my4n1oj5" path="res://pickup/ItemPickup.gd" id="1_icira"]
 [ext_resource type="Texture2D" uid="uid://ckjorlerj8lwq" path="res://aseprite/mushroom_1.aseprite" id="2_cne2k"]
+[ext_resource type="Material" uid="uid://colomf2df0khl" path="res://materials/material_outline.tres" id="2_dmnen"]
+[ext_resource type="Resource" uid="uid://5r105pyybowx" path="res://itemization/items/item_stone.tres" id="2_fdhoe"]
+[ext_resource type="Script" uid="uid://l0xqguyksine" path="res://interaction/OutlineComponent.gd" id="3_acavp"]
 [ext_resource type="Script" uid="uid://bmhgqwj6rw8m1" path="res://interaction/InteractionArea2D.gd" id="3_kev1m"]
 [ext_resource type="Script" uid="uid://ced3wal67d62" path="res://interaction/ItemPickupInteraction.gd" id="4_yp8q6"]
 [ext_resource type="Script" uid="uid://rm7q0mclgm65" path="res://interaction/InteractionResource.gd" id="5_utt5g"]
@@ -14,13 +17,37 @@ metadata/_custom_type_script = "uid://rm7q0mclgm65"
 [sub_resource type="CircleShape2D" id="CircleShape2D_4u41u"]
 radius = 6.0827627
 
+[sub_resource type="Gradient" id="Gradient_fdhoe"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8pe6q"]
+gradient = SubResource("Gradient_fdhoe")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fdhoe"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(4, 4, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+angle_min = 1.0728835e-05
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+angular_velocity_min = -1.6093254e-05
+angular_velocity_max = 179.99998
+gravity = Vector3(0, 98, 0)
+scale_max = 4.0
+color_ramp = SubResource("GradientTexture1D_8pe6q")
+
 [node name="ItemPickup" type="Node2D" node_paths=PackedStringArray("sprite", "interaction_area")]
 script = ExtResource("1_icira")
+item_resource = ExtResource("2_fdhoe")
 sprite = NodePath("Sprite2D")
 interaction_area = NodePath("InteractionArea")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+material = ExtResource("2_dmnen")
 texture = ExtResource("2_cne2k")
 offset = Vector2(0, -4)
 metadata/_aseprite_wizard_interface_config_ = {
@@ -47,6 +74,10 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "fa1bffe3426cb7a92730c47ece1f5f54"
 
+[node name="OutlineComponent" type="Node" parent="Sprite2D"]
+script = ExtResource("3_acavp")
+metadata/_custom_type_script = "uid://l0xqguyksine"
+
 [node name="InteractionArea" type="Area2D" parent="." node_paths=PackedStringArray("interaction")]
 collision_layer = 8
 collision_mask = 0
@@ -63,4 +94,16 @@ metadata/_custom_type_script = "uid://ced3wal67d62"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_4u41u")
 
+[node name="PopParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 12
+lifetime = 0.5
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_fdhoe")
+
+[connection signal="deselected" from="InteractionArea" to="Sprite2D/OutlineComponent" method="fade_out_outline"]
+[connection signal="selected" from="InteractionArea" to="Sprite2D/OutlineComponent" method="fade_in_outline"]
 [connection signal="resolved" from="InteractionArea/ItemPickupInteraction" to="." method="_on_item_pickup_interaction_resolved"]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsvnwjkbetlma"]
+
+[ext_resource type="Script" uid="uid://b5gadugtsr25u" path="res://item_vacuum/ItemVacuumComponent.gd" id="1_iitd5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tqiix"]
+radius = 17.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e7oew"]
+radius = 3.0
+
+[node name="ItemVacuumComponent" type="Node2D" node_paths=PackedStringArray("_vacuum_area", "_vacuum_shape")]
+script = ExtResource("1_iitd5")
+_vacuum_radius = 17.0
+_vacuum_area = NodePath("VacuumArea")
+_vacuum_shape = NodePath("VacuumArea/VacuumShape")
+
+[node name="VacuumArea" type="Area2D" parent="."]
+collision_mask = 16
+
+[node name="VacuumShape" type="CollisionShape2D" parent="VacuumArea"]
+shape = SubResource("CircleShape2D_tqiix")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_e7oew")

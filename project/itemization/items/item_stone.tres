@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://5r105pyybowx"]
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://5r105pyybowx"]
 
 [ext_resource type="Script" uid="uid://dtyvn28yerghq" path="res://itemization/components/ItemComponentResource.gd" id="1_gkp7q"]
 [ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="2_iwjqd"]
+[ext_resource type="Texture2D" uid="uid://dvgp61pmlgaau" path="res://aseprite/stone.aseprite" id="2_q5n0a"]
 
 [resource]
 script = ExtResource("2_iwjqd")
@@ -9,4 +10,7 @@ item_name = "Stone"
 description = "Rocks come in all shapes and sizes.
 
 This one's a perfect size and shape for your pockets."
+inventory_icon = ExtResource("2_q5n0a")
+sprite = ExtResource("2_q5n0a")
+sprite_offset = Vector2(0, 2)
 metadata/_custom_type_script = "uid://dgdru8sn2myct"

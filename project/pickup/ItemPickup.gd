@@ -1,5 +1,12 @@
 class_name ItemPickup extends Node2D
 
+@export var item_resource: ItemResource:
+	set(v):
+		item = ItemData.new(v)
+		item_resource = v
+	get:
+		return item_resource
+
 var item: ItemData
 
 @export var sprite: Sprite2D
@@ -8,6 +15,7 @@ var item: ItemData
 
 func _ready() -> void:
 	sprite.texture = item.resource.sprite
+	sprite.offset = item.resource.sprite_offset
 	(interaction_area.interaction as ItemPickupInteraction).item = item
 
 

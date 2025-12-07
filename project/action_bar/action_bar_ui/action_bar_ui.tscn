@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://kg7ju7f63mak" path="res://action_bar/action_bar_ui/action_bar_slot_ui.tscn" id="2_g20hy"]
 
 [node name="ActionBarUI" type="PanelContainer"]
+offset_right = 364.0
+offset_bottom = 40.0
 size_flags_horizontal = 6
 size_flags_vertical = 8
 script = ExtResource("1_mhvxe")

@@ -5,7 +5,7 @@ signal secondary
 signal dropped_on(item: ItemData)
 
 @onready var _texture: TextureRect = %Texture
-@onready var _background: ColorRect = %Background
+@onready var _background: Control = %Background
 
 var item: ItemData = null:
 	set(value):
@@ -14,7 +14,7 @@ var item: ItemData = null:
 
 		item = value
 		if value != null:
-			_texture.texture = value.resource.icon
+			_texture.texture = value.resource.inventory_icon
 		else:
 			_texture.texture = null
 

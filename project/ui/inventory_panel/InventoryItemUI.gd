@@ -20,7 +20,7 @@ func _ready() -> void:
 	if not item:
 		return
 
-	_texture.texture = item.resource.icon
+	_texture.texture = item.resource.inventory_icon
 
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)

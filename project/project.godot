@@ -162,6 +162,7 @@ toggle_build_menu={
 [layer_names]
 
 2d_physics/layer_4="Interaction"
+2d_physics/layer_5="Vacuum"
 
 [rendering]
 

@@ -1,10 +1,14 @@
-[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://b4ir2wycg356t"]
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://b4ir2wycg356t"]
 
 [ext_resource type="Script" uid="uid://dtyvn28yerghq" path="res://itemization/components/ItemComponentResource.gd" id="1_yrnig"]
+[ext_resource type="Texture2D" uid="uid://cq1cqax74jed1" path="res://aseprite/branch.aseprite" id="2_6yesh"]
 [ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="2_53qjk"]
 
 [resource]
 script = ExtResource("2_53qjk")
 item_name = "Wood"
 description = "Fibrous wood straight off the tree."
+inventory_icon = ExtResource("2_6yesh")
+sprite = ExtResource("2_6yesh")
+sprite_offset = Vector2(0, 3)
 metadata/_custom_type_script = "uid://dgdru8sn2myct"

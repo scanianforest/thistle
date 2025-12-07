@@ -1,4 +1,4 @@
-class_name PlaceableResource extends Resource
+class_name EntityResource extends Resource
 
 @export var name: String = ""
 @export var sprite: Texture2D

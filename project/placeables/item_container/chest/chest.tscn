@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dlc0gxmo2fimf"]
+[gd_scene load_steps=18 format=3 uid="uid://dlc0gxmo2fimf"]
 
 [ext_resource type="Script" uid="uid://juqhuw2yrjkb" path="res://placeables/item_container/ItemContainer.gd" id="1_hdi32"]
 [ext_resource type="Resource" uid="uid://bonop1da8r3gt" path="res://placeables/item_container/chest/chest.tres" id="2_56wfx"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://rm7q0mclgm65" path="res://interaction/InteractionResource.gd" id="6_cjfc3"]
 [ext_resource type="Resource" uid="uid://whcosaepl1e" path="res://itemization/items/item_mushroom_penny_bun.tres" id="7_cjfc3"]
 [ext_resource type="Resource" uid="uid://cfh7ewb1arcf1" path="res://itemization/items/item_tent.tres" id="8_pe136"]
+[ext_resource type="Material" uid="uid://colomf2df0khl" path="res://materials/material_outline.tres" id="9_sl33w"]
+[ext_resource type="Script" uid="uid://l0xqguyksine" path="res://interaction/OutlineComponent.gd" id="11_ek7iu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ai45w"]
 size = Vector2(14, 5)
@@ -37,11 +39,13 @@ starting_items = Array[ExtResource("3_awq1n")]([ExtResource("5_pe136"), ExtResou
 metadata/_custom_type_script = "uid://b2me08syjg2mv"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+material = ExtResource("9_sl33w")
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_ai45w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+material = ExtResource("9_sl33w")
 texture = ExtResource("4_56wfx")
 offset = Vector2(0, -4)
 metadata/_aseprite_wizard_interface_config_ = {
@@ -67,6 +71,9 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "6825286c11bb182327da74edb60b8225"
 
+[node name="OutlineComponent" type="Node" parent="Sprite2D"]
+script = ExtResource("11_ek7iu")
+
 [node name="InteractionArea" type="Area2D" parent="." node_paths=PackedStringArray("interaction")]
 collision_layer = 8
 collision_mask = 8
@@ -80,3 +87,6 @@ interaction_resource = SubResource("Resource_a3541")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_dqjgx")
+
+[connection signal="deselected" from="InteractionArea" to="Sprite2D/OutlineComponent" method="fade_out_outline"]
+[connection signal="selected" from="InteractionArea" to="Sprite2D/OutlineComponent" method="fade_in_outline"]

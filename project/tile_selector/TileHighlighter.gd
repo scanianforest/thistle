@@ -1,7 +1,7 @@
 class_name TileHighlighter extends Control
 
 @onready
-var debug_placeable: PlaceableResource = preload("res://placeables/item_container/chest/chest.tres")
+var debug_placeable: EntityResource = preload("res://placeables/item_container/chest/chest.tres")
 @onready var texture: Texture2D = preload("res://aseprite/white_tile.aseprite")
 
 var ci_rid: RID
@@ -28,7 +28,7 @@ func highlight_tiles(ok: Array[Vector2i], grid_size: Vector2) -> void:
 		)
 
 
-func show_preview(_placeable: PlaceableResource, pos: Vector2) -> void:
+func show_preview(_placeable: EntityResource, pos: Vector2) -> void:
 	# render preview of sprite at origin tile
 	var placeable = debug_placeable
 	var xform = Transform2D.IDENTITY

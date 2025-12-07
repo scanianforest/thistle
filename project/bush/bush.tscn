@@ -1,15 +1,38 @@
-[gd_scene load_steps=11 format=3 uid="uid://mn3qeaj6fses"]
+[gd_scene load_steps=18 format=3 uid="uid://mn3qeaj6fses"]
 
+[ext_resource type="Material" uid="uid://colomf2df0khl" path="res://materials/material_outline.tres" id="1_2at75"]
 [ext_resource type="Texture2D" uid="uid://c1ocwd76npqlu" path="res://aseprite/bush.aseprite" id="1_8vc13"]
 [ext_resource type="Script" uid="uid://bse31gmuf2bou" path="res://bush/Bush.gd" id="1_esmi3"]
 [ext_resource type="Script" uid="uid://bmhgqwj6rw8m1" path="res://interaction/InteractionArea2D.gd" id="3_tytp4"]
+[ext_resource type="Script" uid="uid://l0xqguyksine" path="res://interaction/OutlineComponent.gd" id="4_eoij5"]
 [ext_resource type="Script" uid="uid://iohgn0j0py4u" path="res://interaction/GatherInteraction.gd" id="4_p24jg"]
 [ext_resource type="Resource" uid="uid://cfh7ewb1arcf1" path="res://itemization/items/item_tent.tres" id="5_ihyoc"]
 [ext_resource type="Script" uid="uid://rm7q0mclgm65" path="res://interaction/InteractionResource.gd" id="5_p24jg"]
+[ext_resource type="Texture2D" uid="uid://drbres68topwc" path="res://aseprite/leaf_fibre.aseprite" id="7_fofbo"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ov2xu"]
-radius = 5.0
-height = 17.999996
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fofbo"]
+radius = 3.9999998
+height = 7.9999995
+
+[sub_resource type="Gradient" id="Gradient_fofbo"]
+offsets = PackedFloat32Array(0, 0.5163934, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2at75"]
+gradient = SubResource("Gradient_fofbo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2at75"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(6, 6, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+angle_min = 1.0728835e-05
+angle_max = 720.0
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 98, 0)
+color_ramp = SubResource("GradientTexture1D_2at75")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihyoc"]
 bg_color = Color(0.11489678, 0.11489683, 0.11489671, 1)
@@ -24,30 +47,37 @@ animation_name = &"inventory"
 time = 2.0
 metadata/_custom_type_script = "uid://rm7q0mclgm65"
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ov2xu"]
+radius = 5.0
+height = 17.999996
+
 [node name="Bush" type="Area2D" node_paths=PackedStringArray("interaction")]
-y_sort_enabled = true
 script = ExtResource("1_esmi3")
 interaction = NodePath("InteractionArea2D/GatherInteraction")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(0, -2)
+position = Vector2(0, -5)
 rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_ov2xu")
+shape = SubResource("CapsuleShape2D_fofbo")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+material = ExtResource("1_2at75")
 texture = ExtResource("1_8vc13")
 offset = Vector2(0, -6)
 
-[node name="Sprite2" type="Sprite2D" parent="."]
-position = Vector2(3, 4)
-texture = ExtResource("1_8vc13")
-offset = Vector2(0, -6)
+[node name="LeafRustleParticles" type="GPUParticles2D" parent="Sprite"]
+position = Vector2(0, -5)
+emitting = false
+texture = ExtResource("7_fofbo")
+lifetime = 0.75
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_2at75")
 
-[node name="Sprite3" type="Sprite2D" parent="."]
-position = Vector2(-4, 3)
-texture = ExtResource("1_8vc13")
-offset = Vector2(0, -6)
+[node name="OutlineComponent" type="Node" parent="Sprite"]
+script = ExtResource("4_eoij5")
+metadata/_custom_type_script = "uid://l0xqguyksine"
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 visible = false
@@ -76,3 +106,6 @@ z_index = 1
 position = Vector2(0, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_ov2xu")
+
+[connection signal="deselected" from="InteractionArea2D" to="Sprite/OutlineComponent" method="fade_out_outline"]
+[connection signal="selected" from="InteractionArea2D" to="Sprite/OutlineComponent" method="fade_in_outline"]
