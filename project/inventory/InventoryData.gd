@@ -14,7 +14,7 @@ func to_dict() -> Dictionary:
 
 static func from_dict(data: Dictionary) -> InventoryData:
 	var inventory_data: InventoryData = InventoryData.new()
-	var items_dicts: Array = data.get("items", [])
+	var items_dicts: Array = data.get("items", {})
 
 	for item_dict in items_dicts:
 		var item_data = ItemData.from_dict(item_dict)
