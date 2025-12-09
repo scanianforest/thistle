@@ -2,13 +2,32 @@ class_name ItemData
 
 var resource: ItemResource
 
-var weight: float:
-	get:
-		return resource.weight if resource else 0.0
+var wear: int
 
 
 func _init(res: ItemResource):
 	resource = res
+
+
+var durability: int:
+	get:
+		return resource.max_durability - wear
+
+var weight: float:
+	get:
+		return resource.weight
+
+var stackable: bool:
+	get:
+		return resource.stackable
+
+var description: String:
+	get:
+		return resource.description
+
+var item_name: String:
+	get:
+		return resource.item_name
 
 
 func to_dict() -> Dictionary:

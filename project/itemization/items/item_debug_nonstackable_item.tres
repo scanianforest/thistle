@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://cecutal7bmfpq"]
+
+[ext_resource type="Script" uid="uid://dtyvn28yerghq" path="res://itemization/components/ItemComponentResource.gd" id="1_iglk7"]
+[ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="2_77bc2"]
+
+[resource]
+script = ExtResource("2_77bc2")
+item_name = "Debug Non-stackable"
+description = "FOR TESTING PURPOSES
+This item does not stack."
+metadata/_custom_type_script = "uid://dgdru8sn2myct"

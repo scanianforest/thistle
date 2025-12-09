@@ -150,6 +150,14 @@ script = ExtResource("5_mmdvd")
 tilemap_dual = NodePath("..")
 metadata/_custom_type_script = "uid://c6m630v880okx"
 
+[node name="GroundCursor" type="Sprite2D" parent="TileLayers/Ground/GroundCursor" node_paths=PackedStringArray("tilemap_dual")]
+visible = false
+z_index = 1
+texture = ExtResource("3_fn3g3")
+script = ExtResource("5_mmdvd")
+tilemap_dual = NodePath("../..")
+metadata/_custom_type_script = "uid://c6m630v880okx"
+
 [node name="Entities" type="Node2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true

@@ -42,9 +42,10 @@ func set_owner_name(new_name: String) -> void:
 	owner_label.text = new_name
 
 
-func _add_item_ui(item: ItemData) -> void:
+func _add_item_ui(item: ItemData, count: int) -> void:
 	var item_ui: InventoryItemUI = _item_ui_scene.instantiate()
 	item_ui.item = item
+	item_ui.count = count
 	item_ui.secondary_requested.connect(_on_item_ui_secondary_requested)
 	item_ui.remove_requested.connect(_on_item_ui_remove_requested)
 	%ItemGrid.add_child(item_ui)
@@ -60,7 +61,7 @@ func _on_component_closed() -> void:
 
 
 func _on_inventory_item_added(item: ItemData) -> void:
-	_add_item_ui(item)
+	_add_item_ui(item, 1)
 
 
 func _on_inventory_item_removed(item: ItemData) -> void:
@@ -70,7 +71,7 @@ func _on_inventory_item_removed(item: ItemData) -> void:
 			break
 
 
-func _on_inventory_updated(items: Array[ItemData]) -> void:
+func _on_inventory_updated(items: Dictionary[ItemData, int]) -> void:
 	_refresh_items(items)
 
 
@@ -91,11 +92,11 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var item_ui := data as InventoryItemUI
 	item_ui.remove()
-	inventory_comp.add_item(item_ui.item)
+	inventory_comp._add_item(item_ui.item)
 
 
-func _refresh_items(items: Array[ItemData]) -> void:
+func _refresh_items(items: Dictionary[ItemData, int]) -> void:
 	for child in %ItemGrid.get_children():
 		child.queue_free()
 	for item in items:
-		_add_item_ui(item)
+		_add_item_ui(item, items[item])

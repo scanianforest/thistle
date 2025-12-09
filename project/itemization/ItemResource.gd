@@ -5,6 +5,7 @@ class_name ItemResource extends Resource
 @export_multiline var description: String = ""
 @export var components: Array[ItemComponentResource] = []
 @export var weight: float = 1.0
+@export var stackable: bool = false
 
 @export_group("Visuals")
 @export var inventory_icon: Texture2D

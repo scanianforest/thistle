@@ -1,10 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dn4fk26m0qm2q"]
+[gd_scene load_steps=6 format=3 uid="uid://dn4fk26m0qm2q"]
 
 [ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="1_ie7wm"]
 [ext_resource type="Script" uid="uid://ctl02owkgi514" path="res://ui/inventory_panel/InventoryItemUI.gd" id="1_wkthc"]
 [ext_resource type="PackedScene" uid="uid://c0ptofb04e1y1" path="res://ui/item_tooltip/item_tooltip.tscn" id="3_q0md3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q0md3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q0md3"]
+font_size = 12
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="InventoryItemUI" type="PanelContainer"]
 theme_override_styles/panel = SubResource("StyleBoxFlat_q0md3")
@@ -23,6 +28,15 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("1_ie7wm")
 expand_mode = 1
+
+[node name="StackCount" type="Label" parent="Margins"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+text = "2"
+label_settings = SubResource("LabelSettings_q0md3")
+vertical_alignment = 2
+justification_flags = 161
 
 [node name="ItemTooltip" parent="." instance=ExtResource("3_q0md3")]
 unique_name_in_owner = true

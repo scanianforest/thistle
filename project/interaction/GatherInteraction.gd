@@ -33,7 +33,7 @@ func resolve(interactor: InteractorComponent) -> void:
 		return
 
 	var item_instance: ItemData = ItemData.new(item_resource)
-	var added: bool = inventory.add_item(item_instance)
+	var added: bool = inventory._add_item(item_instance)
 	if not added:
 		Log.err("Could not add gathered item to inventory")
 		return

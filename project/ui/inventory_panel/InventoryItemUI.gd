@@ -4,10 +4,12 @@ signal secondary_requested(item: ItemData)
 signal remove_requested(item: ItemData)
 
 @onready var _tooltip: Control = %ItemTooltip
+@onready var stack_count: Label = %StackCount
 
 var _texture: TextureRect
 
 var item: ItemData
+var count: int
 
 
 func _notification(what: int) -> void:
@@ -26,6 +28,9 @@ func _ready() -> void:
 	mouse_exited.connect(_on_mouse_exited)
 	_tooltip.hide()
 	_tooltip.item = item
+
+	stack_count.visible = item.resource.stackable
+	stack_count.text = str(count)
 
 
 func remove() -> void:
