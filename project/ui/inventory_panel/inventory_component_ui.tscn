@@ -4,12 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://dn4fk26m0qm2q" path="res://ui/inventory_panel/inventory_item_ui.tscn" id="1_eyk4t"]
 [ext_resource type="Script" uid="uid://md4mek4w2xay" path="res://ui/inventory_panel/InventoryComponentUI.gd" id="1_tufe0"]
 
-[node name="InventoryComponentUI" type="PanelContainer"]
+[node name="InventoryComponentUI" type="PanelContainer" node_paths=PackedStringArray("grid", "owner_name_label")]
 custom_minimum_size = Vector2(240, 0)
 offset_right = 364.0
 offset_bottom = 127.0
 theme = ExtResource("1_3a37t")
 script = ExtResource("1_tufe0")
+grid = NodePath("Margins/VBox/ItemGrid")
+owner_name_label = NodePath("Margins/VBox/OwnerName")
 
 [node name="Margins" type="MarginContainer" parent="."]
 layout_mode = 2

@@ -45,13 +45,14 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/TileMapDual/plugin.cfg", "res://addons/limbo_console/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/TileMapDual/plugin.cfg", "res://addons/gdUnit4/plugin.cfg", "res://addons/limbo_console/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [gdunit4]
 
 settings/test/test_lookup_folder=""
 ui/toolbar/run_overall=true
 ui/inspector/node_collapse=false
+Shortcuts/inspector/run_test_overall=PackedInt32Array(4194338)
 
 [input]
 

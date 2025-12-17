@@ -6,10 +6,25 @@ signal remove_requested(item: ItemData)
 @onready var _tooltip: Control = %ItemTooltip
 @onready var stack_count: Label = %StackCount
 
-var _texture: TextureRect
+@onready var _texture: TextureRect = %Texture
 
-var item: ItemData
-var count: int
+var item: ItemData:
+	set(v):
+		item = v
+
+		if not _texture:
+			return
+		_texture.texture = item.resource.inventory_icon
+	get:
+		return item
+
+var count: int:
+	set(v):
+		count = v
+		if stack_count:
+			stack_count.text = str(count)
+	get:
+		return count
 
 
 func _notification(what: int) -> void:
@@ -18,7 +33,6 @@ func _notification(what: int) -> void:
 
 
 func _ready() -> void:
-	_texture = %Texture
 	if not item:
 		return
 

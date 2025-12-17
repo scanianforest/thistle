@@ -5,6 +5,9 @@ signal item_ui_secondary_requested(item_ui: InventoryItemUI)
 signal component_opened
 signal component_closed
 
+@onready var grid: GridContainer = %ItemGrid
+@onready var owner_name_label: Label = %OwnerName
+
 var inventory_comp: InventoryComponent:
 	set(value):
 		if inventory_comp:
@@ -38,8 +41,7 @@ func _ready() -> void:
 
 
 func set_owner_name(new_name: String) -> void:
-	var owner_label: Label = %OwnerName
-	owner_label.text = new_name
+	owner_name_label.text = new_name
 
 
 func _add_item_ui(item: ItemData, count: int) -> void:
@@ -48,7 +50,7 @@ func _add_item_ui(item: ItemData, count: int) -> void:
 	item_ui.count = count
 	item_ui.secondary_requested.connect(_on_item_ui_secondary_requested)
 	item_ui.remove_requested.connect(_on_item_ui_remove_requested)
-	%ItemGrid.add_child(item_ui)
+	grid.add_child(item_ui)
 
 
 func _on_component_opened() -> void:
@@ -65,7 +67,7 @@ func _on_inventory_item_added(item: ItemData) -> void:
 
 
 func _on_inventory_item_removed(item: ItemData) -> void:
-	for child in %ItemGrid.get_children():
+	for child in grid.get_children():
 		if child is InventoryItemUI and child.item == item:
 			child.queue_free()
 			break
@@ -84,7 +86,7 @@ func _on_item_ui_remove_requested(item: ItemData) -> void:
 
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	if %ItemGrid.get_children().find(data) >= 0:
+	if grid.get_children().find(data) >= 0:
 		return false
 	return data is InventoryItemUI
 
@@ -96,7 +98,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 
 
 func _refresh_items(items: Dictionary[ItemData, int]) -> void:
-	for child in %ItemGrid.get_children():
+	for child in grid.get_children():
 		child.queue_free()
 	for item in items:
 		_add_item_ui(item, items[item])

@@ -22,8 +22,16 @@ func _ready() -> void:
 	visible = false
 
 
-func _on_inventory_set(inventory: InventoryComponent) -> void:
+func set_player_inventory(inventory: InventoryComponent) -> void:
 	_player_inventory.inventory_comp = inventory
+
+
+func set_container_inventory(inventory: InventoryComponent) -> void:
+	_container_inventory.inventory_comp = inventory
+
+
+func _on_inventory_set(inventory: InventoryComponent) -> void:
+	set_player_inventory(inventory)
 
 
 func _on_player_component_opened() -> void:
@@ -45,7 +53,7 @@ func _on_container_component_closed() -> void:
 
 
 func _on_container_opened(inventory_comp: InventoryComponent) -> void:
-	_container_inventory.inventory_comp = inventory_comp
+	set_container_inventory(inventory_comp)
 
 	visible = true
 	_container_inventory.visible = true
