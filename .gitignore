@@ -4,4 +4,4 @@
 
 bin/
 assets/
-project/reports
+project/reports/**
