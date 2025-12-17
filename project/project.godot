@@ -51,6 +51,7 @@ enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addon
 
 settings/test/test_lookup_folder=""
 ui/toolbar/run_overall=true
+ui/inspector/node_collapse=false
 
 [input]
 
