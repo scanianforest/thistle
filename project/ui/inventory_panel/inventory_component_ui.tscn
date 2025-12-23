@@ -1,17 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://caok1c4w0g7lh"]
+[gd_scene load_steps=5 format=3 uid="uid://caok1c4w0g7lh"]
 
 [ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_3a37t"]
 [ext_resource type="PackedScene" uid="uid://dn4fk26m0qm2q" path="res://ui/inventory_panel/inventory_item_ui.tscn" id="1_eyk4t"]
 [ext_resource type="Script" uid="uid://md4mek4w2xay" path="res://ui/inventory_panel/InventoryComponentUI.gd" id="1_tufe0"]
+[ext_resource type="PackedScene" uid="uid://blw05kp48gl64" path="res://ui/inventory_panel/item_grid.tscn" id="3_3a37t"]
 
-[node name="InventoryComponentUI" type="PanelContainer" node_paths=PackedStringArray("grid", "owner_name_label")]
+[node name="InventoryComponentUI" type="PanelContainer"]
 custom_minimum_size = Vector2(240, 0)
 offset_right = 364.0
 offset_bottom = 127.0
 theme = ExtResource("1_3a37t")
 script = ExtResource("1_tufe0")
-grid = NodePath("Margins/VBox/ItemGrid")
-owner_name_label = NodePath("Margins/VBox/OwnerName")
 
 [node name="Margins" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -27,16 +26,12 @@ size_flags_vertical = 0
 text = "Inventory"
 horizontal_alignment = 2
 
-[node name="ItemGrid" type="GridContainer" parent="Margins/VBox"]
+[node name="ItemGrid" parent="Margins/VBox" instance=ExtResource("3_3a37t")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-columns = 8
 
 [node name="InventoryItemUI" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
 
 [node name="InventoryItemUI2" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
@@ -75,4 +70,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="InventoryItemUI14" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+layout_mode = 2
+
+[node name="InventoryItemUI15" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2

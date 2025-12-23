@@ -165,24 +165,6 @@ script = ExtResource("7_4papg")
 
 [node name="ItemContainer" parent="Entities" instance=ExtResource("7_sc4t8")]
 
-[node name="Bush" parent="Entities" instance=ExtResource("11_ov2xu")]
-position = Vector2(8, 26)
-
-[node name="Bush2" parent="Entities" instance=ExtResource("11_ov2xu")]
-position = Vector2(24, 26)
-
-[node name="Bush3" parent="Entities" instance=ExtResource("11_ov2xu")]
-position = Vector2(40, 26)
-
-[node name="Bush4" parent="Entities" instance=ExtResource("11_ov2xu")]
-position = Vector2(40, 38)
-
-[node name="Bush5" parent="Entities" instance=ExtResource("11_ov2xu")]
-position = Vector2(24, 38)
-
-[node name="Bush6" parent="Entities" instance=ExtResource("11_ov2xu")]
-position = Vector2(8, 38)
-
 [node name="Pickups" type="Node2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
@@ -205,3 +187,21 @@ resource = ExtResource("15_b2suy")
 
 [node name="FloatingItem2" parent="." instance=ExtResource("14_dqqhb")]
 position = Vector2(47, 101)
+
+[node name="Bush" parent="." instance=ExtResource("11_ov2xu")]
+position = Vector2(8, 26)
+
+[node name="Bush2" parent="." instance=ExtResource("11_ov2xu")]
+position = Vector2(24, 26)
+
+[node name="Bush3" parent="." instance=ExtResource("11_ov2xu")]
+position = Vector2(40, 26)
+
+[node name="Bush4" parent="." instance=ExtResource("11_ov2xu")]
+position = Vector2(40, 38)
+
+[node name="Bush5" parent="." instance=ExtResource("11_ov2xu")]
+position = Vector2(24, 38)
+
+[node name="Bush6" parent="." instance=ExtResource("11_ov2xu")]
+position = Vector2(8, 38)

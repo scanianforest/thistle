@@ -40,6 +40,7 @@ justification_flags = 161
 
 [node name="ItemTooltip" parent="." instance=ExtResource("3_q0md3")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="PanelContainer" parent="ItemTooltip" index="0"]

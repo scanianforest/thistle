@@ -20,7 +20,7 @@ func _on_body_entered(body: Node) -> void:
 		_jiggle.tween_property($Sprite, "rotation_degrees", 5, 0.1)
 		_jiggle.tween_property($Sprite, "rotation_degrees", -5, 0.1)
 		_jiggle.tween_property($Sprite, "rotation_degrees", 0, 0.1)
-		$LeafRustleParticles.restart()
+		%LeafRustleParticles.restart()
 
 
 func _on_body_exited(body: Node) -> void:

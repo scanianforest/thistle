@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://blw05kp48gl64"]
+
+[ext_resource type="Script" uid="uid://bu5jsm07i0tat" path="res://ui/inventory_panel/ItemGrid.gd" id="1_tt4p2"]
+
+[node name="ItemGrid" type="GridContainer"]
+size_flags_vertical = 3
+columns = 8
+script = ExtResource("1_tt4p2")

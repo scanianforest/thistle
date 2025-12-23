@@ -4,9 +4,10 @@ class_name InventoryComponent extends Node
 signal opened
 signal closed
 signal item_added(item: ItemData)
+signal new_stack_created(item: ItemData)
 signal item_removed(item: ItemData)
 signal item_rejected(item: ItemData)
-signal item_dropped(item: ItemData)
+signal item_dropped(item: ItemData, count: int)
 signal inventory_updated(items: Dictionary[ItemData, int])
 
 var weight:
@@ -54,7 +55,7 @@ func add_item(item: ItemData, count: int = 1) -> int:
 	# Handle non stackable items in a loop
 	if not item.resource.stackable:
 		for i in count:
-			if not _add_item(item):
+			if not _add_item_to_new_stack(item, 1):
 				return i
 		return count
 
@@ -69,9 +70,8 @@ func add_item(item: ItemData, count: int = 1) -> int:
 		return true
 
 	# New stack
-	items[item] = count
-	item_added.emit(item)
-	inventory_updated.emit(items)
+	if not _add_item_to_new_stack(item, count):
+		return count
 	return true
 
 
@@ -82,21 +82,22 @@ func get_by_resource(item_resource: ItemResource) -> ItemData:
 	return null
 
 
-func _add_item(item: ItemData) -> bool:
+func _add_item_to_new_stack(item: ItemData, count: int) -> bool:
 	if false:  # Placeholder for weight check
 		item_rejected.emit(item)
 		return false
 
-	items[item] = 1
+	items[item] = count
 	item_added.emit(item)
+	new_stack_created.emit(item)
 	inventory_updated.emit(items)
 	return true
 
 
-func drop_item(item) -> void:
+func drop_item(item: ItemData, count: int) -> void:
 	if item in items:
-		_remove_item(item)
-		item_dropped.emit(item)
+		remove_item(item, count)
+		item_dropped.emit(item, count)
 
 
 func remove_item(item: ItemData, count: int = 1) -> void:
@@ -110,7 +111,7 @@ func remove_item(item: ItemData, count: int = 1) -> void:
 		inventory_updated.emit(items)
 
 
-func _remove_item(item) -> void:
+func _remove_item(item: ItemData) -> void:
 	items.erase(item)
 
 	item_removed.emit(item)

@@ -67,6 +67,7 @@ texture = ExtResource("1_8vc13")
 offset = Vector2(0, -6)
 
 [node name="LeafRustleParticles" type="GPUParticles2D" parent="Sprite"]
+unique_name_in_owner = true
 position = Vector2(0, -5)
 emitting = false
 texture = ExtResource("7_fofbo")

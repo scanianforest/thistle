@@ -1,6 +1,6 @@
 class_name Player extends Pawn2D
 
-signal dropped_item(item: ItemData)
+signal dropped_item(item: ItemData, count: int)
 
 @export var sprite: PawnSprite
 @export var health: HealthComponent
@@ -36,9 +36,9 @@ func _ready() -> void:
 	health.died.connect(_on_health_died)
 	health.health_changed.connect(_on_health_changed)
 
-	inventory.item_added.connect(_on_inventory_item_added)
 	inventory.item_removed.connect(_on_inventory_item_removed)
 	inventory.item_dropped.connect(_on_inventory_item_dropped)
+	inventory.new_stack_created.connect(_on_inventory_new_stack_created)
 
 	actionbar.slot_selected.connect(_on_actionbar_slot_selected)
 
@@ -100,20 +100,20 @@ func _on_health_changed(new_health: int) -> void:
 	print("Player health changed to %d" % new_health)
 
 
-func _on_inventory_item_added(item: ItemData) -> void:
-	var empty_slot = actionbar._get_first_empty_slot()
-	if empty_slot != -1:
-		actionbar.set_slot(empty_slot, item)
-
-
 func _on_inventory_item_removed(item: ItemData) -> void:
 	var index = actionbar.find_item(item)
 	if index != -1:
 		actionbar.set_slot(index, null)
 
 
-func _on_inventory_item_dropped(item: ItemData) -> void:
-	dropped_item.emit(item)
+func _on_inventory_item_dropped(item: ItemData, count: int = 1) -> void:
+	dropped_item.emit(item, count)
+
+
+func _on_inventory_new_stack_created(item: ItemData) -> void:
+	var empty_slot = actionbar._get_first_empty_slot()
+	if empty_slot != -1:
+		actionbar.set_slot(empty_slot, item)
 
 
 func _on_actionbar_slot_selected(index: int) -> void:

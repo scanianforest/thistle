@@ -34,5 +34,5 @@ func _process(delta: float) -> void:
 
 func _on_pickup_area_entered(area: Area2D) -> void:
 	if area.item and _inventory.can_add_item(area.item):
-		_inventory._add_item(area.item)
+		_inventory.add_item(area.item, area.count)
 		area.queue_free()

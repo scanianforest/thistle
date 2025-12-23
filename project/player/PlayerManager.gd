@@ -73,5 +73,5 @@ func unpossess_player() -> void:
 	unpossessed.emit()
 
 
-func _on_player_dropped_item(item: ItemData) -> void:
-	ItemSpawner.spawn_item(item, _player_world.pickups, _player_node.global_position)
+func _on_player_dropped_item(item: ItemData, count: int) -> void:
+	ItemSpawner.spawn_item(item, count, _player_world.pickups, _player_node.global_position)

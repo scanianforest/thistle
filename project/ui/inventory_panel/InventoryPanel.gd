@@ -61,16 +61,16 @@ func _on_container_opened(inventory_comp: InventoryComponent) -> void:
 
 func _on_player_item_secondary_requested(item: ItemData) -> void:
 	if _container_inventory.inventory_comp:
-		_container_inventory.inventory_comp._add_item(item)
+		_container_inventory.inventory_comp.add_item(item)
 		_player_inventory.inventory_comp.remove_item(item)
 	else:
-		_player_inventory.inventory_comp.drop_item(item)
+		_player_inventory.inventory_comp.drop_item(item, 1)
 
 
 func _on_container_item_secondary_requested(item: ItemData) -> void:
 	Log.pr("Moving item from container to player inventory: %s" % item)
 	_container_inventory.inventory_comp.remove_item(item)
-	_player_inventory.inventory_comp._add_item(item)
+	_player_inventory.inventory_comp.add_item(item)
 
 
 func _on_container_closed() -> void:
@@ -84,4 +84,4 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var item_ui: InventoryItemUI = data as InventoryItemUI
-	_player_inventory.inventory_comp.drop_item(item_ui.item)
+	_player_inventory.inventory_comp.drop_item(item_ui.item, item_ui.count)

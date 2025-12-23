@@ -19,6 +19,8 @@ var item: ItemData:
 	get:
 		return item
 
+var count: int = 1
+
 var _tween: Tween
 
 

@@ -25,7 +25,7 @@ func resolve(interactor: InteractorComponent) -> void:
 				"InventoryComponent"
 			)
 			if inventory:
-				inventory._add_item(item)
+				inventory.add_item(item)
 			else:
 				Log.err("Interacting parent has no InventoryComponent, cannot add item")
 	)

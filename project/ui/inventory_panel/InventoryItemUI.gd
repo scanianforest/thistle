@@ -4,7 +4,7 @@ signal secondary_requested(item: ItemData)
 signal remove_requested(item: ItemData)
 
 @onready var _tooltip: Control = %ItemTooltip
-@onready var stack_count: Label = %StackCount
+@onready var _count_label: Label = %StackCount
 
 @onready var _texture: TextureRect = %Texture
 
@@ -21,8 +21,8 @@ var item: ItemData:
 var count: int:
 	set(v):
 		count = v
-		if stack_count:
-			stack_count.text = str(count)
+		if _count_label:
+			_count_label.text = str(count)
 	get:
 		return count
 
@@ -43,8 +43,8 @@ func _ready() -> void:
 	_tooltip.hide()
 	_tooltip.item = item
 
-	stack_count.visible = item.resource.stackable
-	stack_count.text = str(count)
+	_count_label.visible = item.resource.stackable
+	_count_label.text = str(count)
 
 
 func remove() -> void:

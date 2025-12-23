@@ -28,4 +28,4 @@ func test_setting_item_updates_texture() -> void:
 func test_setting_count_updates_label() -> void:
 	ui.count = 5
 
-	assert_str(ui.stack_count.text).is_equal("5")
+	assert_str(ui._count_label.text).is_equal("5")
