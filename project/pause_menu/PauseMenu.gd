@@ -26,10 +26,10 @@ func _on_settings_pressed() -> void:
 
 
 func _on_quit_to_main_menu_pressed() -> void:
-	_game.quit_to_main_menu()
+	_game.quit(false)
 	hide()
 
 
 func _on_quit_to_desktop_pressed() -> void:
-	_game.quit_to_desktop()
+	_game.quit(true)
 	hide()

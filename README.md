@@ -13,3 +13,9 @@ Additionally, the game is built using a server-for-one architecture, hoping to a
 Assets are kept in a separate repository for licensing reasons. Guide to set these up for team members coming soon.
 
 To manage addons, [godam](https://github.com/nilsiker/godam) is used. In addition to these addons, the project also uses `TileMapDual` which isn't included as stable in the AssetLib just yet. Handle using manual git installation.
+
+## Attributions
+
+Thistle is using the following third-party licensed assets:
+
+- [Righteous font by Otter and Bench](https://otter-and-bench.itch.io/righteous) under [C.C. BY 4.0](https://creativecommons.org/licenses/by/4.0/) (no changed made)

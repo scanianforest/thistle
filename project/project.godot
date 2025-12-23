@@ -32,7 +32,6 @@ config/icon="res://icon.svg"
 
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 LimboConsole="*res://addons/limbo_console/limbo_console.gd"
-GameChannel="*res://game/GameChannel.gd"
 WorldChannel="*res://world/WorldChannel.gd"
 PlayerChannel="*res://player/PlayerChannel.gd"
 UIChannel="*res://ui/UIChannel.gd"
@@ -53,6 +52,10 @@ settings/test/test_lookup_folder=""
 ui/toolbar/run_overall=true
 ui/inspector/node_collapse=false
 Shortcuts/inspector/run_test_overall=PackedInt32Array(4194338)
+
+[gui]
+
+theme/custom="uid://8hao7e54tpil"
 
 [input]
 

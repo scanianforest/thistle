@@ -1,20 +1,49 @@
-[gd_scene load_steps=11 format=3 uid="uid://c446o4raiy6f0"]
+[gd_scene load_steps=17 format=3 uid="uid://c446o4raiy6f0"]
 
 [ext_resource type="Script" uid="uid://c245vawn22817" path="res://game/Game.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://bwf6mbp1fiqjk" path="res://player/PlayerManager.gd" id="1_vasa2"]
+[ext_resource type="Script" uid="uid://dy80hb0dkwhts" path="res://game/states/Game.State.InMainMenu.gd" id="2_hb504"]
 [ext_resource type="Script" uid="uid://vimpfw778p7s" path="res://network/NetworkManager.gd" id="2_y36n6"]
+[ext_resource type="Script" uid="uid://jk8q6fot0xmn" path="res://game/states/Game.State.Starting.gd" id="3_ee6o4"]
 [ext_resource type="Script" uid="uid://i3ure5y75cj2" path="res://player/PlayerController.gd" id="3_y36n6"]
+[ext_resource type="Script" uid="uid://c5ugphstcptwe" path="res://game/states/Game.State.Joining.gd" id="4_4cobl"]
 [ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world.tscn" id="5_dxrkv"]
+[ext_resource type="Script" uid="uid://cpy7sqlphkoj2" path="res://game/states/Game.State.Running.gd" id="5_ln7ps"]
 [ext_resource type="PackedScene" uid="uid://dwbps7xbx2u6l" path="res://hud/hud.tscn" id="6_dakft"]
+[ext_resource type="Script" uid="uid://g43m5le85ash" path="res://game/states/Game.State.Quitting.gd" id="6_pxxsx"]
 [ext_resource type="PackedScene" uid="uid://dofr2shxk3w7y" path="res://pause_menu/pause_menu.tscn" id="7_j8tme"]
 [ext_resource type="PackedScene" uid="uid://dabvnpoxo3xoe" path="res://main_menu/main_menu.tscn" id="7_u5opy"]
 [ext_resource type="PackedScene" uid="uid://dlc2ruwf2v73l" path="res://ui/build_menu/build_menu.tscn" id="9_j8tme"]
 [ext_resource type="PackedScene" uid="uid://bvyxea5kvytl1" path="res://ui/inventory_panel/inventory_panel.tscn" id="9_l8g03"]
+[ext_resource type="PackedScene" uid="uid://dlpgem2hg4gay" path="res://blackout/blackout.tscn" id="16_ee6o4"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_h7iqs")
 
+[node name="HSM" type="LimboHSM" parent="."]
+
+[node name="InMainMenu" type="LimboState" parent="HSM"]
+script = ExtResource("2_hb504")
+metadata/_custom_type_script = "uid://dy80hb0dkwhts"
+
+[node name="Starting" type="LimboState" parent="HSM"]
+script = ExtResource("3_ee6o4")
+metadata/_custom_type_script = "uid://jk8q6fot0xmn"
+
+[node name="Joining" type="LimboState" parent="HSM"]
+script = ExtResource("4_4cobl")
+metadata/_custom_type_script = "uid://c5ugphstcptwe"
+
+[node name="Running" type="LimboState" parent="HSM"]
+script = ExtResource("5_ln7ps")
+metadata/_custom_type_script = "uid://cpy7sqlphkoj2"
+
+[node name="Quitting" type="LimboState" parent="HSM"]
+script = ExtResource("6_pxxsx")
+metadata/_custom_type_script = "uid://g43m5le85ash"
+
 [node name="NetworkManager" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("2_y36n6")
 
 [node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("_local_player_controller", "_player_world")]
@@ -79,6 +108,7 @@ _game = NodePath("../../../..")
 offset_bottom = -78.0
 
 [node name="HUD" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("6_dakft")]
+visible = false
 
 [node name="BuildMenu" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("9_j8tme")]
 custom_minimum_size = Vector2(600, 400)
@@ -89,3 +119,6 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -150.0
 offset_right = 150.0
+
+[node name="Blackout" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("16_ee6o4")]
+unique_name_in_owner = true

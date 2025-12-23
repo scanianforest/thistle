@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dabvnpoxo3xoe"]
+[gd_scene load_steps=4 format=3 uid="uid://dabvnpoxo3xoe"]
 
+[ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_d3a7t"]
 [ext_resource type="Script" uid="uid://dbg7cpvypx7u4" path="res://main_menu/MainMenu.gd" id="1_oa53l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_d3a7t"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -10,13 +13,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+theme = ExtResource("1_d3a7t")
 script = ExtResource("1_oa53l")
 
 [node name="Margins" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -171.5
+offset_right = 170.0
+offset_bottom = 171.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 20
@@ -34,24 +44,11 @@ theme_override_constants/separation = 12
 [node name="GameTitle" type="Label" parent="Margins/VBoxContainer"]
 layout_mode = 2
 text = "THISTLE"
+label_settings = SubResource("LabelSettings_d3a7t")
 horizontal_alignment = 1
 
 [node name="Separator" type="HSeparator" parent="Margins/VBoxContainer"]
 layout_mode = 2
-
-[node name="CharacterNameEdit" type="LineEdit" parent="Margins/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Adventurer"
-placeholder_text = "Enter character name..."
-alignment = 1
-
-[node name="WorldNameEdit" type="LineEdit" parent="Margins/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "World1"
-placeholder_text = "Enter world name..."
-alignment = 1
 
 [node name="StartButton" type="Button" parent="Margins/VBoxContainer"]
 unique_name_in_owner = true
@@ -60,7 +57,100 @@ layout_mode = 2
 disabled = true
 text = "START"
 
+[node name="JoinContainer" type="HBoxContainer" parent="Margins/VBoxContainer"]
+layout_mode = 2
+
+[node name="JoinEdit" type="LineEdit" parent="Margins/VBoxContainer/JoinContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "127.0.0.1:9339"
+placeholder_text = "127.0.0.1:9339"
+alignment = 1
+
+[node name="JoinButton" type="Button" parent="Margins/VBoxContainer/JoinContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "JOIN"
+
 [node name="QuitButton" type="Button" parent="Margins/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "QUIT"
+
+[node name="CharacterContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 406.0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CharacterContainer"]
+layout_mode = 2
+
+[node name="CharacterListLabel" type="Label" parent="CharacterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Characters"
+
+[node name="HSeparator2" type="HSeparator" parent="CharacterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NewCharacterBox" type="HBoxContainer" parent="CharacterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CharacterNameEdit" type="LineEdit" parent="CharacterContainer/VBoxContainer/NewCharacterBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Character name"
+
+[node name="CreateCharacterButton" type="Button" parent="CharacterContainer/VBoxContainer/NewCharacterBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Create"
+
+[node name="CharacterList" type="ItemList" parent="CharacterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+auto_height = true
+
+[node name="WorldContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -406.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WorldContainer"]
+layout_mode = 2
+
+[node name="WorldListLabel" type="Label" parent="WorldContainer/VBoxContainer"]
+layout_mode = 2
+text = "Worlds"
+
+[node name="HSeparator2" type="HSeparator" parent="WorldContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NewWorldBox" type="HBoxContainer" parent="WorldContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="WorldNameEdit" type="LineEdit" parent="WorldContainer/VBoxContainer/NewWorldBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "World name"
+
+[node name="CreateWorldButton" type="Button" parent="WorldContainer/VBoxContainer/NewWorldBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Create"
+
+[node name="WorldList" type="ItemList" parent="WorldContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+auto_height = true

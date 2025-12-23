@@ -60,6 +60,8 @@ func _ready() -> void:
 	hsm.initialize(self)
 	hsm.set_active(true)
 
+	$MainCamera.enabled = is_multiplayer_authority()
+
 
 #region Base
 func possess() -> void:

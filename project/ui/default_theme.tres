@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://8hao7e54tpil"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://8hao7e54tpil"]
+
+[ext_resource type="FontFile" uid="uid://8a78abg4w4dx" path="res://ui/fonts/PressStart2P-Regular.ttf" id="1_vos2p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5boi"]
 bg_color = Color(0.14406255, 0.14406255, 0.14406249, 1)
@@ -8,6 +10,8 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [resource]
+default_font = ExtResource("1_vos2p")
+default_font_size = 16
 MarginContainer/constants/margin_bottom = 20
 MarginContainer/constants/margin_left = 20
 MarginContainer/constants/margin_right = 20

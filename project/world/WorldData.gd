@@ -11,17 +11,20 @@ class Metadata:
 
 	var name: String = "Unnamed World"
 	var version: String = "1"
+	var last_loaded: float = Time.get_unix_time_from_system()
 
 	func to_dict() -> Dictionary:
 		return {
 			"name": name,
 			"version": version,
+			"last_loaded": last_loaded,
 		}
 
 	static func from_dict(dict: Dictionary) -> Metadata:
 		var metadata = Metadata.new()
 		metadata.name = dict.get("name", "Unnamed World")
 		metadata.version = dict.get("version", "1")
+		metadata.last_loaded = dict.get("last_loaded", Time.get_unix_time_from_system())
 		return metadata
 
 
