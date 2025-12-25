@@ -9,7 +9,7 @@ signal stopped
 @onready var main_menu_state: Game_State_InMainMenu = $HSM/InMainMenu
 @onready var starting_state: Game_State_Starting = $HSM/Starting
 @onready var joining_state: Game_State_Joining = $HSM/Joining
-@onready var running_state: Game_State_Running = $HSM/Running
+@onready var ingame_state: Game_State_InGame = $HSM/InGame
 @onready var quitting_state: Game_State_Quitting = $HSM/Quitting
 
 @onready var world: World = %World
@@ -37,24 +37,35 @@ func _ready() -> void:
 	hsm.add_transition(main_menu_state, joining_state, &"to_joining")
 	hsm.add_transition(main_menu_state, quitting_state, &"to_quitting")
 
-	hsm.add_transition(starting_state, running_state, &"to_running")
+	hsm.add_transition(starting_state, ingame_state, &"to_ingame")
 	hsm.add_transition(starting_state, main_menu_state, &"to_main_menu")
 
-	hsm.add_transition(joining_state, running_state, &"to_running")
+	hsm.add_transition(joining_state, ingame_state, &"to_ingame")
 	hsm.add_transition(joining_state, main_menu_state, &"to_main_menu")
 
-	hsm.add_transition(running_state, quitting_state, &"to_quitting")
-
-	hsm.add_transition(quitting_state, main_menu_state, &"to_main_menu")
+	hsm.add_transition(ingame_state, quitting_state, &"to_quitting")
+	hsm.add_transition(ingame_state, main_menu_state, &"to_main_menu")
 
 	hsm.initialize(self)
 	hsm.set_active(true)
 
-	hsm.add_event_handler(&"player_data_set", _on_player_data_set)
-	hsm.add_event_handler(&"world_data_set", _on_world_data_set)
+	hsm.add_event_handler(&"player_loaded", _on_player_data_loaded)
+	hsm.add_event_handler(&"world_loaded", _on_world_data_loaded)
 	hsm.add_event_handler(&"started", _on_started)
+	hsm.add_event_handler(&"stopped", _on_stopped)
 	hsm.add_event_handler(&"host", _on_host)
+	hsm.add_event_handler(&"join", _on_join)
 	hsm.add_event_handler(&"reveal", _on_reveal)
+
+
+func ready_for_start() -> bool:
+	Log.pr(
+		(
+			"Checking if ready for start: Player Data: %s, World Data: %s"
+			% [player_manager.local_player_data != null, world.data != null]
+		)
+	)
+	return player_manager.local_player_data != null and world.data != null
 
 
 func start() -> void:
@@ -69,9 +80,7 @@ func create_character(player_name: String) -> void:
 
 
 func create_world(world_name: String) -> void:
-	var data = WorldData.new()
-	data.metadata.name = world_name
-	WorldSaveFileAccess.save(world_name, data)
+	world.create_new(world_name)
 
 
 func load_player(player_name: String) -> void:
@@ -102,20 +111,32 @@ func _register_console_commands() -> void:
 	)
 
 
-func _on_player_data_set(data: PlayerData) -> void:
+func _on_player_data_loaded(data: PlayerData) -> bool:
 	player_manager.local_player_data = data
+	Log.pr("Player data set: %s" % data.metadata.name)
+	return true
 
 
-func _on_world_data_set(data: WorldData) -> void:
+func _on_world_data_loaded(data: WorldData) -> bool:
 	world.data = data
+	Log.pr("World data set: %s" % data.metadata.name)
+	return true
 
 
-func _on_host(ip_port_dict: Dictionary) -> void:
-	network_manager.host(ip_port_dict.ip, ip_port_dict.port)
+func _on_host(dict: Dictionary) -> bool:
+	network_manager.host(dict.port, dict.max_clients)
+	player_manager.spawn_local_player()
+
+	return true
 
 
 func _on_started() -> bool:
-	started.emit()
+	start_game()
+	return true
+
+
+func _on_stopped() -> bool:
+	stop_game()
 	return true
 
 
@@ -132,14 +153,35 @@ func _load_player(player_data: PlayerData) -> void:
 	player_manager.local_player_data = player_data
 
 
-func start_game() -> void:
-	network_manager.host()
+func _on_join(ip_port_dict: Dictionary) -> bool:
+	var ip: String = ip_port_dict.ip
+	var port: int = ip_port_dict.port
+
+	network_manager.join(ip, port)
 
 	world.show()
 	world.unpause()
-	player_manager.spawn_local_player()
 
 	started.emit()
+	return true
+
+
+func start_game() -> void:
+	world.show()
+	world.unpause()
+
+	started.emit()
+
+
+func stop_game() -> void:
+	player_manager.despawn_player()
+	world.pause()
+	world.hide()
+	world.clear()
+
+	network_manager.leave()
+
+	stopped.emit()
 
 
 func join(ip: String, port: int = 7890) -> void:

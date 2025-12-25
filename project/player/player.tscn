@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://cbe5o8ii1in3w"]
+[gd_scene load_steps=38 format=4 uid="uid://cbe5o8ii1in3w"]
 
 [ext_resource type="Script" uid="uid://daao54ylb0umw" path="res://player/Player.gd" id="1_rkbax"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_hg6s5"]
@@ -23,12 +23,18 @@
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("PawnSprite/AnimationPlayer:current_animation")
+properties/1/path = NodePath("PawnSprite:flip_h")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("PawnSprite:flip_h")
+properties/2/path = NodePath("Nameplate:text")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("PawnSprite/AnimationPlayer:current_animation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("PawnSprite:frame")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ebec5"]
 var/attacker/name = &"attacker"
@@ -306,6 +312,9 @@ _data = {
 &"walk": SubResource("Animation_g1dw6")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_e7oew"]
+font_size = 8
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "health", "movement", "attacker", "placer", "inventory", "actionbar", "equipment")]
 script = ExtResource("1_rkbax")
 sprite = NodePath("PawnSprite")
@@ -423,3 +432,13 @@ script = ExtResource("14_32hag")
 
 [node name="InteractorComponent" parent="DirectionRotationComponent" node_paths=PackedStringArray("_parent") instance=ExtResource("7_boad6")]
 _parent = NodePath("../..")
+
+[node name="Nameplate" type="Label" parent="."]
+offset_left = -35.0
+offset_top = -29.0
+offset_right = 105.0
+offset_bottom = -13.0
+scale = Vector2(0.5, 0.5)
+text = "A"
+label_settings = SubResource("LabelSettings_e7oew")
+horizontal_alignment = 1

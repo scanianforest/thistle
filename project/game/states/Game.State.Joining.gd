@@ -7,8 +7,12 @@ func _enter() -> void:
 
 	Log.pr("Joining game session at %s:%d..." % [address, port])
 
-	get_tree().create_timer(1.0).timeout.connect(
-		func() -> void:
-			dispatch(&"error_occurred", "Failed to join the game session.")
-			dispatch(&"to_main_menu")
-	)
+	var player_data: PlayerData = blackboard.get_var("player_data")
+
+	if player_data == null:
+		Log.err("No player data found in blackboard!")
+		dispatch(&"to_main_menu")
+		return
+
+	dispatch(&"join", {"ip": address, "port": port})
+	dispatch(&"to_ingame")

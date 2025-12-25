@@ -55,21 +55,25 @@ func _refresh_world_list() -> void:
 func _on_character_selected(index: int) -> void:
 	var character_name: String = characters.get_item_text(index)
 	_game.load_player(character_name)
+	_start_button.disabled = not _game.ready_for_start()
 
 
 func _on_world_selected(index: int) -> void:
 	var world_name: String = worlds.get_item_text(index)
 	_game.load_world(world_name)
+	_start_button.disabled = not _game.ready_for_start()
 
 
 func _on_create_character_button_pressed() -> void:
 	var character_name: String = character_name_edit.text
 	_game.create_character(character_name)
+	_refresh_character_list()
 
 
 func _on_create_world_button_pressed() -> void:
 	var world_name: String = world_name_edit.text
 	_game.create_world(world_name)
+	_refresh_world_list()
 
 
 func _update_start_button_state() -> void:

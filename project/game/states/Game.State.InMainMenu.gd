@@ -9,6 +9,7 @@ func _setup() -> void:
 
 
 func _enter() -> void:
+	dispatch(&"stopped")
 	dispatch(&"reveal")
 
 
@@ -31,7 +32,7 @@ func _on_new_world(world_name: String) -> bool:
 func _on_load_player(player_name: String) -> bool:
 	if PlayerSaveFileAccess.exists(player_name):
 		var player_data = PlayerSaveFileAccess.load(player_name)
-		dispatch("player_loaded", player_data)
+		dispatch(&"player_loaded", player_data)
 	else:
 		Log.warn("Player save file does not exist: %s" % player_name)
 	return true
@@ -40,7 +41,7 @@ func _on_load_player(player_name: String) -> bool:
 func _on_load_world(world_name: String) -> bool:
 	if WorldSaveFileAccess.exists(world_name):
 		var world_data = WorldSaveFileAccess.load(world_name)
-		dispatch("world_loaded", world_data)
+		dispatch(&"world_loaded", world_data)
 	else:
 		Log.warn("World save file does not exist: %s" % world_name)
 	return true

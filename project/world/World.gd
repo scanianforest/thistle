@@ -60,7 +60,7 @@ func unload() -> void:
 	clear()
 
 
-func start_new(world_name: String) -> void:
+func create_new(world_name: String) -> void:
 	data = WorldData.new()
 	data.metadata.name = world_name
 	Log.pr("New world started: ", data.to_dict())

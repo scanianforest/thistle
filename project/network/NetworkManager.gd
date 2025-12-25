@@ -34,7 +34,15 @@ func leave() -> void:
 		Log.warn("No multiplayer peer to disconnect")
 		return
 
-	multiplayer.multiplayer_peer = null
+	if multiplayer.is_server():
+		Log.pr("Shutting down server")
+		for id in multiplayer.get_peers():
+			Log.pr("Disconnecting peer ID: %d" % id)
+			multiplayer.multiplayer_peer.disconnect_peer(id)
+	else:
+		Log.pr("Disconnecting from server")
+
+	multiplayer.multiplayer_peer.close()
 
 
 func _setup_client_connection_signals() -> void:
@@ -56,7 +64,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_server_disconnected() -> void:
 	Log.pr("Disconnected from server")
-	_peer = null
+	multiplayer.multiplayer_peer = null
 
 
 @rpc("any_peer", "call_remote")

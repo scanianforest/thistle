@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://i3ure5y75cj2" path="res://player/PlayerController.gd" id="3_y36n6"]
 [ext_resource type="Script" uid="uid://c5ugphstcptwe" path="res://game/states/Game.State.Joining.gd" id="4_4cobl"]
 [ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world.tscn" id="5_dxrkv"]
-[ext_resource type="Script" uid="uid://cpy7sqlphkoj2" path="res://game/states/Game.State.Running.gd" id="5_ln7ps"]
+[ext_resource type="Script" uid="uid://cpy7sqlphkoj2" path="res://game/states/Game.State.InGame.gd" id="5_ln7ps"]
 [ext_resource type="PackedScene" uid="uid://dwbps7xbx2u6l" path="res://hud/hud.tscn" id="6_dakft"]
 [ext_resource type="Script" uid="uid://g43m5le85ash" path="res://game/states/Game.State.Quitting.gd" id="6_pxxsx"]
 [ext_resource type="PackedScene" uid="uid://dofr2shxk3w7y" path="res://pause_menu/pause_menu.tscn" id="7_j8tme"]
@@ -34,7 +34,7 @@ metadata/_custom_type_script = "uid://jk8q6fot0xmn"
 script = ExtResource("4_4cobl")
 metadata/_custom_type_script = "uid://c5ugphstcptwe"
 
-[node name="Running" type="LimboState" parent="HSM"]
+[node name="InGame" type="LimboState" parent="HSM"]
 script = ExtResource("5_ln7ps")
 metadata/_custom_type_script = "uid://cpy7sqlphkoj2"
 
@@ -46,14 +46,19 @@ metadata/_custom_type_script = "uid://g43m5le85ash"
 unique_name_in_owner = true
 script = ExtResource("2_y36n6")
 
-[node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("_local_player_controller", "_player_world")]
+[node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("_local_player_controller", "_player_spawner", "_player_world")]
 unique_name_in_owner = true
 script = ExtResource("1_vasa2")
 _local_player_controller = NodePath("PlayerController")
+_player_spawner = NodePath("PlayerSpawner")
 _player_world = NodePath("../CanvasLayer/WorldViewportContainer/WorldViewport/World")
 
 [node name="PlayerController" type="Node" parent="PlayerManager"]
 script = ExtResource("3_y36n6")
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="PlayerManager"]
+_spawnable_scenes = PackedStringArray("uid://cbe5o8ii1in3w")
+spawn_path = NodePath("../../CanvasLayer/WorldViewportContainer/WorldViewport/World")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -108,7 +113,6 @@ _game = NodePath("../../../..")
 offset_bottom = -78.0
 
 [node name="HUD" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("6_dakft")]
-visible = false
 
 [node name="BuildMenu" parent="CanvasLayer/UIContainer/UIViewport" instance=ExtResource("9_j8tme")]
 custom_minimum_size = Vector2(600, 400)

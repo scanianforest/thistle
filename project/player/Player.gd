@@ -22,7 +22,6 @@ var data: PlayerData = PlayerData.new():
 	set(value):
 		if value == null:
 			return
-		Log.pr("Setting player data")
 		data = value
 		global_position = data.position
 		inventory.data = data.inventory_data
@@ -30,9 +29,6 @@ var data: PlayerData = PlayerData.new():
 
 
 func _ready() -> void:
-	UIChannel.set_inventory.call_deferred(inventory)
-	UIChannel.set_player.call_deferred(self)
-
 	health.died.connect(_on_health_died)
 	health.health_changed.connect(_on_health_changed)
 
@@ -61,19 +57,10 @@ func _ready() -> void:
 	hsm.set_active(true)
 
 	$MainCamera.enabled = is_multiplayer_authority()
+	$Nameplate.text = data.metadata.name
 
 
 #region Base
-func possess() -> void:
-	Log.info("Player possessed")
-	PlayerChannel.possess(self)
-
-
-func unpossess() -> void:
-	Log.info("Player unpossessed")
-	PlayerChannel.unpossess()
-
-
 func handle_input(event: InputEvent) -> void:
 	if hsm.dispatch("input", event):
 		get_viewport().set_input_as_handled()

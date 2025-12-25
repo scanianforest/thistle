@@ -9,4 +9,5 @@ func _enter() -> void:
 		dispatch(&"to_main_menu")
 		return
 
-	dispatch(&"to_running")
+	dispatch(&"host", {"port": 7890, "max_clients": 32})
+	dispatch(&"to_ingame")
