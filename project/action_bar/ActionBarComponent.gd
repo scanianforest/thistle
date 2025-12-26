@@ -8,7 +8,8 @@ var selected_slot_index: int
 
 
 func _ready() -> void:
-	UIChannel.set_actionbar(self)
+	if is_multiplayer_authority():
+		UIChannel.set_actionbar(self)
 
 	slots.resize(10)
 

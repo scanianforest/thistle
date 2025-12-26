@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr0qpmi06o5u7"]
+
+[ext_resource type="Script" uid="uid://d0kh7vhanfdk2" path="res://ui/chat/Chat.gd" id="1_3j8to"]
+
+[node name="Chat" type="VBoxContainer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -20.0
+offset_right = 40.0
+grow_vertical = 0
+alignment = 2
+script = ExtResource("1_3j8to")
+
+[node name="Log" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Input" type="LineEdit" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+placeholder_text = "Enter message..."

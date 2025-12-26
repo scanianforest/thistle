@@ -37,9 +37,11 @@ PlayerChannel="*res://player/PlayerChannel.gd"
 UIChannel="*res://ui/UIChannel.gd"
 ItemSpawner="*res://item_spawner/ItemSpawnerComponent.gd"
 PlaceableSpawner="*res://placeables/PlaceableSpawner.gd"
+Lobby="*res://networking/Lobby.gd"
 
 [display]
 
+window/size/always_on_top=true
 window/stretch/mode="canvas_items"
 
 [editor_plugins]
@@ -174,9 +176,10 @@ toggle_build_menu={
 2d_physics/layer_4="Interaction"
 2d_physics/layer_5="Vacuum"
 
-[physics]
+[log_gd]
 
-common/physics_interpolation=true
+config/log_level=0
+config/show_log_level_selector=true
 
 [rendering]
 

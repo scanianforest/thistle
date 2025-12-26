@@ -1,4 +1,4 @@
-class_name Game extends Node2D
+class_name Game extends CanvasLayer
 
 enum PauseMode { PAUSED_BY_GAME, PAUSED_BY_PLAYER, UNPAUSED }
 
@@ -14,12 +14,14 @@ signal stopped
 
 @onready var world: World = %World
 @onready var player_manager: PlayerManager = %PlayerManager
-@onready var network_manager: NetworkManager = %NetworkManager
 @onready var blackout: Blackout = %Blackout
 
 
 func _ready() -> void:
+	multiplayer.server_disconnected.connect(_on_server_disconnected)
+
 	_register_console_commands()
+
 	WorldSaveFileAccess.create_world_save_directory()
 	PlayerSaveFileAccess.create_player_save_directory()
 
@@ -124,8 +126,7 @@ func _on_world_data_loaded(data: WorldData) -> bool:
 
 
 func _on_host(dict: Dictionary) -> bool:
-	network_manager.host(dict.port, dict.max_clients)
-	player_manager.spawn_local_player()
+	Lobby.host(dict.port, dict.max_clients)
 
 	return true
 
@@ -157,7 +158,7 @@ func _on_join(ip_port_dict: Dictionary) -> bool:
 	var ip: String = ip_port_dict.ip
 	var port: int = ip_port_dict.port
 
-	network_manager.join(ip, port)
+	Lobby.join(ip, port)
 
 	world.show()
 	world.unpause()
@@ -179,7 +180,7 @@ func stop_game() -> void:
 	world.hide()
 	world.clear()
 
-	network_manager.leave()
+	Lobby.leave()
 
 	stopped.emit()
 
@@ -221,7 +222,11 @@ func _quit_to_desktop() -> void:
 func save() -> void:
 	Log.pr("saving game...")
 
-	player_manager.save_local_player()
+	player_manager.save()
 
-	if multiplayer.is_server():
+	if world.is_multiplayer_authority():
 		world.save()
+
+
+func _on_server_disconnected() -> void:
+	quit(false)

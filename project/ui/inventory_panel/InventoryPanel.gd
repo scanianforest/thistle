@@ -23,6 +23,7 @@ func _ready() -> void:
 
 
 func set_player_inventory(inventory: InventoryComponent) -> void:
+	Log.pr("Setting player inventory in UI: %s" % inventory)
 	_player_inventory.inventory_comp = inventory
 
 

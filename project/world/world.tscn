@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://gx2ryayaffn8"]
+[gd_scene load_steps=16 format=4 uid="uid://gx2ryayaffn8"]
 
 [ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/World.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
@@ -11,8 +11,6 @@
 [ext_resource type="Script" uid="uid://cnlkitvwdtavd" path="res://pickups_manager/PickupsManager.gd" id="8_ai45w"]
 [ext_resource type="Script" uid="uid://bed3t8w2on2gs" path="res://placeables/PlaceablesManager.gd" id="10_fyhu2"]
 [ext_resource type="PackedScene" uid="uid://mn3qeaj6fses" path="res://bush/bush.tscn" id="11_ov2xu"]
-[ext_resource type="PackedScene" uid="uid://dg6htjj423ta0" path="res://pickup/item_pickup.tscn" id="12_mad0u"]
-[ext_resource type="Resource" uid="uid://b4ir2wycg356t" path="res://itemization/items/item_wood.tres" id="13_ocfjn"]
 [ext_resource type="PackedScene" uid="uid://2d6wwf70r8jc" path="res://floating_item/floating_item.tscn" id="14_dqqhb"]
 [ext_resource type="Resource" uid="uid://5r105pyybowx" path="res://itemization/items/item_stone.tres" id="15_b2suy"]
 
@@ -170,23 +168,16 @@ unique_name_in_owner = true
 y_sort_enabled = true
 script = ExtResource("8_ai45w")
 
-[node name="Placeables" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("10_fyhu2")
-
-[node name="ItemPickup" parent="." instance=ExtResource("12_mad0u")]
-position = Vector2(28, 67)
-
-[node name="ItemPickup2" parent="." instance=ExtResource("12_mad0u")]
-position = Vector2(42, 72)
-item_resource = ExtResource("13_ocfjn")
-
-[node name="FloatingItem" parent="." instance=ExtResource("14_dqqhb")]
+[node name="FloatingItem" parent="Pickups" instance=ExtResource("14_dqqhb")]
 position = Vector2(31, 96)
 resource = ExtResource("15_b2suy")
 
-[node name="FloatingItem2" parent="." instance=ExtResource("14_dqqhb")]
+[node name="FloatingItem2" parent="Pickups" instance=ExtResource("14_dqqhb")]
 position = Vector2(47, 101)
+
+[node name="Placeables" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("10_fyhu2")
 
 [node name="Bush" parent="." instance=ExtResource("11_ov2xu")]
 position = Vector2(8, 26)
@@ -205,3 +196,7 @@ position = Vector2(24, 38)
 
 [node name="Bush6" parent="." instance=ExtResource("11_ov2xu")]
 position = Vector2(8, 38)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+zoom = Vector2(5, 5)

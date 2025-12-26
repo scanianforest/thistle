@@ -29,6 +29,10 @@ var data: PlayerData = PlayerData.new():
 
 
 func _ready() -> void:
+	if is_multiplayer_authority():
+		UIChannel.set_player.call_deferred(self)
+		UIChannel.set_inventory.call_deferred(inventory)
+
 	health.died.connect(_on_health_died)
 	health.health_changed.connect(_on_health_changed)
 

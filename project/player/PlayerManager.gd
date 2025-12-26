@@ -16,46 +16,44 @@ var local_player_data: PlayerData
 
 
 func _ready() -> void:
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
-	multiplayer.connected_to_server.connect(_on_connected_to_server)
-
-	_player_spawner.spawned.connect(_on_player_spawned)
-
 	_defer_ready.call_deferred()
+
+	Lobby.player_connected.connect(_on_player_connected)
+	Lobby.player_disconnected.connect(_on_player_disconnected)
 
 
 func _defer_ready() -> void:
-	if multiplayer.is_server():
-		_player_spawner.spawn_path = _player_world.entities.get_path()
-	else:
-		_player_spawner.queue_free()
+	_player_spawner.spawn_path = _player_world.entities.get_path()
 
 
-func _on_player_spawned(pawn: Pawn2D) -> void:
-	Log.pr("Player spawned: %s" % pawn)
-	if pawn.is_multiplayer_authority():
-		Log.pr("Possessing local player pawn: %s" % pawn)
-		possess_player(pawn)
-
-
-func spawn_local_player() -> Pawn2D:
+func spawn(id: int, info: Lobby.PlayerInfo) -> Player:
 	if local_player_data == null:
 		Log.err("No local player data to spawn player from")
 		return null
 
-	var pawn = _spawn_player(local_player_data, multiplayer.get_unique_id())
+	var player: Player
 
-	possess_player(pawn)
+	var uid = multiplayer.get_unique_id()
+	Log.pr(uid)
 
-	UIChannel.set_player(pawn)
-	UIChannel.set_inventory(pawn.inventory)
+	if id == multiplayer.get_unique_id():
+		player = _spawn_player(local_player_data, id)
+		possess_player(player)
+		Log.pr("Local player %s spawned and possessed" % local_player_data.metadata.name)
+	else:
+		player = _spawn_player(PlayerData.new(), id)
+		player.name = info.name
+		Log.pr("Remote player %s spawned for id %d" % [info.name, id])
 
-	Log.pr("Local player %s spawned and possessed" % local_player_data.metadata.name)
-	return pawn
+	player.dropped_item.connect(_on_player_dropped_item)
+
+	return player
 
 
-func save_local_player() -> void:
+func save() -> void:
+	if not is_multiplayer_authority():
+		return
+
 	if _player_node == null:
 		Log.warn("No local player to save")
 		return
@@ -65,61 +63,11 @@ func save_local_player() -> void:
 	Log.info("Local player %s saved" % saved_data.metadata.name)
 
 
-@rpc("any_peer", "call_remote")
-func spawn_player(player_data: Dictionary, id: int) -> Pawn2D:
-	var player = PlayerData.from_dict(player_data)
-	Log.pr("Spawning remote player %s with ID %d" % [player.name, id])
-	return _spawn_player(player, id)
-
-
-func _spawn_player(player: PlayerData, network_id: int = 1) -> Pawn2D:
-	_player_node = _player_scene.instantiate()
-	_player_node.name = "Player_%s_%s" % [player.name, network_id]
-	_player_node.data = player
-	_player_node.set_multiplayer_authority(network_id)
-
-	if _player_world:
-		_player_world.entities.add_child(_player_node)
-	else:
-		Log.warn("No world node set, spawning as child of self")
-		add_child(_player_node)
-
-	spawned.emit(player)
-
-	_player_node.dropped_item.connect(_on_player_dropped_item)
-
-	return _player_node
-
-
-func _on_peer_connected(id: int) -> void:
-	Log.pr("Peer connected with ID: %d" % id)
-
-
-func _on_peer_disconnected(id: int) -> void:
-	Log.pr("Peer disconnected with ID: %d" % id)
-	despawn_remote_player(id)
-
-
-func _on_connected_to_server() -> void:
-	spawn_local_player()
-	spawn_player.rpc(local_player_data.to_dict(), multiplayer.get_unique_id())
-
-
 func despawn_player() -> void:
 	if _player_node:
-		_player_node.dropped_item.disconnect(_on_player_dropped_item)
 		_player_node.queue_free()
 		_player_node = null
 		despawned.emit()
-
-
-@rpc("any_peer", "call_remote")
-func despawn_remote_player(id: int) -> void:
-	for child in _player_world.entities.get_children():
-		if child is Player and child.get_multiplayer_authority() == id:
-			child.queue_free()
-			despawned.emit()
-			return
 
 
 func possess_player(pawn: Pawn2D) -> void:
@@ -134,5 +82,40 @@ func unpossess_player() -> void:
 	unpossessed.emit()
 
 
+func _spawn_player(player: PlayerData, network_id: int = 1) -> Player:
+	var player_node = _player_scene.instantiate()
+	player_node.name = "Player_%s_%s" % [player.name, network_id]
+	player_node.data = player
+	player_node.set_multiplayer_authority(network_id)
+
+	if _player_world:
+		_player_world.entities.add_child(player_node)
+	else:
+		Log.warn("No world node set, spawning as child of self")
+		add_child(player_node)
+
+	spawned.emit(player)
+
+	return player_node
+
+
 func _on_player_dropped_item(item: ItemData, count: int) -> void:
-	ItemSpawner.spawn_item(item, count, _player_world.pickups, _player_node.global_position)
+	var pickup: ItemPickupData = ItemPickupData.new()
+	pickup.item = item
+	pickup.position = _local_player_controller.possessed_pawn.global_position
+	if multiplayer.is_server():
+		_player_world.pickups.spawn_item_pickup(pickup)
+	else:
+		_player_world.pickups.rpc_spawn_item_pickup.rpc_id(1, pickup.to_dict())
+
+
+#region Signals
+func _on_player_connected(id: int, info: Lobby.PlayerInfo) -> void:
+	Log.pr("PlayerManager detected player connected with ID %d and name %s" % [id, info.name])
+	spawn(id, info)
+
+
+func _on_player_disconnected(id: int, info: Lobby.PlayerInfo) -> void:
+	Log.pr("PlayerManager detected player disconnected with ID %d and name %s" % [id, info.name])
+
+#endregion Signals
