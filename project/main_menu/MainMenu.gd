@@ -78,7 +78,7 @@ func _on_create_world_button_pressed() -> void:
 
 func _update_start_button_state() -> void:
 	_start_button.disabled = (
-		_game.player_manager.local_player_data == null or _game.world.data == null
+		_game.player_manager.character_data == null or _game.world.data == null
 	)
 
 

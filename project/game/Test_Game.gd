@@ -17,5 +17,3 @@ func test_game_lifecycle() -> void:
 	sut.start()
 
 	await assert_signal(monitor).is_emitted("started")
-
-	sut.quit_to_main_menu()

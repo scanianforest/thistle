@@ -52,5 +52,5 @@ static func from_dict(dict: Dictionary) -> PlayerData:
 		dict.get("actionbar_data", ActionBarData.new().to_dict())
 	)
 
-	Log.pr("Deserialized player data: ", data.to_dict())
+	Log.debug("Deserialized player data: ", data.to_dict())
 	return data

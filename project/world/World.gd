@@ -10,7 +10,7 @@ var data: WorldData = WorldData.new():
 		if not data:
 			return
 
-		Log.pr("Setting ground tiles")
+		Log.info("Setting ground tiles")
 		for coord_string in data.ground_tiles.keys():
 			var tile = data.ground_tiles[coord_string]
 			var coord: PackedStringArray = coord_string.split(",")
@@ -37,7 +37,7 @@ static func load_existing_world(world_name: String) -> WorldData:
 	if loaded_data != null:
 		return loaded_data
 	else:
-		Log.pr("No saved world found with name: ", world_name)
+		Log.err("No saved world found with name: ", world_name)
 		return null
 
 
@@ -63,19 +63,25 @@ func unload() -> void:
 func create_new(world_name: String) -> void:
 	data = WorldData.new()
 	data.metadata.name = world_name
-	Log.pr("New world started: ", data.to_dict())
+	Log.info("World %s created." % world_name)
+	Log.debug(data.to_dict())
 
 
-func load_existing(world_name: String) -> void:
+func load(world_name: String) -> void:
 	var loaded_data = WorldSaveFileAccess.load(world_name)
 	if loaded_data != null:
 		data = loaded_data
-		Log.pr("World loaded: ", data.to_dict())
+		Log.info("World %s loaded." % world_name)
+		Log.debug(data.to_dict())
 	else:
-		Log.pr("No saved world found with name: ", world_name)
+		Log.err("No saved world found with name: ", world_name)
 
 
 func save() -> void:
+	if not is_multiplayer_authority():
+		Log.warn("%d is not authority, skipping world save" % multiplayer.get_unique_id())
+		return
+
 	if data == null:
 		Log.warn("No world data to save")
 		return
@@ -84,7 +90,8 @@ func save() -> void:
 	entities.save(data)
 
 	WorldSaveFileAccess.save(data.metadata.name, data)
-	print("World saved: ", data.to_dict())
+	Log.info("World %s saved." % data.metadata.name)
+	Log.debug(data.to_dict())
 
 
 func pause() -> void:
@@ -98,4 +105,4 @@ func unpause() -> void:
 func _on_ground_tile_changed(x: int, y: int, new_tile: int) -> void:
 	var coord = "%d,%d" % [x, y]
 	data.ground_tiles[coord] = new_tile
-	Log.pr("Ground tile changed at ", coord, " to ", new_tile)
+	Log.debug("Ground tile changed at ", coord, " to ", new_tile)

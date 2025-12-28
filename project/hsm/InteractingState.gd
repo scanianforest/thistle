@@ -13,7 +13,6 @@ func _setup() -> void:
 
 
 func _enter() -> void:
-	Log.pr("Entering InteractingState")
 	var interaction: Interaction = blackboard.get_var("interaction")
 
 	interaction.start(interactor)
@@ -35,21 +34,17 @@ func _exit() -> void:
 
 
 func _timed_interaction(interaction: Interaction) -> void:
-	Log.pr("Starting timed interaction: %s" % interaction)
-
 	await interaction.resolved
 
 	dispatch("to_idle")
 
 
-func _continuous_interaction(interaction: Interaction) -> void:
-	Log.pr("Starting continuous interaction: %s" % interaction)
+func _continuous_interaction(_interaction: Interaction) -> void:
 	await interactor.stopped
 	dispatch("to_idle")
 
 
-func _instant_interaction(interaction: Interaction) -> void:
-	Log.pr("Resolving interaction: %s" % interaction)
+func _instant_interaction(_interaction: Interaction) -> void:
 	interactor.resolve()
 	dispatch("to_idle")
 

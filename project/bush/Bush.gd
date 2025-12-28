@@ -13,7 +13,6 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body is Player:
-		Log.pr("Player entered bush area")
 		_tween = create_tween()
 		_tween.tween_property($Sprite, "modulate:a", 0.6, 0.5)
 		_jiggle = create_tween()
@@ -25,6 +24,5 @@ func _on_body_entered(body: Node) -> void:
 
 func _on_body_exited(body: Node) -> void:
 	if body is Player:
-		Log.pr("Player exited bush area")
 		_tween = create_tween()
 		_tween.tween_property($Sprite, "modulate:a", 1.0, 0.5)

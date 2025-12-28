@@ -20,6 +20,7 @@ static func save(world_name: String, data: WorldData) -> void:
 	if file:
 		file.store_var(data.to_dict())
 		file.close()
+		Log.debug("World data saved successfully to %s" % path)
 	else:
 		Log.err("Failed to open file for saving: %s" % path)
 
@@ -36,6 +37,8 @@ static func load(world_name: String) -> WorldData:
 	var world_data_dict: Dictionary = file.get_var()
 	var world_data: WorldData = WorldData.from_dict(world_data_dict)
 	file.close()
+
+	Log.debug("World data loaded successfully from %s" % path)
 
 	return world_data
 

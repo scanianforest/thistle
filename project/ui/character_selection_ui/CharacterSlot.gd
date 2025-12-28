@@ -37,6 +37,5 @@ func deselect() -> void:
 
 
 func _on_gui_input(event: InputEvent) -> void:
-	Log.pr(event)
 	if event is InputEventMouseButton and event.pressed:
 		select()

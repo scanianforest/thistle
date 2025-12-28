@@ -38,5 +38,5 @@ func to_dict() -> Dictionary:
 
 static func from_dict(data: Dictionary) -> ItemData:
 	var res = ResourceLoader.load(data.get("resource", null))
-	Log.pr("Deserialized item data: ", data)
+	Log.debug("Deserialized item data: ", data)
 	return ItemData.new(res)

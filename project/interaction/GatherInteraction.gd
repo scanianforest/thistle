@@ -6,7 +6,6 @@ var _timer: SceneTreeTimer
 
 
 func start(interactor: InteractorComponent) -> void:
-	Log.pr("Starting GatherInteraction")
 	started.emit()
 
 	_timer = get_tree().create_timer(interaction_resource.time)

@@ -327,6 +327,7 @@ font_size = 8
 
 [sub_resource type="Resource" id="Resource_bjvpn"]
 script = ExtResource("20_x7c3f")
+duration = 0.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "health", "movement", "attacker", "placer", "inventory", "actionbar", "equipment")]
 script = ExtResource("1_rkbax")

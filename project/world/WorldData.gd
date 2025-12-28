@@ -45,5 +45,5 @@ static func from_dict(dict: Dictionary) -> WorldData:
 	data.pickups = PickupsData.from_dict(dict.get(PickupsData.key, PickupsData.new().to_dict()))
 	data.entities = EntitiesData.from_dict(dict.get(EntitiesData.key, EntitiesData.new().to_dict()))
 
-	print("Deserialized world data: ", data.to_dict())
+	Log.debug("Deserialized world data: ", data.to_dict())
 	return data

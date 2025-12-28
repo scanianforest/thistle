@@ -13,7 +13,7 @@ func to_dict() -> Dictionary:
 static func from_dict(dict: Dictionary) -> EntitiesData:
 	var data := EntitiesData.new()
 	for container_dict in dict.get("containers", []):
-		Log.pr("Deserializing container: ", container_dict)
+		Log.debug("Deserializing container: ", container_dict)
 		var container_data := ContainerData.from_dict(container_dict)
 		data.containers.append(container_data)
 	return data

@@ -11,7 +11,7 @@ class PlayerInfo:
 	var name: String
 
 	func _init(dict: Dictionary) -> void:
-		self.name = dict.get("name", "Stranger")
+		self.name = dict.name
 
 	func to_dict() -> Dictionary:
 		return {
@@ -19,7 +19,8 @@ class PlayerInfo:
 		}
 
 
-var _info: PlayerInfo = PlayerInfo.new({"name": "Player_%d" % randi_range(1000, 9999)})
+var _info: PlayerInfo = PlayerInfo.new({"name": OS.get_environment("USERNAME")})
+
 var _players: Dictionary[int, PlayerInfo] = {}
 
 
@@ -36,12 +37,13 @@ func _ready() -> void:
 #region Public
 func host(port: int = 7890, max_clients = 32) -> int:
 	var peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
-	var error: int = peer.create_server(port, max_clients)
-	if error != OK:
-		Log.err("Failed to create server on port %d" % port)
-		return error
+	var host_error: int = peer.create_server(port, max_clients)
 
-	Log.pr("Server started on port %d" % port)
+	if host_error != OK:
+		Log.err("Failed to create server on port %d" % port)
+		return host_error
+
+	Log.info("Server started on port %d" % port)
 	multiplayer.multiplayer_peer = peer
 
 	_players[1] = _info
@@ -50,15 +52,18 @@ func host(port: int = 7890, max_clients = 32) -> int:
 	return OK
 
 
-func join(address: String = "127.0.0.1", port: int = 7890) -> void:
+func join(address: String = "127.0.0.1", port: int = 7890) -> int:
 	var peer := ENetMultiplayerPeer.new()
 	var client_err = peer.create_client(address, port)
+
 	if client_err != OK:
 		Log.err("Failed to create client: %s" % client_err)
-		return
+		return client_err
 
 	multiplayer.multiplayer_peer = peer
 	_players[multiplayer.get_unique_id()] = _info
+
+	return OK
 
 
 func leave() -> void:
@@ -74,6 +79,10 @@ func get_player_info(id: int) -> PlayerInfo:
 	return _players.get(id, null)
 
 
+func set_lobby_player_name(player_name: String) -> void:
+	_info.name = player_name
+
+
 #endregion Public
 
 #region Private
@@ -87,13 +96,15 @@ func _register_player(info_dict: Dictionary) -> void:
 	_players[rid] = info
 
 	player_connected.emit(rid, info)
-	Log.pr("Player %d registered player %d with info %s" % [lid, rid, info_dict])
+	Log.info("Player %d registered player %d" % [lid, rid])
+	Log.debug(info.to_dict())
 
 
 func _remove_player(id: int) -> void:
 	var info = _players.get(id, null)
 	if _players.erase(id):
-		Log.pr("Player %s with ID %d has left the lobby" % [info.name, id])
+		Log.info("Player with ID %d has left the lobby" % [id])
+		Log.debug(info.to_dict())
 		player_disconnected.emit(id, info)
 	else:
 		Log.warn("Tried to remove non-existent player with ID %d" % id)
@@ -142,17 +153,17 @@ func _on_peer_disconnected(id: int) -> void:
 
 
 func _on_server_disconnected() -> void:
-	Log.pr("Disconnected from server")
+	Log.info("Disconnected from server")
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	server_disconnected.emit()
 
 
 func _on_connected_to_server() -> void:
-	Log.pr("Connected with ID %d to server" % multiplayer.get_unique_id())
+	Log.info("Connected with ID %d to server" % multiplayer.get_unique_id())
 	connected.emit()
 
 
 func _on_connection_failed() -> void:
-	Log.pr("Connection to server failed")
+	Log.err("Connection to server failed")
 
 #endregion Signals

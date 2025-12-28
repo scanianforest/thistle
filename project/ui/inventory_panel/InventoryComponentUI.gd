@@ -11,7 +11,7 @@ signal component_closed
 var inventory_comp: InventoryComponent:
 	set(value):
 		if inventory_comp:
-			Log.pr("Disconnecting from previous inventory component signals")
+			Log.info("Disconnecting from previous inventory component signals")
 			inventory_comp.opened.disconnect(_on_component_opened)
 			inventory_comp.closed.disconnect(_on_component_closed)
 			inventory_comp.inventory_updated.disconnect(_on_inventory_updated)
@@ -39,7 +39,6 @@ func set_owner_name(new_name: String) -> void:
 
 
 func _on_component_opened() -> void:
-	Log.pr("Component opened")
 	component_opened.emit()
 
 

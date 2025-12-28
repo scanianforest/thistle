@@ -23,7 +23,6 @@ func start(interactor: InteractorComponent) -> void:
 
 
 func stop(interactor: InteractorComponent) -> void:
-	Log.pr("Stopping OpenContainerInteraction")
 	var interactor_inventory: InventoryComponent = interactor.get_sibling_component(
 		"InventoryComponent"
 	)

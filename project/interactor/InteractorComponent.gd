@@ -50,22 +50,18 @@ func get_parent_global_position() -> Vector2:
 
 
 func _on_body_entered(body: Node) -> void:
-	Log.pr("Body entered interaction area: ", body.name)
 	_interactables_in_area.push_back(body)
 
 
 func _on_body_exited(body: Node) -> void:
-	Log.pr("Body exited interaction area: ", body.name)
 	_interactables_in_area.erase(body)
 
 
 func _on_area_entered(area: Area2D) -> void:
-	Log.pr("Area entered interaction area: ", area.name)
 	_interactables_in_area.push_back(area)
 
 
 func _on_area_exited(area: Area2D) -> void:
-	Log.pr("Area exited interaction area: ", area.name)
 	_interactables_in_area.erase(area)
 
 
@@ -100,7 +96,6 @@ func resolve() -> void:
 
 
 func stop_interaction() -> void:
-	Log.pr("Stopping interaction", current_interaction)
 	if current_interaction == null:
 		Log.err("No current interactable to stop interaction with")
 		return

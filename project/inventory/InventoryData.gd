@@ -27,5 +27,5 @@ static func from_dict(data: Dictionary) -> InventoryData:
 
 	inventory_data.items = items_to_assign
 
-	Log.pr("Deserialized inventory data: ", inventory_data.to_dict())
+	Log.debug("Deserialized inventory data: ", inventory_data.to_dict())
 	return inventory_data

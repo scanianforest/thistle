@@ -48,7 +48,6 @@ func _refresh_world_list() -> void:
 
 
 func _select_by_name(world_name: String) -> void:
-	Log.pr("Selecting world by name:", world_name)
 	for i in range(world_option_button.get_item_count()):
 		if world_option_button.get_item_text(i) == world_name:
 			world_option_button.select(i)
@@ -67,7 +66,7 @@ func _on_world_selected(index: int) -> void:
 
 	world_selected.emit(world_data)
 
-	Log.pr("Selected world:", world_data.metadata.name)
+	Log.info("Selected world:", world_data.metadata.name)
 
 
 func _on_new_world_name_input_submitted(_new_text: String) -> void:
@@ -84,7 +83,7 @@ func _on_new_world_button_pressed() -> void:
 
 	new_world_name_input.text = ""
 	_refresh_world_list()
-	Log.pr("Created new world:", world_name)
+	Log.info("Created new world:", world_name)
 
 	_select_by_name(world_name)
 
@@ -97,7 +96,7 @@ func _on_delete_world_button_pressed() -> void:
 
 	_refresh_world_list()
 
-	Log.pr("Deleted world:", world_name)
+	Log.info("Deleted world:", world_name)
 
 	var new_index: int = world_option_button.selected
 

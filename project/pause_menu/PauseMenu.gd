@@ -22,7 +22,7 @@ func _on_resume_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
-	Log.pr("TODO: Open settings menu")
+	Log.todo("TODO: Open settings menu")
 
 
 func _on_quit_to_main_menu_pressed() -> void:

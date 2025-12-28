@@ -23,7 +23,6 @@ func _ready() -> void:
 
 
 func set_player_inventory(inventory: InventoryComponent) -> void:
-	Log.pr("Setting player inventory in UI: %s" % inventory)
 	_player_inventory.inventory_comp = inventory
 
 
@@ -44,7 +43,6 @@ func _on_player_component_closed() -> void:
 
 
 func _on_container_component_opened() -> void:
-	Log.pr("Container component opened")
 	visible = true
 
 
@@ -69,7 +67,6 @@ func _on_player_item_secondary_requested(item: ItemData) -> void:
 
 
 func _on_container_item_secondary_requested(item: ItemData) -> void:
-	Log.pr("Moving item from container to player inventory: %s" % item)
 	_container_inventory.inventory_comp.remove_item(item)
 	_player_inventory.inventory_comp.add_item(item)
 

@@ -37,8 +37,8 @@ func _ready() -> void:
 	if is_multiplayer_authority():
 		UIChannel.set_player.call_deferred(self)
 		UIChannel.set_inventory.call_deferred(inventory)
-	else:
-		$PlayerCamera.queue_free()
+		data = Game.instance.selected_character
+		$PlayerCamera.priority = 1
 
 	health.died.connect(_on_health_died)
 	health.health_changed.connect(_on_health_changed)
@@ -67,7 +67,6 @@ func _ready() -> void:
 	hsm.add_transition(interacting_state, idle_state, &"to_idle")
 
 	$Nameplate.text = name
-	$PlayerCamera.priority_override = is_multiplayer_authority()
 
 
 #region Base

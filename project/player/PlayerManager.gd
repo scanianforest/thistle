@@ -3,10 +3,11 @@ class_name PlayerManager extends Node
 var _player_scene = preload("res://player/player.tscn")
 var _player_node: Player
 
-var local_player_data: PlayerData
-
 @export var _player_spawner: MultiplayerSpawner
 @export var _player_world: World
+
+# todo move this to some otehr node, make this script a dedicated Player Spawner
+var character_data: PlayerData
 
 
 func _ready() -> void:
@@ -20,32 +21,22 @@ func _defer_ready() -> void:
 	_player_spawner.spawn_path = _player_world.entities.get_path()
 
 
-func spawn(id: int, _info: Lobby.PlayerInfo) -> Player:
-	if local_player_data == null:
-		Log.err("No local player data to spawn player from")
-		return null
-
-	var player: Player = _spawn_player(id, PlayerData.new())
-
-	player.dropped_item.connect(_on_player_dropped_item)
-
-	return player
-
-
 func despawn(id: int) -> void:
 	var player = _player_world.entities.get_node("Player_%d" % id)
-	Log.pr("Despawning player with ID %d: %s" % [id, player])
 
 	if player:
+		Log.info("Despawning player with ID %d" % [id])
 		player.queue_free()
+	else:
+		Log.warn("Failed to despawn: player with ID %d not found" % [id])
 
 
 func save() -> void:
-	if not is_multiplayer_authority():
-		return
-
 	if _player_node == null:
 		Log.warn("No local player to save")
+		return
+
+	if not _player_node.is_multiplayer_authority():
 		return
 
 	var saved_data = _player_node.save_to_data()
@@ -53,12 +44,11 @@ func save() -> void:
 	Log.info("Local player %s saved" % saved_data.metadata.name)
 
 
-func _spawn_player(id: int, player_data: PlayerData) -> Player:
+func spawn(id: int) -> Player:
 	var player_node: Player = _player_scene.instantiate()
 	var node_name = "Player_%d" % id
 
 	player_node.name = node_name
-	#player_node.data = player_data
 
 	if _player_world:
 		_player_world.entities.add_child(player_node, true)
@@ -66,31 +56,27 @@ func _spawn_player(id: int, player_data: PlayerData) -> Player:
 		Log.warn("No world node set, spawning as child of self")
 		add_child(player_node, true)
 
+	if id == multiplayer.get_unique_id():
+		Log.info("Spawning local player with ID %d" % id)
+		_player_node = player_node
+	else:
+		Log.info("Spawning remote player with ID %d" % id)
+
 	return player_node
 
 
-func _on_player_dropped_item(item: ItemData, count: int) -> void:
-	var pickup: ItemPickupData = ItemPickupData.new()
-	pickup.item = item
-	pickup.position = _player_node.global_position
-	if multiplayer.is_server():
-		_player_world.pickups.spawn_item_pickup(pickup)
-	else:
-		_player_world.pickups.rpc_spawn_item_pickup.rpc_id(1, pickup.to_dict())
-
-
 #region Signals
-func _on_player_connected(id: int, info: Lobby.PlayerInfo) -> void:
+func _on_player_connected(id: int, _info: Lobby.PlayerInfo) -> void:
 	if not multiplayer.is_server():
 		return
-	Log.pr("PlayerManager detected player connected with ID %d and name %s" % [id, info.name])
-	spawn(id, info)
+
+	spawn(id)
 
 
-func _on_player_disconnected(id: int, info: Lobby.PlayerInfo) -> void:
+func _on_player_disconnected(id: int, _info: Lobby.PlayerInfo) -> void:
 	if not multiplayer.is_server():
 		return
-	Log.pr("PlayerManager detected player disconnected with ID %d and name %s" % [id, info.name])
+
 	despawn(id)
 
 #endregion Signals
