@@ -1,16 +1,10 @@
 class_name PlayerManager extends Node
 
-signal possessed(pawn: Pawn2D)
-signal unpossessed
-signal spawned(player: PlayerData)
-signal despawned
-
 var _player_scene = preload("res://player/player.tscn")
 var _player_node: Player
 
 var local_player_data: PlayerData
 
-@export var _local_player_controller: PlayerController
 @export var _player_spawner: MultiplayerSpawner
 @export var _player_world: World
 
@@ -26,28 +20,24 @@ func _defer_ready() -> void:
 	_player_spawner.spawn_path = _player_world.entities.get_path()
 
 
-func spawn(id: int, info: Lobby.PlayerInfo) -> Player:
+func spawn(id: int, _info: Lobby.PlayerInfo) -> Player:
 	if local_player_data == null:
 		Log.err("No local player data to spawn player from")
 		return null
 
-	var player: Player
-
-	var uid = multiplayer.get_unique_id()
-	Log.pr(uid)
-
-	if id == multiplayer.get_unique_id():
-		player = _spawn_player(local_player_data, id)
-		possess_player(player)
-		Log.pr("Local player %s spawned and possessed" % local_player_data.metadata.name)
-	else:
-		player = _spawn_player(PlayerData.new(), id)
-		player.name = info.name
-		Log.pr("Remote player %s spawned for id %d" % [info.name, id])
+	var player: Player = _spawn_player(id, PlayerData.new())
 
 	player.dropped_item.connect(_on_player_dropped_item)
 
 	return player
+
+
+func despawn(id: int) -> void:
+	var player = _player_world.entities.get_node("Player_%d" % id)
+	Log.pr("Despawning player with ID %d: %s" % [id, player])
+
+	if player:
+		player.queue_free()
 
 
 func save() -> void:
@@ -63,38 +53,18 @@ func save() -> void:
 	Log.info("Local player %s saved" % saved_data.metadata.name)
 
 
-func despawn_player() -> void:
-	if _player_node:
-		_player_node.queue_free()
-		_player_node = null
-		despawned.emit()
+func _spawn_player(id: int, player_data: PlayerData) -> Player:
+	var player_node: Player = _player_scene.instantiate()
+	var node_name = "Player_%d" % id
 
-
-func possess_player(pawn: Pawn2D) -> void:
-	Log.info("Player possessed %s" % pawn)
-	_local_player_controller.possessed_pawn = pawn
-	possessed.emit(pawn)
-
-
-func unpossess_player() -> void:
-	Log.info("Player unpossessed")
-	_local_player_controller.possessed_pawn = null
-	unpossessed.emit()
-
-
-func _spawn_player(player: PlayerData, network_id: int = 1) -> Player:
-	var player_node = _player_scene.instantiate()
-	player_node.name = "Player_%s_%s" % [player.name, network_id]
-	player_node.data = player
-	player_node.set_multiplayer_authority(network_id)
+	player_node.name = node_name
+	#player_node.data = player_data
 
 	if _player_world:
-		_player_world.entities.add_child(player_node)
+		_player_world.entities.add_child(player_node, true)
 	else:
 		Log.warn("No world node set, spawning as child of self")
-		add_child(player_node)
-
-	spawned.emit(player)
+		add_child(player_node, true)
 
 	return player_node
 
@@ -102,7 +72,7 @@ func _spawn_player(player: PlayerData, network_id: int = 1) -> Player:
 func _on_player_dropped_item(item: ItemData, count: int) -> void:
 	var pickup: ItemPickupData = ItemPickupData.new()
 	pickup.item = item
-	pickup.position = _local_player_controller.possessed_pawn.global_position
+	pickup.position = _player_node.global_position
 	if multiplayer.is_server():
 		_player_world.pickups.spawn_item_pickup(pickup)
 	else:
@@ -111,11 +81,16 @@ func _on_player_dropped_item(item: ItemData, count: int) -> void:
 
 #region Signals
 func _on_player_connected(id: int, info: Lobby.PlayerInfo) -> void:
+	if not multiplayer.is_server():
+		return
 	Log.pr("PlayerManager detected player connected with ID %d and name %s" % [id, info.name])
 	spawn(id, info)
 
 
 func _on_player_disconnected(id: int, info: Lobby.PlayerInfo) -> void:
+	if not multiplayer.is_server():
+		return
 	Log.pr("PlayerManager detected player disconnected with ID %d and name %s" % [id, info.name])
+	despawn(id)
 
 #endregion Signals

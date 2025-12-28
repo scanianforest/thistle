@@ -28,6 +28,11 @@ var data: PlayerData = PlayerData.new():
 		actionbar.load(data.actionbar_data)
 
 
+func _enter_tree() -> void:
+	var nid = name.split("_")[-1].to_int()
+	set_multiplayer_authority(nid)
+
+
 func _ready() -> void:
 	if is_multiplayer_authority():
 		UIChannel.set_player.call_deferred(self)
@@ -43,6 +48,8 @@ func _ready() -> void:
 	actionbar.slot_selected.connect(_on_actionbar_slot_selected)
 
 	hsm.initial_state = idle_state
+	hsm.initialize(self)
+	hsm.set_active(true)
 
 	hsm.add_transition(idle_state, moving_state, &"to_moving")
 	hsm.add_transition(idle_state, inventory_state, &"to_inventory")
@@ -57,11 +64,8 @@ func _ready() -> void:
 
 	hsm.add_transition(interacting_state, idle_state, &"to_idle")
 
-	hsm.initialize(self)
-	hsm.set_active(true)
-
-	$MainCamera.enabled = is_multiplayer_authority()
-	$Nameplate.text = data.metadata.name
+	$Nameplate.text = name
+	$PlayerCamera.priority_override = is_multiplayer_authority()
 
 
 #region Base

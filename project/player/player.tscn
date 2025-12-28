@@ -1,7 +1,6 @@
-[gd_scene load_steps=37 format=4 uid="uid://cbe5o8ii1in3w"]
+[gd_scene load_steps=41 format=4 uid="uid://cbe5o8ii1in3w"]
 
 [ext_resource type="Script" uid="uid://daao54ylb0umw" path="res://player/Player.gd" id="1_rkbax"]
-[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_hg6s5"]
 [ext_resource type="Script" uid="uid://dsv8gc8clg4qj" path="res://player/PawnSprite.gd" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://cy57k20t1sml" path="res://hsm/IdleState.gd" id="2_yllr7"]
 [ext_resource type="Script" uid="uid://b7t1weje48a6q" path="res://hsm/MovingState.gd" id="3_kb6p2"]
@@ -11,6 +10,7 @@
 [ext_resource type="Script" uid="uid://bj5fue7tho57m" path="res://pawn/MovementComponent.gd" id="5_boad6"]
 [ext_resource type="Script" uid="uid://deemyexy8pnk7" path="res://action_bar/ActionBarComponent.gd" id="7_2ieo8"]
 [ext_resource type="PackedScene" uid="uid://egvwb1mw2ono" path="res://interactor/interactor_component.tscn" id="7_boad6"]
+[ext_resource type="Script" uid="uid://i3ure5y75cj2" path="res://player/PlayerInput.gd" id="8_c35mf"]
 [ext_resource type="PackedScene" uid="uid://dwsdlscxbslis" path="res://tile_selector/tile_selector_component.tscn" id="8_rgyib"]
 [ext_resource type="Script" uid="uid://b2me08syjg2mv" path="res://inventory/InventoryComponent.gd" id="10_8t03j"]
 [ext_resource type="Script" uid="uid://drvye4jjikvfs" path="res://item_spawner/ItemSpawnerComponent.gd" id="12_ebec5"]
@@ -18,13 +18,35 @@
 [ext_resource type="PackedScene" uid="uid://b6j5qkam4tqni" path="res://attacker/attacker_component.tscn" id="13_yllr7"]
 [ext_resource type="Script" uid="uid://bb3bq03hwbha5" path="res://player/DirectionRotatorComponent.gd" id="14_32hag"]
 [ext_resource type="PackedScene" uid="uid://dsvnwjkbetlma" path="res://item_vacuum/item_vacuum_component.tscn" id="18_e7oew"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="19_65viv"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="20_x7c3f"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_e7oew"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Nameplate:text")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("InventoryComponent:items")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("PawnSprite/AnimationPlayer:current_animation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("PawnSprite:frame")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("PawnSprite:flip_h")
+properties/5/spawn = true
+properties/5/replication_mode = 1
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ebec5"]
-var/attacker/name = &"attacker"
-var/attacker/type = 22
-var/attacker/value = NodePath("../DirectionRotationComponent/AttackerComponent")
-var/attacker/hint = 26
-var/attacker/hint_string = "AttackerComponent"
+var/input/name = &"input"
+var/input/type = 22
+var/input/value = NodePath("../PlayerInput")
+var/input/hint = 26
+var/input/hint_string = "PlayerInput"
 var/health/name = &"health"
 var/health/type = 22
 var/health/value = NodePath("../HealthComponent")
@@ -50,6 +72,11 @@ var/interactor/type = 22
 var/interactor/value = NodePath("../DirectionRotationComponent/InteractorComponent")
 var/interactor/hint = 26
 var/interactor/hint_string = "InteractorComponent"
+var/attacker/name = &"attacker"
+var/attacker/type = 22
+var/attacker/value = NodePath("../DirectionRotationComponent/AttackerComponent")
+var/attacker/hint = 26
+var/attacker/hint_string = "AttackerComponent"
 var/item_spawner/name = &"item_spawner"
 var/item_spawner/type = 22
 var/item_spawner/value = NodePath("../ItemSpawnerComponent")
@@ -298,6 +325,9 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_e7oew"]
 font_size = 8
 
+[sub_resource type="Resource" id="Resource_bjvpn"]
+script = ExtResource("20_x7c3f")
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "health", "movement", "attacker", "placer", "inventory", "actionbar", "equipment")]
 script = ExtResource("1_rkbax")
 sprite = NodePath("PawnSprite")
@@ -308,6 +338,10 @@ placer = NodePath("PlacerComponent")
 inventory = NodePath("InventoryComponent")
 actionbar = NodePath("ActionBarComponent")
 equipment = NodePath("EquipmentComponent")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_e7oew")
+visibility_update_mode = 1
 
 [node name="HSM" type="LimboHSM" parent="."]
 blackboard_plan = SubResource("BlackboardPlan_ebec5")
@@ -323,17 +357,6 @@ script = ExtResource("4_wodsf")
 
 [node name="Inventory" type="LimboState" parent="HSM"]
 script = ExtResource("4_kb6p2")
-
-[node name="MainCamera" type="Camera2D" parent="."]
-physics_interpolation_mode = 1
-enabled = false
-zoom = Vector2(3, 3)
-
-[node name="PhantomCameraHost" type="Node" parent="MainCamera"]
-process_priority = 300
-process_physics_priority = 300
-script = ExtResource("2_hg6s5")
-metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rkbax")
@@ -375,6 +398,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_wodsf")
 }
 autoplay = "idle"
+
+[node name="PlayerInput" type="Node" parent="."]
+script = ExtResource("8_c35mf")
+metadata/_custom_type_script = "uid://i3ure5y75cj2"
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("4_g6k8r")
@@ -422,3 +449,14 @@ scale = Vector2(0.5, 0.5)
 text = "A"
 label_settings = SubResource("LabelSettings_e7oew")
 horizontal_alignment = 1
+
+[node name="PlayerCamera" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
+top_level = true
+script = ExtResource("19_65viv")
+follow_mode = 2
+follow_target = NodePath("..")
+zoom = Vector2(3, 3)
+tween_resource = SubResource("Resource_bjvpn")
+tween_on_load = false
+follow_damping = true
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"

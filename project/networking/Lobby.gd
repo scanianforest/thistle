@@ -139,7 +139,7 @@ func _on_peer_disconnected(id: int) -> void:
 
 
 func _on_server_disconnected() -> void:
-	Log.pr("[%d] Disconnected from server" % multiplayer.get_unique_id())
+	Log.pr("Disconnected from server")
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	server_disconnected.emit()
 

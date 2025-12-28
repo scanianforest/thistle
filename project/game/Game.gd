@@ -175,7 +175,6 @@ func start_game() -> void:
 
 
 func stop_game() -> void:
-	player_manager.despawn_player()
 	world.pause()
 	world.hide()
 	world.clear()

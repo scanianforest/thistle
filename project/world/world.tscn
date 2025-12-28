@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://gx2ryayaffn8"]
+[gd_scene load_steps=17 format=4 uid="uid://gx2ryayaffn8"]
 
 [ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/World.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cnlkitvwdtavd" path="res://pickups_manager/PickupsManager.gd" id="8_ai45w"]
 [ext_resource type="Script" uid="uid://bed3t8w2on2gs" path="res://placeables/PlaceablesManager.gd" id="10_fyhu2"]
 [ext_resource type="PackedScene" uid="uid://mn3qeaj6fses" path="res://bush/bush.tscn" id="11_ov2xu"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_b2suy"]
 [ext_resource type="PackedScene" uid="uid://2d6wwf70r8jc" path="res://floating_item/floating_item.tscn" id="14_dqqhb"]
 [ext_resource type="Resource" uid="uid://5r105pyybowx" path="res://itemization/items/item_stone.tres" id="15_b2suy"]
 
@@ -197,6 +198,10 @@ position = Vector2(24, 38)
 [node name="Bush6" parent="." instance=ExtResource("11_ov2xu")]
 position = Vector2(8, 38)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
-zoom = Vector2(5, 5)
+[node name="MainCamera" type="Camera2D" parent="."]
+process_callback = 0
+limit_enabled = false
+
+[node name="PhantomCameraHost" type="Node" parent="MainCamera"]
+script = ExtResource("14_b2suy")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"

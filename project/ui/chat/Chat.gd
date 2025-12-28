@@ -24,15 +24,15 @@ func _ready() -> void:
 
 @rpc("any_peer", "call_local")
 func send_message(message: String) -> void:
-	var id = multiplayer.get_remote_sender_id()
-	var player_info = Lobby.get_player_info(id)
+	#var id = multiplayer.get_remote_sender_id()
+	#var player_info = Lobby.get_player_info(id)
 
-	if player_info == null:
-		_add_local_message("Unknown player (ID: %d) tried to send a message." % id)
-		return
+	#if player_info == null:
+	#	_add_local_message("Unknown player (ID: %d) tried to send a message." % id)
+	#	return
 
 	var msg = ChatMessage.new()
-	msg.sender = player_info.name
+	msg.sender = "Player_%d" % multiplayer.get_remote_sender_id()
 	msg.message = message
 
 	_add_message(msg)
