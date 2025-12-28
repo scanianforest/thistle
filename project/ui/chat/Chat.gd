@@ -68,7 +68,7 @@ func _clear_log() -> void:
 
 func _on_player_connected(id: int, info: Lobby.PlayerInfo) -> void:
 	Log.debug("%s connected. Sending chat history..." % id)
-	_add_local_message("%s connected." % info.name)
+	_add_local_message("%s connected." % "Player_%d" % id)
 
 	if multiplayer.is_server():
 		for msg in _history:
@@ -77,7 +77,7 @@ func _on_player_connected(id: int, info: Lobby.PlayerInfo) -> void:
 
 func _on_player_disconnected(id: int, info: Lobby.PlayerInfo) -> void:
 	Log.debug("%s disconnected with ID: %d" % [info.name, id])
-	_add_local_message("%s disconnected." % info.name)
+	_add_local_message("%s disconnected." % "Player_%d" % id)
 
 
 func _on_lobby_connected() -> void:

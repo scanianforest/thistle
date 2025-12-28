@@ -34,17 +34,20 @@ func _ready() -> void:
 
 
 #region Public
-func host(port: int = 7890, max_clients = 32) -> void:
+func host(port: int = 7890, max_clients = 32) -> int:
 	var peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
-	if peer.create_server(port, max_clients) != OK:
+	var error: int = peer.create_server(port, max_clients)
+	if error != OK:
 		Log.err("Failed to create server on port %d" % port)
-		return
+		return error
 
 	Log.pr("Server started on port %d" % port)
 	multiplayer.multiplayer_peer = peer
 
 	_players[1] = _info
 	player_connected.emit(1, _info)
+
+	return OK
 
 
 func join(address: String = "127.0.0.1", port: int = 7890) -> void:

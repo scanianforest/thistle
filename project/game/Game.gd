@@ -126,7 +126,13 @@ func _on_world_data_loaded(data: WorldData) -> bool:
 
 
 func _on_host(dict: Dictionary) -> bool:
-	Lobby.host(dict.port, dict.max_clients)
+	var host_error = Lobby.host(dict.port, dict.max_clients)
+
+	if host_error != OK:
+		Log.err("Failed to host lobby: %s" % str(host_error))
+		hsm.dispatch(&"to_main_menu")
+	else:
+		hsm.dispatch(&"hosted")
 
 	return true
 
