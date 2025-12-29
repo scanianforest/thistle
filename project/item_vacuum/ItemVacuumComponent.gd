@@ -23,6 +23,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	# vacuum server-side
+	if not multiplayer.is_server():
+		return
+
 	var areas: Array = _vacuum_area.get_overlapping_areas()
 	for area in areas:
 		if area:
