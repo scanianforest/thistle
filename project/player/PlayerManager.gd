@@ -16,6 +16,7 @@ func _ready() -> void:
 	Lobby.player_connected.connect(_on_player_connected)
 	Lobby.player_disconnected.connect(_on_player_disconnected)
 
+	_player_spawner.despawned.connect(func(id: int) -> void: despawn(id))
 
 func _defer_ready() -> void:
 	_player_spawner.spawn_path = _player_world.entities.get_path()
