@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dlc0gxmo2fimf"]
+[gd_scene load_steps=13 format=3 uid="uid://dlc0gxmo2fimf"]
 
 [ext_resource type="Script" uid="uid://juqhuw2yrjkb" path="res://placeables/item_container/ItemContainer.gd" id="1_hdi32"]
 [ext_resource type="Resource" uid="uid://bonop1da8r3gt" path="res://placeables/item_container/chest/chest.tres" id="2_56wfx"]
@@ -9,6 +9,11 @@
 [ext_resource type="Script" uid="uid://rm7q0mclgm65" path="res://interaction/InteractionResource.gd" id="6_cjfc3"]
 [ext_resource type="Material" uid="uid://colomf2df0khl" path="res://materials/material_outline.tres" id="9_sl33w"]
 [ext_resource type="Script" uid="uid://l0xqguyksine" path="res://interaction/OutlineComponent.gd" id="11_ek7iu"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_eyue5"]
+properties/0/path = NodePath("InventoryComponent:rpc_items")
+properties/0/spawn = true
+properties/0/replication_mode = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ai45w"]
 size = Vector2(14, 5)
@@ -24,6 +29,9 @@ metadata/_custom_type_script = "uid://rm7q0mclgm65"
 script = ExtResource("1_hdi32")
 resource = ExtResource("2_56wfx")
 inventory = NodePath("InventoryComponent")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_eyue5")
 
 [node name="InventoryComponent" type="Node" parent="."]
 script = ExtResource("3_b6162")

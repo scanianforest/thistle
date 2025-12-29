@@ -26,6 +26,8 @@ var count: int:
 	get:
 		return count
 
+var inventory: InventoryComponent
+
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_DRAG_END:
@@ -62,6 +64,7 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	var preview = Control.new()
 	preview.z_index = 1000
 	preview.z_as_relative = false
+
 	var dup = duplicate()
 	preview.add_child(dup)
 	dup.position = -0.5 * size
@@ -69,6 +72,7 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	modulate.a = 0.5
 
 	set_drag_preview(preview)
+
 	return self
 
 

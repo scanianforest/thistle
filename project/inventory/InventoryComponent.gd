@@ -33,6 +33,20 @@ var items: Dictionary[ItemData, int] = {}:
 	get:
 		return items
 
+# RPC-friendly getter/setter of items dictionary
+var rpc_items: Dictionary[Dictionary, int]:
+	get:
+		var dict: Dictionary[Dictionary, int] = {}
+		for item in items:
+			dict[item.to_dict()] = items[item]
+		return dict
+	set(value):
+		items.clear()
+		for item_dict in value.keys():
+			var item_data = ItemData.from_dict(item_dict)
+			items[item_data] = value[item_dict]
+		inventory_updated.emit(items)
+
 
 func _ready() -> void:
 	inventory_updated.emit.call_deferred(items)
@@ -75,6 +89,26 @@ func add_item(item: ItemData, count: int = 1) -> int:
 	return true
 
 
+@rpc("any_peer", "call_local", "reliable")
+func rpc_add_item(item_dict: Dictionary, count: int = 1) -> int:
+	if not is_multiplayer_authority():
+		return 0
+
+	var item_data = ItemData.from_dict(item_dict)
+	return add_item(item_data, count)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func rpc_remove_item(item_dict: Dictionary, count: int = 1) -> void:
+	if not is_multiplayer_authority():
+		Log.debug("Not authority, ignoring rpc_remove_item call")
+		return
+
+	Log.info("RPC Remove Item called")
+	var item_data = ItemData.from_dict(item_dict)
+	remove_item(item_data, count)
+
+
 func get_by_resource(item_resource: ItemResource) -> ItemData:
 	for item in items.keys():
 		if item.resource == item_resource:
@@ -101,13 +135,20 @@ func drop_item(item: ItemData, count: int) -> void:
 
 
 func remove_item(item: ItemData, count: int = 1) -> void:
-	if item not in items:
-		return
+	var found_item = null
+	for existing_item in items.keys():
+		if item.is_equal(existing_item):
+			found_item = existing_item
+			break
 
-	if items[item] <= count:
-		_remove_item(item)
+	if not found_item:
+		Log.err("Attempted to remove item not in inventory: %s" % item.id)
+		return  # Item not found
+
+	if items[found_item] <= count:
+		_remove_item(found_item)
 	else:
-		items[item] -= count
+		items[found_item] -= count
 		inventory_updated.emit(items)
 
 
@@ -125,10 +166,3 @@ func contains(item: ItemResource) -> bool:
 func get_item_count(item_resource: ItemResource) -> int:
 	var existing_item = get_by_resource(item_resource)
 	return items.get(existing_item, 0)
-
-
-func serialize() -> Dictionary:
-	var item_ids: Array = []
-	for item in items:
-		item_ids.append(item.resource_id)
-	return {"item_ids": item_ids}

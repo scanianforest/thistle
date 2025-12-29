@@ -48,7 +48,7 @@ func _on_component_closed() -> void:
 
 func _on_inventory_updated(items: Dictionary[ItemData, int]) -> void:
 	grid.clear_items()
-	grid.set_items(items)
+	grid.set_items(items, inventory_comp)
 
 
 func _on_item_ui_secondary_requested(item: ItemData) -> void:
@@ -60,12 +60,26 @@ func _on_item_ui_remove_requested(item: ItemData) -> void:
 
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	if grid.get_children().find(data) >= 0:
-		return false
 	return data is InventoryItemUI
 
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	## 1. an item was dropped on the Inventory
+	## 2. determine how many items can be transfered
+	## 3. call the server to transfer the items
+
 	var item_ui := data as InventoryItemUI
-	item_ui.remove()
-	inventory_comp.add_item(item_ui.item)
+
+	if item_ui.get_parent() == grid:
+		Log.debug("Dropping item back into the same inventory, no action taken")
+		return
+
+	ItemServer.transfer_item.rpc_id(
+		1,
+		item_ui.inventory.get_path(),
+		inventory_comp.get_path(),
+		item_ui.item.to_dict(),
+		item_ui.count
+	)
+	#inventory_comp.rpc_add_item.rpc_id(1, item_ui.item.to_dict(), item_ui.count)
+	#item_ui.inventory.remove_item(item_ui.item, item_ui.count)

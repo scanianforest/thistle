@@ -38,6 +38,7 @@ UIChannel="*res://ui/UIChannel.gd"
 ItemSpawner="*res://item_spawner/ItemSpawnerComponent.gd"
 PlaceableSpawner="*res://placeables/PlaceableSpawner.gd"
 Lobby="*res://networking/Lobby.gd"
+ItemServer="*res://core/ItemServer.gd"
 
 [display]
 
@@ -47,7 +48,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/TileMapDual/plugin.cfg", "res://addons/gdUnit4/plugin.cfg", "res://addons/limbo_console/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/TileMapDual/plugin.cfg", "res://addons/gdUnit4/plugin.cfg", "res://addons/limbo_console/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/uuid/plugin.cfg")
 
 [gdunit4]
 
@@ -180,6 +181,7 @@ toggle_build_menu={
 [log_gd]
 
 config/show_log_level_selector=true
+config/log_level=0
 
 [physics]
 

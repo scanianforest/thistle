@@ -17,7 +17,7 @@ func _enter() -> void:
 		dispatch(&"to_main_menu")
 		return
 
-	var join_error = await Lobby.join(address, port)
+	var join_error = Lobby.join(address, port)
 
 	if join_error != OK:
 		Log.err("Failed to join lobby at %s:%d" % [address, port])

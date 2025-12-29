@@ -1,6 +1,6 @@
+@warning_ignore_start("unused_signal")
 @abstract
 class_name Interaction extends Node
-
 signal started
 signal stopped
 signal resolved

@@ -7,12 +7,13 @@ func _ready() -> void:
 	clear_items()
 
 
-func set_items(items: Dictionary[ItemData, int]) -> void:
+func set_items(items: Dictionary[ItemData, int], inventory: InventoryComponent) -> void:
 	clear_items()
 	for item_data in items:
 		var item_ui: InventoryItemUI = item_ui_scene.instantiate() as InventoryItemUI
 		item_ui.item = item_data
 		item_ui.count = items[item_data]
+		item_ui.inventory = inventory
 		add_child(item_ui)
 
 

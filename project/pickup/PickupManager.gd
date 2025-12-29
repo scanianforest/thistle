@@ -76,9 +76,5 @@ func pick_up(player_path: NodePath, pickup_path: NodePath) -> void:
 
 	var rid = multiplayer.get_remote_sender_id()
 
-	Log.todo(
-		"Handle adding item %s to player's inventory with id %d" % [pickup.item.item_name, rid]
-	)
-
 	player.rpc_add_item_to_inventory.rpc_id(rid, pickup.item.to_dict(), pickup.count)
 	pickup.queue_free()
