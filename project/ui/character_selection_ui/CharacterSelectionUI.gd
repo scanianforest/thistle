@@ -1,5 +1,7 @@
 extends MarginContainer
 
+signal character_selected(character_data: PlayerData)
+
 @onready var grid: GridContainer = %CharacterGrid
 
 var _slot_scene: PackedScene = preload("res://ui/character_selection_ui/character_slot.tscn")
@@ -25,3 +27,5 @@ func _on_slot_selected(slot: CharacterSlot) -> void:
 	for c in grid.get_children():
 		if c != slot:
 			c.deselect()
+
+	character_selected.emit(slot.data)

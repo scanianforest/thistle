@@ -1,42 +1,32 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqavx66vnr1rw"]
+[gd_scene load_steps=5 format=3 uid="uid://cqavx66vnr1rw"]
 
 [ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="1_53hdw"]
 [ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_mj6wf"]
 [ext_resource type="Script" uid="uid://ba08ajhkha83v" path="res://ui/character_selection_ui/CharacterSlot.gd" id="1_vlx0v"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vlx0v"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.16206557, 0.1620656, 0.16206548, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="LabelSettings" id="LabelSettings_4xkan"]
 font_color = Color(0.6542321, 0.6542321, 0.654232, 1)
 
 [node name="CharacterSlot" type="PanelContainer" node_paths=PackedStringArray("_name")]
-offset_right = 336.0
-offset_bottom = 76.0
+offset_right = 340.0
+offset_bottom = 80.0
 size_flags_horizontal = 3
+focus_mode = 2
 theme = ExtResource("1_mj6wf")
-theme_override_styles/panel = SubResource("StyleBoxFlat_vlx0v")
 script = ExtResource("1_vlx0v")
 _name = NodePath("MarginContainer/HBoxContainer/CharacterInfo/Name")
 
+[node name="SelectedPanel" type="Panel" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(3.6017861, 3.6017861, 3.6017861, 1)
+layout_mode = 2
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 custom_minimum_size = Vector2(0, 64)
@@ -68,3 +58,18 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "1990-01-01 12:00"
 label_settings = SubResource("LabelSettings_4xkan")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CharacterInfo"]
+layout_mode = 2
+
+[node name="SelectButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterInfo/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Select"
+
+[node name="DeleteButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterInfo/HBoxContainer"]
+layout_mode = 2
+text = "X"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/CharacterInfo/HBoxContainer/SelectButton" to="." method="select"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/CharacterInfo/HBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]

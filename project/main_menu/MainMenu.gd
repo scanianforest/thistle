@@ -52,6 +52,11 @@ func _refresh_world_list() -> void:
 		worlds.add_item(world.metadata.name)
 
 
+func _on_character_data_selected(data: PlayerData) -> void:
+	_game.load_player(data.metadata.name)
+	_start_button.disabled = not _game.ready_for_start()
+
+
 func _on_character_selected(index: int) -> void:
 	var character_name: String = characters.get_item_text(index)
 	_game.load_player(character_name)

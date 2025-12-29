@@ -24,18 +24,14 @@ func _update_ui() -> void:
 
 
 func select() -> void:
-	var stylebox: StyleBoxFlat = self.get_theme_stylebox("panel")
-	stylebox.set_border_width_all(4)
-	self.add_theme_stylebox_override("panel", stylebox)
+	%SelectedPanel.visible = false
 	selected.emit(self)
 
 
 func deselect() -> void:
-	var stylebox: StyleBoxFlat = self.get_theme_stylebox("panel")
-	stylebox.set_border_width_all(0)
-	self.add_theme_stylebox_override("panel", stylebox)
+	%SelectedPanel.visible = true
 
 
-func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		select()
+func _on_delete_button_pressed() -> void:
+	if PlayerSaveFileAccess.delete(data.metadata.name):
+		queue_free()
