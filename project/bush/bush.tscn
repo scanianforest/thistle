@@ -57,12 +57,13 @@ interaction = NodePath("InteractionArea2D/GatherInteraction")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(0, -5)
+position = Vector2(0, -3)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_fofbo")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 material = ExtResource("1_2at75")
+position = Vector2(0, 3)
 texture = ExtResource("1_8vc13")
 offset = Vector2(0, -6)
 
@@ -92,6 +93,7 @@ max_value = 1.0
 show_percentage = false
 
 [node name="InteractionArea2D" type="Area2D" parent="." node_paths=PackedStringArray("interaction")]
+position = Vector2(0, 2)
 collision_layer = 8
 script = ExtResource("3_tytp4")
 interaction = NodePath("GatherInteraction")
