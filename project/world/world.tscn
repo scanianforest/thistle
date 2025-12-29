@@ -6,13 +6,13 @@
 [ext_resource type="Script" uid="uid://dh8wyajr7wh3" path="res://terrain/Terrain.gd" id="3_mmdvd"]
 [ext_resource type="Texture2D" uid="uid://xpkn0ea7v1pg" path="res://aseprite/glades-study.aseprite" id="3_ov2xu"]
 [ext_resource type="Script" uid="uid://ckfkcenlc2vj6" path="res://terrain/TerrainCursor.gd" id="5_mmdvd"]
-[ext_resource type="Script" uid="uid://cf3vta2qbef4s" path="res://entities_manager/EntitiesManager.gd" id="7_4papg"]
+[ext_resource type="Script" uid="uid://cf3vta2qbef4s" path="res://entity/EntityManager.gd" id="7_4papg"]
 [ext_resource type="PackedScene" uid="uid://dlc0gxmo2fimf" path="res://placeables/item_container/chest/chest.tscn" id="7_sc4t8"]
-[ext_resource type="Script" uid="uid://cnlkitvwdtavd" path="res://pickups_manager/PickupsManager.gd" id="8_ai45w"]
+[ext_resource type="Script" uid="uid://cnlkitvwdtavd" path="res://pickup/PickupManager.gd" id="8_ai45w"]
 [ext_resource type="Script" uid="uid://bed3t8w2on2gs" path="res://placeables/PlaceablesManager.gd" id="10_fyhu2"]
 [ext_resource type="PackedScene" uid="uid://mn3qeaj6fses" path="res://bush/bush.tscn" id="11_ov2xu"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_b2suy"]
-[ext_resource type="PackedScene" uid="uid://2d6wwf70r8jc" path="res://floating_item/floating_item.tscn" id="14_dqqhb"]
+[ext_resource type="PackedScene" uid="uid://2d6wwf70r8jc" path="res://pickup/item_pickup/item_pickup.tscn" id="14_dqqhb"]
 [ext_resource type="Resource" uid="uid://5r105pyybowx" path="res://itemization/items/item_stone.tres" id="15_b2suy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mad0u"]
@@ -128,6 +128,13 @@ sources/0 = SubResource("TileSetAtlasSource_mad0u")
 y_sort_enabled = true
 script = ExtResource("1_mmdvd")
 
+[node name="EntitySpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../EntityManager")
+
+[node name="PickupsSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://2d6wwf70r8jc")
+spawn_path = NodePath("../PickupManager")
+
 [node name="TileLayers" type="Node2D" parent="."]
 
 [node name="Ground" type="TileMapLayer" parent="TileLayers"]
@@ -157,23 +164,23 @@ script = ExtResource("5_mmdvd")
 tilemap_dual = NodePath("../..")
 metadata/_custom_type_script = "uid://c6m630v880okx"
 
-[node name="Entities" type="Node2D" parent="."]
+[node name="EntityManager" type="Node2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
 script = ExtResource("7_4papg")
 
-[node name="ItemContainer" parent="Entities" instance=ExtResource("7_sc4t8")]
+[node name="ItemContainer" parent="EntityManager" instance=ExtResource("7_sc4t8")]
 
-[node name="Pickups" type="Node2D" parent="."]
+[node name="PickupManager" type="Node2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
 script = ExtResource("8_ai45w")
 
-[node name="FloatingItem" parent="Pickups" instance=ExtResource("14_dqqhb")]
+[node name="FloatingItem" parent="PickupManager" instance=ExtResource("14_dqqhb")]
 position = Vector2(31, 96)
 resource = ExtResource("15_b2suy")
 
-[node name="FloatingItem2" parent="Pickups" instance=ExtResource("14_dqqhb")]
+[node name="FloatingItem2" parent="PickupManager" instance=ExtResource("14_dqqhb")]
 position = Vector2(47, 101)
 
 [node name="Placeables" type="Node2D" parent="."]
@@ -203,5 +210,7 @@ process_callback = 0
 limit_enabled = false
 
 [node name="PhantomCameraHost" type="Node" parent="MainCamera"]
+process_priority = 300
+process_physics_priority = 300
 script = ExtResource("14_b2suy")
 metadata/_custom_type_script = "uid://bd046eokvcnu2"

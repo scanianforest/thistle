@@ -26,18 +26,17 @@ var data: PlayerData = PlayerData.new():
 		global_position = data.position
 		inventory.data = data.inventory_data
 		actionbar.load(data.actionbar_data)
+		show()
 
 
 func _enter_tree() -> void:
-	var nid = name.split("_")[-1].to_int()
-	set_multiplayer_authority(nid)
+	hide()
 
 
 func _ready() -> void:
 	if is_multiplayer_authority():
 		UIChannel.set_player.call_deferred(self)
 		UIChannel.set_inventory.call_deferred(inventory)
-		data = Game.instance.selected_character
 		$PlayerCamera.priority = 1
 
 	health.died.connect(_on_health_died)
@@ -73,9 +72,20 @@ func _ready() -> void:
 func handle_input(event: InputEvent) -> void:
 	if hsm.dispatch("input", event):
 		get_viewport().set_input_as_handled()
+	else:
+		UIChannel.on_input_event(event)
 
 
 #endregion
+
+#region RPCs
+@rpc("any_peer", "call_local", "reliable")
+func rpc_add_item_to_inventory(item_data_dict: Dictionary, count: int) -> void:
+	var item_data = ItemData.from_dict(item_data_dict)
+	inventory.add_item(item_data, count)
+
+
+#endregion RPCs
 
 
 #region Signal Handlers

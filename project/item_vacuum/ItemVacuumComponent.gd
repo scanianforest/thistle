@@ -33,6 +33,7 @@ func _process(delta: float) -> void:
 
 
 func _on_pickup_area_entered(area: Area2D) -> void:
-	if area.item and _inventory.can_add_item(area.item):
-		_inventory.add_item(area.item, area.count)
-		area.queue_free()
+	# pick up client-side
+	if is_multiplayer_authority():
+		if area.item and _inventory.can_add_item(area.item):
+			area.on_pickup(get_parent())

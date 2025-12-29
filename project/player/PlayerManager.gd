@@ -6,7 +6,6 @@ var _player_node: Player
 @export var _player_spawner: MultiplayerSpawner
 @export var _player_world: World
 
-# todo move this to some otehr node, make this script a dedicated Player Spawner
 var character_data: PlayerData
 
 
@@ -15,15 +14,18 @@ func _ready() -> void:
 
 	Lobby.player_connected.connect(_on_player_connected)
 	Lobby.player_disconnected.connect(_on_player_disconnected)
+	Lobby.server_disconnected.connect(_on_server_disconnected)
 
-	_player_spawner.despawned.connect(func(id: int) -> void: despawn(id))
+	_player_spawner.spawn_function = spawn
+	_player_spawner.spawned.connect(_on_player_spawned)
+
 
 func _defer_ready() -> void:
-	_player_spawner.spawn_path = _player_world.entities.get_path()
+	_player_spawner.spawn_path = _player_world.entity_manager.get_path()
 
 
 func despawn(id: int) -> void:
-	var player = _player_world.entities.get_node("Player_%d" % id)
+	var player = _player_world.entity_manager.get_node("Player_%d" % id)
 
 	if player:
 		Log.info("Despawning player with ID %d" % [id])
@@ -32,12 +34,12 @@ func despawn(id: int) -> void:
 		Log.warn("Failed to despawn: player with ID %d not found" % [id])
 
 
-func save() -> void:
+func save(emergency: bool = false) -> void:
 	if _player_node == null:
 		Log.warn("No local player to save")
 		return
 
-	if not _player_node.is_multiplayer_authority():
+	if not emergency and not _player_node.is_multiplayer_authority():
 		return
 
 	var saved_data = _player_node.save_to_data()
@@ -50,18 +52,7 @@ func spawn(id: int) -> Player:
 	var node_name = "Player_%d" % id
 
 	player_node.name = node_name
-
-	if _player_world:
-		_player_world.entities.add_child(player_node, true)
-	else:
-		Log.warn("No world node set, spawning as child of self")
-		add_child(player_node, true)
-
-	if id == multiplayer.get_unique_id():
-		Log.info("Spawning local player with ID %d" % id)
-		_player_node = player_node
-	else:
-		Log.info("Spawning remote player with ID %d" % id)
+	player_node.set_multiplayer_authority(id)
 
 	return player_node
 
@@ -71,7 +62,8 @@ func _on_player_connected(id: int, _info: Lobby.PlayerInfo) -> void:
 	if not multiplayer.is_server():
 		return
 
-	spawn(id)
+	var player = _player_spawner.spawn(id)
+	_on_player_spawned(player)
 
 
 func _on_player_disconnected(id: int, _info: Lobby.PlayerInfo) -> void:
@@ -79,5 +71,24 @@ func _on_player_disconnected(id: int, _info: Lobby.PlayerInfo) -> void:
 		return
 
 	despawn(id)
+
+
+func _on_player_spawned(player: Player) -> void:
+	if player.is_multiplayer_authority():
+		Log.info("Local player spawned with name %s" % player.name)
+		_player_node = player
+		_player_node.data = character_data
+		_player_node.dropped_item.connect(_on_player_dropped_item)
+	else:
+		Log.info("Remote player spawned with name %s" % player.name)
+
+
+func _on_server_disconnected() -> void:
+	Log.err("Disconnected from server, performing emergency save...")
+	save(true)
+
+
+func _on_player_dropped_item(item: ItemData, count: int) -> void:
+	_player_world.pickup_manager.spawn_from_item_data(item, count, _player_node.global_position)
 
 #endregion Signals

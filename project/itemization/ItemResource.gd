@@ -6,6 +6,7 @@ class_name ItemResource extends Resource
 @export var components: Array[ItemComponentResource] = []
 @export var weight: float = 1.0
 @export var stackable: bool = false
+@export var max_durability: int = 100
 
 @export_group("Visuals")
 @export var inventory_icon: Texture2D

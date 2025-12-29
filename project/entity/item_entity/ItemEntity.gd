@@ -1,4 +1,4 @@
-class_name ItemPickup extends Node2D
+class_name ItemEntity extends Node2D
 
 @export var item_resource: ItemResource:
 	set(v):

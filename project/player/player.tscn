@@ -24,7 +24,7 @@
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_e7oew"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/replication_mode = 2
+properties/0/replication_mode = 1
 properties/1/path = NodePath("Nameplate:text")
 properties/1/spawn = true
 properties/1/replication_mode = 2
@@ -36,10 +36,13 @@ properties/3/spawn = true
 properties/3/replication_mode = 2
 properties/4/path = NodePath("PawnSprite:frame")
 properties/4/spawn = true
-properties/4/replication_mode = 2
+properties/4/replication_mode = 1
 properties/5/path = NodePath("PawnSprite:flip_h")
 properties/5/spawn = true
 properties/5/replication_mode = 2
+properties/6/path = NodePath(".:visible")
+properties/6/spawn = true
+properties/6/replication_mode = 2
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ebec5"]
 var/input/name = &"input"
@@ -342,7 +345,7 @@ equipment = NodePath("EquipmentComponent")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_e7oew")
-visibility_update_mode = 1
+visibility_update_mode = 2
 
 [node name="HSM" type="LimboHSM" parent="."]
 blackboard_plan = SubResource("BlackboardPlan_ebec5")
@@ -459,5 +462,4 @@ follow_target = NodePath("..")
 zoom = Vector2(3, 3)
 tween_resource = SubResource("Resource_bjvpn")
 tween_on_load = false
-follow_damping = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"

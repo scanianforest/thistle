@@ -25,7 +25,3 @@ func _on_max_health_changed(new_max_health: int) -> void:
 
 func _on_died() -> void:
 	health_bar.value = 0
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	UIChannel.on_input_event(event)

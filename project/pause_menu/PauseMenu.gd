@@ -1,4 +1,4 @@
-extends Control
+class_name PauseMenu extends Control
 
 @export var _game: Game
 
@@ -9,12 +9,17 @@ extends Control
 
 
 func _ready() -> void:
-	UIChannel.pause_menu_opened.connect(show)
+	UIChannel.input_event.connect(_on_input_event)
 
 	_resume.pressed.connect(_on_resume_pressed)
 	_settings.pressed.connect(_on_settings_pressed)
 	_quit_to_main_menu.pressed.connect(_on_quit_to_main_menu_pressed)
 	_quit_to_desktop.pressed.connect(_on_quit_to_desktop_pressed)
+
+
+func _on_input_event(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		visible = !visible
 
 
 func _on_resume_pressed() -> void:

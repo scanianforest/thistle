@@ -1,4 +1,4 @@
-class_name EntitiesManager extends Node2D
+class_name EntityManager extends Node2D
 
 @onready
 var chest_container_scene: PackedScene = preload("res://placeables/item_container/chest/chest.tscn")
@@ -15,8 +15,8 @@ func _ready() -> void:
 
 
 func clear() -> void:
-	for entity in get_children():
-		entity.queue_free()
+	for child in get_children():
+		child.queue_free()
 
 
 func save(world_data: WorldData) -> void:
@@ -31,8 +31,8 @@ func save(world_data: WorldData) -> void:
 	world_data.entities = entities_data
 
 
-func load(world_data: WorldData) -> void:
-	for container in world_data.entities.containers:
+func load(entities: EntitiesData) -> void:
+	for container in entities.containers:
 		spawn_container(container)
 
 
@@ -41,6 +41,10 @@ func spawn_container(container_data: ContainerData) -> void:
 	add_child(container)
 	container.global_position = container_data.position
 	container.inventory.items = container_data.items
+
+
+func is_entity(node: Node) -> bool:
+	return node.get("resource") and node.resource is EntityResource
 
 
 func _command_spawn_container(spawn_pos: Vector2) -> void:

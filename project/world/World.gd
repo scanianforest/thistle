@@ -1,8 +1,8 @@
 class_name World extends Node2D
 
 @onready var ground: Terrain = %Ground
-@onready var entities: EntitiesManager = %Entities
-@onready var pickups: PickupsManager = %Pickups
+@onready var entity_manager: EntityManager = %EntityManager
+@onready var pickup_manager: PickupManager = %PickupManager
 
 var data: WorldData = WorldData.new():
 	set(value):
@@ -18,39 +18,19 @@ var data: WorldData = WorldData.new():
 			var y = int(coord[1])
 			ground.draw_cell(Vector2i(x, y), tile)
 
-		entities.load(data)
-		pickups.load(data)
-
-
-static func exists(world_name: String) -> bool:
-	return WorldSaveFileAccess.exists(world_name)
-
-
-static func create_world(world_name: String) -> WorldData:
-	var new_world_data = WorldData.new()
-	new_world_data.metadata.name = world_name
-	return new_world_data
-
-
-static func load_existing_world(world_name: String) -> WorldData:
-	var loaded_data = WorldSaveFileAccess.load(world_name)
-	if loaded_data != null:
-		return loaded_data
-	else:
-		Log.err("No saved world found with name: ", world_name)
-		return null
+		entity_manager.load(data.entities)
+		pickup_manager.load(data.pickups)
 
 
 func _ready() -> void:
 	ground.tile_changed.connect(_on_ground_tile_changed)
-
 	clear()
 
 
 func clear() -> void:
 	ground.clear_terrain()
-	entities.clear()
-	pickups.clear()
+	entity_manager.clear()
+	#pickup_manager.clear()
 
 
 func unload() -> void:
@@ -86,8 +66,8 @@ func save() -> void:
 		Log.warn("No world data to save")
 		return
 
-	pickups.save(data)
-	entities.save(data)
+	pickup_manager.save(data)
+	entity_manager.save(data)
 
 	WorldSaveFileAccess.save(data.metadata.name, data)
 	Log.info("World %s saved." % data.metadata.name)

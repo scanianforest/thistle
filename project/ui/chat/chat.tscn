@@ -22,5 +22,6 @@ alignment = 2
 [node name="Input" type="LineEdit" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 3
 theme_override_font_sizes/font_size = 8
 placeholder_text = "Enter message..."

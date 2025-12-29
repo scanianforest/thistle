@@ -19,6 +19,3 @@ func _unhandled_input(event: InputEvent) -> void:
 		move_direction = Input.get_vector("left", "right", "up", "down")
 
 	get_parent().handle_input(event)
-
-	if event.is_action_pressed("ui_cancel"):
-		UIChannel.open_pause_menu()

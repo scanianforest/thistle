@@ -1,9 +1,5 @@
 class_name Game extends CanvasLayer
 
-enum PauseMode { PAUSED_BY_GAME, PAUSED_BY_PLAYER, UNPAUSED }
-
-static var instance: Game
-
 signal started
 signal stopped
 
@@ -18,12 +14,8 @@ signal stopped
 @onready var player_manager: PlayerManager = %PlayerManager
 @onready var blackout: Blackout = %Blackout
 
-var selected_character: PlayerData
-
 
 func _ready() -> void:
-	instance = self
-
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 	_register_console_commands()
@@ -115,6 +107,7 @@ func _on_player_data_loaded(data: PlayerData) -> bool:
 
 func _on_world_data_loaded(data: WorldData) -> bool:
 	world.data = data
+
 	Log.info("World data set: %s" % data.metadata.name)
 	return true
 
@@ -134,14 +127,6 @@ func _on_reveal() -> bool:
 	return true
 
 
-func _load_world(world_data: WorldData) -> void:
-	world.data = world_data
-
-
-func _load_player(player_data: PlayerData) -> void:
-	player_manager.character_data = player_data
-
-
 func start_game() -> void:
 	world.show()
 	world.unpause()
@@ -154,6 +139,8 @@ func stop_game() -> void:
 	world.pause()
 	world.hide()
 	world.clear()
+
+	player_manager.save()
 
 	Lobby.leave()
 
@@ -195,4 +182,5 @@ func _on_save() -> bool:
 
 
 func _on_server_disconnected() -> void:
+	save()
 	quit(false)

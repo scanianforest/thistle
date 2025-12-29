@@ -60,6 +60,7 @@ size_flags_vertical = 3
 stretch = true
 
 [node name="WorldViewport" type="SubViewport" parent="WorldViewportContainer"]
+unique_name_in_owner = true
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
@@ -103,6 +104,7 @@ size_flags_vertical = 8
 _game = NodePath("../../..")
 
 [node name="PauseMenu" parent="UIContainer/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
+unique_name_in_owner = true
 visible = false
 _game = NodePath("../../..")
 
