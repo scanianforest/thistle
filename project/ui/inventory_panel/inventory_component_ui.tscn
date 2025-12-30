@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://blw05kp48gl64" path="res://ui/inventory_panel/item_grid.tscn" id="3_3a37t"]
 
 [node name="InventoryComponentUI" type="PanelContainer"]
-custom_minimum_size = Vector2(360, 200)
-offset_right = 364.0
-offset_bottom = 127.0
+custom_minimum_size = Vector2(300, 160)
+offset_right = 300.0
+offset_bottom = 168.0
 theme = ExtResource("1_3a37t")
 script = ExtResource("1_tufe0")
 
@@ -27,6 +27,7 @@ theme_override_constants/separation = 16
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+columns = 6
 
 [node name="InventoryItemUI" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2

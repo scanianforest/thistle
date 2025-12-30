@@ -15,13 +15,15 @@ signal stopped
 @onready var blackout: Blackout = %Blackout
 
 
-func _ready() -> void:
-	multiplayer.server_disconnected.connect(_on_server_disconnected)
-
+func _enter_tree() -> void:
 	_register_console_commands()
 
 	WorldSaveFileAccess.create_world_save_directory()
 	PlayerSaveFileAccess.create_player_save_directory()
+
+
+func _ready() -> void:
+	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 	hsm.initial_state = main_menu_state
 
@@ -83,6 +85,52 @@ func load_world(world_name: String) -> void:
 	hsm.dispatch(&"load_world", world_name)
 
 
+func start_game() -> void:
+	world.show()
+	world.unpause()
+
+	started.emit()
+
+
+func stop_game() -> void:
+	world.pause()
+	world.hide()
+	world.clear()
+
+	player_manager.save()
+
+	Lobby.leave()
+
+	stopped.emit()
+
+
+func join(ip: String, port: int = 7890) -> void:
+	await blackout.blackout()
+	hsm.blackboard.set_var("ip", ip)
+	hsm.blackboard.set_var("port", port)
+	hsm.dispatch(&"to_joining")
+
+
+func save() -> void:
+	Log.info("Saving game...")
+	player_manager.save()
+
+	if world.is_multiplayer_authority():
+		world.save()
+
+
+func quit(to_desktop: bool, save_on_quit: bool = true) -> void:
+	await blackout.blackout()
+
+	if save_on_quit:
+		save()
+
+	if to_desktop:
+		hsm.dispatch(&"to_quitting")
+	else:
+		hsm.dispatch(&"to_main_menu")
+
+
 func _register_console_commands() -> void:
 	LimboConsole.register_command(start, "game_start", "Starts a new game")
 	(
@@ -127,60 +175,5 @@ func _on_reveal() -> bool:
 	return true
 
 
-func start_game() -> void:
-	world.show()
-	world.unpause()
-	world.load(world.data.metadata.name)
-
-	started.emit()
-
-
-func stop_game() -> void:
-	world.pause()
-	world.hide()
-	world.clear()
-
-	player_manager.save()
-
-	Lobby.leave()
-
-	stopped.emit()
-
-
-func join(ip: String, port: int = 7890) -> void:
-	await blackout.blackout()
-	hsm.blackboard.set_var("ip", ip)
-	hsm.blackboard.set_var("port", port)
-	hsm.dispatch(&"to_joining")
-
-
-func save() -> void:
-	Log.info("Saving game...")
-	player_manager.save()
-
-	if world.is_multiplayer_authority():
-		world.save()
-
-
-func quit(to_desktop: bool, save_on_quit: bool = true) -> void:
-	await blackout.blackout()
-	if save_on_quit:
-		save()
-
-	if to_desktop:
-		hsm.dispatch(&"to_quitting")
-	else:
-		hsm.dispatch(&"to_main_menu")
-
-
-func _quit_to_desktop() -> void:
-	get_tree().quit()
-
-
-func _on_save() -> bool:
-	return true
-
-
 func _on_server_disconnected() -> void:
-	save()
 	quit(false)

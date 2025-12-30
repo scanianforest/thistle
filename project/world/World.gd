@@ -4,7 +4,7 @@ class_name World extends Node2D
 @onready var entity_manager: EntityManager = %EntityManager
 @onready var pickup_manager: PickupManager = %PickupManager
 
-var data: WorldData = WorldData.new():
+var data: WorldData:
 	set(value):
 		data = value
 		if not data:
@@ -47,14 +47,13 @@ func create_new(world_name: String) -> void:
 	Log.debug(data.to_dict())
 
 
-func load(world_name: String) -> void:
-	var loaded_data = WorldSaveFileAccess.load(world_name)
-	if loaded_data != null:
-		data = loaded_data
-		Log.info("World %s loaded." % world_name)
-		Log.debug(data.to_dict())
-	else:
-		Log.err("No saved world found with name: ", world_name)
+func load() -> void:
+	if not data:
+		Log.err("No world data set to load from")
+		return
+
+	# TODO a bit hacky, make this more robust later
+	self.data = data
 
 
 func save() -> void:

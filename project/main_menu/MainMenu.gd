@@ -5,13 +5,8 @@ extends Control
 
 @export var _game: Game
 
-@onready var world_name_edit: LineEdit = %WorldNameEdit
-
 @onready var join_edit: LineEdit = %JoinEdit
 @onready var join_button: Button = %JoinButton
-
-@onready var worlds: ItemList = %WorldList
-@onready var create_world_button: Button = %CreateWorldButton
 
 
 func _ready() -> void:
@@ -23,36 +18,15 @@ func _ready() -> void:
 
 	join_button.pressed.connect(_on_join_button_pressed)
 
-	worlds.item_selected.connect(_on_world_selected)
-
-	create_world_button.pressed.connect(_on_create_world_button_pressed)
-
-	_refresh_world_list()
-
-
-func _refresh_world_list() -> void:
-	worlds.clear()
-	var ws = WorldSaveFileAccess.get_saves()
-	ws.sort_custom(func(a, b): return a.metadata.last_loaded > b.metadata.last_loaded)
-	for world in ws:
-		worlds.add_item(world.metadata.name)
-
 
 func _on_character_data_selected(data: PlayerData) -> void:
 	_game.load_player(data.metadata.name)
 	_start_button.disabled = not _game.ready_for_start()
 
 
-func _on_world_selected(index: int) -> void:
-	var world_name: String = worlds.get_item_text(index)
-	_game.load_world(world_name)
+func _on_world_data_selected(data: WorldData) -> void:
+	_game.load_world(data.metadata.name)
 	_start_button.disabled = not _game.ready_for_start()
-
-
-func _on_create_world_button_pressed() -> void:
-	var world_name: String = world_name_edit.text
-	_game.create_world(world_name)
-	_refresh_world_list()
 
 
 func _update_start_button_state() -> void:

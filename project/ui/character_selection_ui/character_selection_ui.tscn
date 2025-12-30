@@ -32,7 +32,6 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="CharacterSlot" parent="VBoxContainer/CharacterGrid" instance=ExtResource("3_qyiqi")]
-custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 
 [node name="CharacterSlot2" parent="VBoxContainer/CharacterGrid" instance=ExtResource("3_qyiqi")]

@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsfbsd2x7blnb"]
+
+[ext_resource type="Script" uid="uid://badnkft1qtrtq" path="res://ui/world_selection_panel/WorldSlot.gd" id="1_ajb0e"]
+[ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="1_ytdtc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj6wf"]
+bg_color = Color(0.20392157, 0.20392157, 0.20392157, 0.33333334)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hal47"]
+font_color = Color(0.60933006, 0.6093302, 0.6093298, 1)
+
+[node name="WorldSlot" type="Button" node_paths=PackedStringArray("_name_label", "_days_passed_label")]
+custom_minimum_size = Vector2(340, 72)
+theme_override_styles/normal = SubResource("StyleBoxFlat_mj6wf")
+toggle_mode = true
+script = ExtResource("1_ajb0e")
+_name_label = NodePath("MarginContainer/HBoxContainer/WorldInfo/Name")
+_days_passed_label = NodePath("MarginContainer/HBoxContainer/WorldInfo/DaysPassed")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ytdtc")
+expand_mode = 2
+
+[node name="WorldInfo" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Name" type="Label" parent="MarginContainer/HBoxContainer/WorldInfo"]
+layout_mode = 2
+text = "World Name"
+
+[node name="DaysPassed" type="Label" parent="MarginContainer/HBoxContainer/WorldInfo"]
+layout_mode = 2
+text = "Day 4"
+label_settings = SubResource("LabelSettings_hal47")
+
+[node name="DeleteButton" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "X"
