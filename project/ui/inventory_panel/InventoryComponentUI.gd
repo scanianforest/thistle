@@ -6,7 +6,6 @@ signal component_opened
 signal component_closed
 
 @onready var grid: ItemGrid = %ItemGrid
-@onready var owner_name_label: Label = %OwnerName
 
 var inventory_comp: InventoryComponent:
 	set(value):
@@ -22,7 +21,6 @@ var inventory_comp: InventoryComponent:
 			inventory_comp.closed.connect(_on_component_closed)
 			inventory_comp.inventory_updated.connect(_on_inventory_updated)
 			_on_inventory_updated(inventory_comp.items)
-			set_owner_name(inventory_comp.get_parent().name)
 		else:
 			visible = false
 		inventory_comp = value
@@ -32,10 +30,6 @@ var inventory_comp: InventoryComponent:
 
 func _ready() -> void:
 	visible = false
-
-
-func set_owner_name(new_name: String) -> void:
-	owner_name_label.text = new_name
 
 
 func _on_component_opened() -> void:

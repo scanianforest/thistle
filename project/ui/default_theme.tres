@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://8hao7e54tpil"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://8hao7e54tpil"]
 
 [ext_resource type="FontFile" uid="uid://8a78abg4w4dx" path="res://ui/fonts/PressStart2P-Regular.ttf" id="1_vos2p"]
 
@@ -9,6 +9,14 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vos2p"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_i4llc"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5r0yv"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0ie0l"]
+
 [resource]
 default_font = ExtResource("1_vos2p")
 default_font_size = 16
@@ -17,3 +25,7 @@ MarginContainer/constants/margin_left = 20
 MarginContainer/constants/margin_right = 20
 MarginContainer/constants/margin_top = 20
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_y5boi")
+TabBar/icons/decrement = SubResource("PlaceholderTexture2D_vos2p")
+TabBar/icons/decrement_highlight = SubResource("PlaceholderTexture2D_i4llc")
+TabBar/icons/increment = SubResource("PlaceholderTexture2D_5r0yv")
+TabBar/icons/increment_highlight = SubResource("PlaceholderTexture2D_0ie0l")

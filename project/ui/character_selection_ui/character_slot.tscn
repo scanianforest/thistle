@@ -1,36 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqavx66vnr1rw"]
+[gd_scene load_steps=6 format=3 uid="uid://cqavx66vnr1rw"]
 
 [ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="1_53hdw"]
 [ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_mj6wf"]
 [ext_resource type="Script" uid="uid://ba08ajhkha83v" path="res://ui/character_selection_ui/CharacterSlot.gd" id="1_vlx0v"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_4xkan"]
-font_color = Color(0.6542321, 0.6542321, 0.654232, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj6wf"]
+bg_color = Color(0.20392157, 0.20392157, 0.20392157, 0.33333334)
 
-[node name="CharacterSlot" type="PanelContainer" node_paths=PackedStringArray("_name")]
+[sub_resource type="LabelSettings" id="LabelSettings_mj6wf"]
+font_color = Color(0.60933006, 0.6093302, 0.6093298, 1)
+
+[node name="CharacterSlot" type="Button" node_paths=PackedStringArray("_name")]
+custom_minimum_size = Vector2(340, 72)
 offset_right = 340.0
-offset_bottom = 80.0
+offset_bottom = 72.0
 size_flags_horizontal = 3
-focus_mode = 2
 theme = ExtResource("1_mj6wf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mj6wf")
+toggle_mode = true
 script = ExtResource("1_vlx0v")
 _name = NodePath("MarginContainer/HBoxContainer/CharacterInfo/Name")
 
-[node name="SelectedPanel" type="Panel" parent="."]
-unique_name_in_owner = true
-self_modulate = Color(3.6017861, 3.6017861, 3.6017861, 1)
-layout_mode = 2
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -40,6 +45,7 @@ expand_mode = 2
 
 [node name="CharacterInfo" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 alignment = 1
 
 [node name="Name" type="Label" parent="MarginContainer/HBoxContainer/CharacterInfo"]
@@ -50,26 +56,12 @@ text = "Character Name"
 [node name="Level" type="Label" parent="MarginContainer/HBoxContainer/CharacterInfo"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Level 10"
-label_settings = SubResource("LabelSettings_4xkan")
+text = "Level 1"
+label_settings = SubResource("LabelSettings_mj6wf")
 
-[node name="LastSaved" type="Label" parent="MarginContainer/HBoxContainer/CharacterInfo"]
-unique_name_in_owner = true
+[node name="DeleteButton" type="Button" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-text = "1990-01-01 12:00"
-label_settings = SubResource("LabelSettings_4xkan")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CharacterInfo"]
-layout_mode = 2
-
-[node name="SelectButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterInfo/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Select"
-
-[node name="DeleteButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterInfo/HBoxContainer"]
-layout_mode = 2
+size_flags_vertical = 0
 text = "X"
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/CharacterInfo/HBoxContainer/SelectButton" to="." method="select"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/CharacterInfo/HBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]

@@ -3,6 +3,7 @@ extends MarginContainer
 signal character_selected(character_data: PlayerData)
 
 @onready var grid: GridContainer = %CharacterGrid
+@export var button_group: ButtonGroup
 
 var _slot_scene: PackedScene = preload("res://ui/character_selection_ui/character_slot.tscn")
 
@@ -10,6 +11,8 @@ var _slot_scene: PackedScene = preload("res://ui/character_selection_ui/characte
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	refresh()
+	button_group.pressed.connect(_on_button_group_pressed)
+	%NewCharacterButton.pressed.connect(_on_new_character_button_pressed)
 
 
 func refresh() -> void:
@@ -19,13 +22,24 @@ func refresh() -> void:
 	for player in PlayerSaveFileAccess.get_saves():
 		var slot: CharacterSlot = _slot_scene.instantiate()
 		slot.data = player
-		slot.selected.connect(_on_slot_selected)
+		slot.button_group = button_group
 		grid.add_child(slot)
 
 
-func _on_slot_selected(slot: CharacterSlot) -> void:
-	for c in grid.get_children():
-		if c != slot:
-			c.deselect()
+func _on_button_group_pressed(character_slot: CharacterSlot) -> void:
+	character_selected.emit(character_slot.data)
 
-	character_selected.emit(slot.data)
+
+func _on_new_character_button_pressed() -> void:
+	var new_character_data: PlayerData = PlayerData.new()
+
+	var character_name: String = %NameEdit.text.strip_edges()
+
+	if character_name == "":
+		Log.error("Character name cannot be empty")
+		return
+
+	new_character_data.metadata.name = character_name
+
+	PlayerSaveFileAccess.save(character_name, new_character_data)
+	refresh.call_deferred()

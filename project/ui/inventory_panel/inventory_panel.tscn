@@ -1,10 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvyxea5kvytl1"]
+[gd_scene load_steps=7 format=3 uid="uid://bvyxea5kvytl1"]
 
 [ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_0mjcg"]
 [ext_resource type="Script" uid="uid://dk7arl4c7tf7j" path="res://ui/inventory_panel/InventoryPanel.gd" id="1_p663k"]
 [ext_resource type="PackedScene" uid="uid://caok1c4w0g7lh" path="res://ui/inventory_panel/inventory_component_ui.tscn" id="2_0mjcg"]
+[ext_resource type="Texture2D" uid="uid://cq1cqax74jed1" path="res://aseprite/branch.aseprite" id="4_wjk4u"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wjk4u"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wjk4u"]
+font_size = 8
 
 [node name="InventoryPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(200, 0)
@@ -21,7 +25,8 @@ script = ExtResource("1_p663k")
 
 [node name="Margins" type="MarginContainer" parent="."]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
+size_flags_vertical = 8
 
 [node name="VBoxContainer" type="HBoxContainer" parent="Margins"]
 layout_mode = 2
@@ -30,10 +35,40 @@ theme_override_constants/separation = 20
 
 [node name="PlayerInventory" parent="Margins/VBoxContainer" instance=ExtResource("2_0mjcg")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 
 [node name="ContainerInventory" parent="Margins/VBoxContainer" instance=ExtResource("2_0mjcg")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+
+[node name="ItemInformation" type="PanelContainer" parent="Margins/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Margins/VBoxContainer/ItemInformation"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margins/VBoxContainer/ItemInformation/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Margins/VBoxContainer/ItemInformation/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ItemIcon" type="TextureRect" parent="Margins/VBoxContainer/ItemInformation/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("4_wjk4u")
+
+[node name="ItemName" type="Label" parent="Margins/VBoxContainer/ItemInformation/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Wood"
+label_settings = SubResource("LabelSettings_wjk4u")
+
+[node name="ItemDescription" type="Label" parent="Margins/VBoxContainer/ItemInformation/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "A splintery piece of wood."
+label_settings = SubResource("LabelSettings_wjk4u")
+autowrap_mode = 2

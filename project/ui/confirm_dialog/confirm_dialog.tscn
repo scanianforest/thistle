@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://ch2k2ihf48th6"]
+
+[ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_ipfm5"]
+[ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="2_3wy0f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipfm5"]
+bg_color = Color(0.4800281, 0.15957049, 0.18378657, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3wy0f"]
+bg_color = Color(0.21054223, 0.25267988, 0.14460477, 1)
+
+[node name="ConfirmDialog" type="PanelContainer"]
+offset_right = 620.0
+offset_bottom = 168.0
+theme = ExtResource("1_ipfm5")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_3wy0f")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PromptLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Delete character Beanmaster?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "No"
+
+[node name="DestructiveConfirmButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_ipfm5")
+text = "Confirm"
+
+[node name="PositiveConfirmButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_3wy0f")
+text = "Confirm"

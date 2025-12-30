@@ -6,71 +6,69 @@
 [ext_resource type="PackedScene" uid="uid://blw05kp48gl64" path="res://ui/inventory_panel/item_grid.tscn" id="3_3a37t"]
 
 [node name="InventoryComponentUI" type="PanelContainer"]
-custom_minimum_size = Vector2(240, 0)
+custom_minimum_size = Vector2(360, 200)
 offset_right = 364.0
 offset_bottom = 127.0
 theme = ExtResource("1_3a37t")
 script = ExtResource("1_tufe0")
 
-[node name="Margins" type="MarginContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="VBox" type="VBoxContainer" parent="Margins"]
+[node name="Margins" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="OwnerName" type="Label" parent="Margins/VBox"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Margins"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ItemGrid" parent="VBoxContainer/Margins/HBoxContainer" instance=ExtResource("3_3a37t")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-text = "Inventory"
-horizontal_alignment = 2
+size_flags_horizontal = 3
 
-[node name="ItemGrid" parent="Margins/VBox" instance=ExtResource("3_3a37t")]
-unique_name_in_owner = true
+[node name="InventoryItemUI" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI2" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI2" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI3" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI3" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI4" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI4" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI5" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI5" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI6" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI6" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI7" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI7" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI8" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI8" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI9" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI9" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI10" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI10" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI11" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI11" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI12" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI12" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI13" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI13" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI14" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
 
-[node name="InventoryItemUI14" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
-layout_mode = 2
-
-[node name="InventoryItemUI15" parent="Margins/VBox/ItemGrid" instance=ExtResource("1_eyk4t")]
+[node name="InventoryItemUI15" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2

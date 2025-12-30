@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxvnurm1t6utv"]
+[gd_scene load_steps=6 format=3 uid="uid://cxvnurm1t6utv"]
 
 [ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_ho8y6"]
 [ext_resource type="Script" uid="uid://bhach0gfbdmg4" path="res://ui/character_selection_ui/CharacterSelectionUI.gd" id="2_yf5nl"]
+[ext_resource type="ButtonGroup" uid="uid://xw353o8lt5ih" path="res://ui/character_selection_ui/character_slot_button_group.tres" id="3_j3ng2"]
 [ext_resource type="PackedScene" uid="uid://cqavx66vnr1rw" path="res://ui/character_selection_ui/character_slot.tscn" id="3_qyiqi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qyiqi"]
 
 [node name="CharacterSelectionUI" type="MarginContainer"]
 anchors_preset = 9
@@ -12,6 +15,7 @@ grow_vertical = 2
 focus_mode = 2
 theme = ExtResource("1_ho8y6")
 script = ExtResource("2_yf5nl")
+button_group = ExtResource("3_j3ng2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -23,24 +27,27 @@ text = "Characters"
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="NewCharacterBox" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="CharacterNameEdit" type="LineEdit" parent="VBoxContainer/NewCharacterBox"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "Character name"
-
-[node name="CreateCharacterButton" type="Button" parent="VBoxContainer/NewCharacterBox"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Create"
-
 [node name="CharacterGrid" type="GridContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="CharacterSlot" parent="VBoxContainer/CharacterGrid" instance=ExtResource("3_qyiqi")]
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
+
+[node name="CharacterSlot2" parent="VBoxContainer/CharacterGrid" instance=ExtResource("3_qyiqi")]
+layout_mode = 2
+
+[node name="CharacterSlot3" parent="VBoxContainer/CharacterGrid" instance=ExtResource("3_qyiqi")]
+layout_mode = 2
+
+[node name="NameEdit" type="LineEdit" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="NewCharacterButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qyiqi")
+text = "+ New Character"

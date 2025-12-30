@@ -3,7 +3,6 @@ class_name InventoryItemUI extends PanelContainer
 signal secondary_requested(item: ItemData)
 signal remove_requested(item: ItemData)
 
-@onready var _tooltip: Control = %ItemTooltip
 @onready var _count_label: Label = %StackCount
 
 @onready var _texture: TextureRect = %Texture
@@ -40,11 +39,6 @@ func _ready() -> void:
 
 	_texture.texture = item.resource.inventory_icon
 
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
-	_tooltip.hide()
-	_tooltip.item = item
-
 	_count_label.visible = item.resource.stackable
 	_count_label.text = str(count)
 
@@ -59,8 +53,6 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
-	_tooltip.hide()
-
 	var preview = Control.new()
 	preview.z_index = 1000
 	preview.z_as_relative = false
@@ -74,11 +66,3 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	set_drag_preview(preview)
 
 	return self
-
-
-func _on_mouse_entered() -> void:
-	_tooltip.show()
-
-
-func _on_mouse_exited() -> void:
-	_tooltip.hide()

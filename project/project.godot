@@ -48,7 +48,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/TileMapDual/plugin.cfg", "res://addons/gdUnit4/plugin.cfg", "res://addons/limbo_console/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/uuid/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/TileMapDual/plugin.cfg", "res://addons/gdUnit4/plugin.cfg", "res://addons/limbo_console/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [gdunit4]
 
