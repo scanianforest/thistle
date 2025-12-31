@@ -43,7 +43,7 @@ ItemServer="*res://core/ItemServer.gd"
 [display]
 
 window/size/always_on_top=true
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 window/vsync/vsync_mode=0
 
 [editor_plugins]

@@ -77,9 +77,12 @@ func _on_container_closed() -> void:
 
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	return data is InventoryItemUI
+	return data is InventoryItemUI.DragData
 
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
-	var item_ui: InventoryItemUI = data as InventoryItemUI
-	_player_inventory.inventory_comp.drop_item(item_ui.item, item_ui.count)
+	var drag_data: InventoryItemUI.DragData = data
+	var item = drag_data.item
+	var count: int = drag_data.count
+
+	_player_inventory.inventory_comp.drop_item(item, count)

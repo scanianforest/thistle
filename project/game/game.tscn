@@ -48,6 +48,7 @@ _player_world = NodePath("../WorldViewportContainer/WorldViewport/World")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="PlayerManager"]
 _spawnable_scenes = PackedStringArray("uid://cbe5o8ii1in3w")
+spawn_path = NodePath("../../WorldViewportContainer/WorldViewport/World")
 
 [node name="WorldViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -103,17 +104,17 @@ size_flags_vertical = 8
 [node name="MainMenu" parent="UIContainer/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
 _game = NodePath("../../..")
 
-[node name="PauseMenu" parent="UIContainer/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
-unique_name_in_owner = true
+[node name="HUD" parent="UIContainer/UIViewport" instance=ExtResource("6_dakft")]
 visible = false
-_game = NodePath("../../..")
 
 [node name="InventoryPanel" parent="UIContainer/UIViewport" instance=ExtResource("9_l8g03")]
 visible = false
 offset_bottom = -78.0
 
-[node name="HUD" parent="UIContainer/UIViewport" instance=ExtResource("6_dakft")]
+[node name="PauseMenu" parent="UIContainer/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
+unique_name_in_owner = true
 visible = false
+_game = NodePath("../../..")
 
 [node name="Blackout" parent="UIContainer/UIViewport" instance=ExtResource("16_ee6o4")]
 unique_name_in_owner = true

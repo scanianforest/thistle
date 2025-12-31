@@ -22,6 +22,10 @@ var data: WorldData:
 		pickup_manager.load(data.pickups)
 
 
+func _enter_tree() -> void:
+	_register_console_commands()
+
+
 func _ready() -> void:
 	ground.tile_changed.connect(_on_ground_tile_changed)
 	clear()
@@ -34,7 +38,6 @@ func clear() -> void:
 
 
 func unload() -> void:
-	data = null
 	hide()
 	pause()
 	clear()
@@ -54,6 +57,8 @@ func load() -> void:
 
 	# TODO a bit hacky, make this more robust later
 	self.data = data
+	show()
+	unpause()
 
 
 func save() -> void:
@@ -79,6 +84,12 @@ func pause() -> void:
 
 func unpause() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT
+
+
+func _register_console_commands() -> void:
+	LimboConsole.register_command(unload, "world_unload", "Unloads the current world.")
+	LimboConsole.register_command(load, "world_load", "Loads the world from set world data.")
+	LimboConsole.register_command(save, "world_save", "Saves the current world.")
 
 
 func _on_ground_tile_changed(x: int, y: int, new_tile: int) -> void:

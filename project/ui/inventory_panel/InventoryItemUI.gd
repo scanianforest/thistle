@@ -7,6 +7,16 @@ signal remove_requested(item: ItemData)
 
 @onready var _texture: TextureRect = %Texture
 
+enum DragMode { ONE, SPLIT, FULL }
+
+
+class DragData:
+	var source: InventoryItemUI
+	var item: ItemData
+	var count: int
+	var mode: DragMode
+
+
 var item: ItemData:
 	set(v):
 		item = v
@@ -65,4 +75,14 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 
 	set_drag_preview(preview)
 
-	return self
+	var drag_data = DragData.new()
+	drag_data.source = self
+	drag_data.item = item
+	if Input.is_key_pressed(KEY_CTRL):
+		drag_data.count = 1
+	elif Input.is_key_pressed(KEY_SHIFT):
+		drag_data.count = ceil(count / 2.0)
+	else:
+		drag_data.count = count
+
+	return drag_data

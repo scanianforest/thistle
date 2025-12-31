@@ -1,8 +1,6 @@
 @tool
 class_name ItemPickup extends Area2D
 
-signal picked_up(pickup: ItemPickup, player: Player)
-
 @export var resource: ItemResource:
 	set(v):
 		item = ItemData.new(v)
@@ -38,7 +36,6 @@ func _ready() -> void:
 	_tween.tween_property(sprite, "offset:y", sprite.offset.y + 1, 1.0).set_ease(Tween.EASE_IN_OUT)
 	_tween.set_loops()
 
-	monitorable = false
 	get_tree().create_timer(0.5).timeout.connect(_activate)
 
 

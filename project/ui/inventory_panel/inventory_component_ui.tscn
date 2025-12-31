@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://caok1c4w0g7lh"]
+[gd_scene load_steps=6 format=3 uid="uid://caok1c4w0g7lh"]
 
 [ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_3a37t"]
 [ext_resource type="PackedScene" uid="uid://dn4fk26m0qm2q" path="res://ui/inventory_panel/inventory_item_ui.tscn" id="1_eyk4t"]
 [ext_resource type="Script" uid="uid://md4mek4w2xay" path="res://ui/inventory_panel/InventoryComponentUI.gd" id="1_tufe0"]
 [ext_resource type="PackedScene" uid="uid://blw05kp48gl64" path="res://ui/inventory_panel/item_grid.tscn" id="3_3a37t"]
+[ext_resource type="Texture2D" uid="uid://cq1cqax74jed1" path="res://aseprite/branch.aseprite" id="5_2jhds"]
 
 [node name="InventoryComponentUI" type="PanelContainer"]
 custom_minimum_size = Vector2(300, 160)
@@ -73,3 +74,53 @@ layout_mode = 2
 
 [node name="InventoryItemUI15" parent="VBoxContainer/Margins/HBoxContainer/ItemGrid" instance=ExtResource("1_eyk4t")]
 layout_mode = 2
+
+[node name="SplitStackPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="SplitStackPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SplitStackPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SplitStackPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ItemContainer" type="VBoxContainer" parent="SplitStackPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ItemIcon" type="TextureRect" parent="SplitStackPanel/MarginContainer/VBoxContainer/HBoxContainer/ItemContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("5_2jhds")
+expand_mode = 4
+
+[node name="StackCountSelectionLabel" type="Label" parent="SplitStackPanel/MarginContainer/VBoxContainer/HBoxContainer/ItemContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0/0"
+
+[node name="StackCountSelectionSlider" type="HSlider" parent="SplitStackPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="SplitStackPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="SplitStackPanel/MarginContainer/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = " X "
+
+[node name="Button2" type="Button" parent="SplitStackPanel/MarginContainer/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Drop"

@@ -26,11 +26,6 @@ var data: PlayerData = PlayerData.new():
 		global_position = data.position
 		inventory.data = data.inventory_data
 		actionbar.load(data.actionbar_data)
-		show()
-
-
-func _enter_tree() -> void:
-	hide()
 
 
 func _ready() -> void:

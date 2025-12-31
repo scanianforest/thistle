@@ -10,18 +10,12 @@ var character_data: PlayerData
 
 
 func _ready() -> void:
-	_defer_ready.call_deferred()
-
 	Lobby.player_connected.connect(_on_player_connected)
 	Lobby.player_disconnected.connect(_on_player_disconnected)
 	Lobby.server_disconnected.connect(_on_server_disconnected)
 
 	_player_spawner.spawn_function = spawn
 	_player_spawner.spawned.connect(_on_player_spawned)
-
-
-func _defer_ready() -> void:
-	_player_spawner.spawn_path = _player_world.entity_manager.get_path()
 
 
 func despawn(id: int) -> void:
@@ -73,6 +67,7 @@ func _on_player_disconnected(id: int, _info: Lobby.PlayerInfo) -> void:
 	despawn(id)
 
 
+# NOTE: this is called for all clients
 func _on_player_spawned(player: Player) -> void:
 	if player.is_multiplayer_authority():
 		Log.info("Local player spawned with name %s" % player.name)
