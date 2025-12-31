@@ -453,16 +453,17 @@ offset_top = -29.0
 offset_right = 105.0
 offset_bottom = -13.0
 scale = Vector2(0.5, 0.5)
-text = "A"
+text = "Character Name"
 label_settings = SubResource("LabelSettings_e7oew")
 horizontal_alignment = 1
 
 [node name="PlayerCamera" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
+unique_name_in_owner = true
 top_level = true
 script = ExtResource("19_65viv")
 follow_mode = 2
 follow_target = NodePath("..")
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
 tween_resource = SubResource("Resource_bjvpn")
 tween_on_load = false
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"

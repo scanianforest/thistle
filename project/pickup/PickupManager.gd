@@ -49,7 +49,7 @@ func _spawn_item_pickup(item_data: ItemPickupData) -> void:
 
 	var node: ItemPickup = _item_pickup_scene.instantiate()
 
-	node.resource = item_data.item.resource
+	node.item = item_data.item
 	node.count = item_data.count
 	node.global_position = item_data.position
 

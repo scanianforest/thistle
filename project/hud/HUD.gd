@@ -13,6 +13,11 @@ func _on_player_set(player: Player) -> void:
 	player.health.health_changed.connect(_on_health_changed)
 	player.health.max_health_changed.connect(_on_max_health_changed)
 	player.health.died.connect(_on_died)
+	player.tree_exited.connect(_on_player_tree_exited)
+
+
+func _on_player_tree_exited() -> void:
+	hide()
 
 
 func _on_health_changed(new_health: int) -> void:

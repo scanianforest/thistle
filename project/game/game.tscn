@@ -44,23 +44,21 @@ metadata/_custom_type_script = "uid://g43m5le85ash"
 unique_name_in_owner = true
 script = ExtResource("1_vasa2")
 _player_spawner = NodePath("PlayerSpawner")
-_player_world = NodePath("../WorldViewportContainer/WorldViewport/World")
+_player_world = NodePath("../World/WorldViewport/World")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="PlayerManager"]
 _spawnable_scenes = PackedStringArray("uid://cbe5o8ii1in3w")
-spawn_path = NodePath("../../WorldViewportContainer/WorldViewport/World")
+spawn_path = NodePath("../../World/WorldViewport/World/EntityManager")
 
-[node name="WorldViewportContainer" type="SubViewportContainer" parent="."]
+[node name="World" type="SubViewportContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 stretch = true
 
-[node name="WorldViewport" type="SubViewport" parent="WorldViewportContainer"]
+[node name="WorldViewport" type="SubViewport" parent="World"]
 unique_name_in_owner = true
 transparent_bg = true
 handle_input_locally = false
@@ -68,12 +66,18 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="World" parent="WorldViewportContainer/WorldViewport" instance=ExtResource("5_dxrkv")]
+[node name="World" parent="World/WorldViewport" instance=ExtResource("5_dxrkv")]
 unique_name_in_owner = true
 process_mode = 4
 visible = false
 
-[node name="UIContainer" type="SubViewportContainer" parent="."]
+[node name="FloatingItem" parent="World/WorldViewport/World/PickupManager" index="0"]
+monitorable = true
+
+[node name="FloatingItem2" parent="World/WorldViewport/World/PickupManager" index="1"]
+monitorable = true
+
+[node name="UI" type="SubViewportContainer" parent="."]
 z_index = 1000
 anchors_preset = 15
 anchor_right = 1.0
@@ -82,39 +86,43 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="UIViewport" type="SubViewport" parent="UIContainer"]
+[node name="UIViewport" type="SubViewport" parent="UI"]
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="Margins" type="MarginContainer" parent="UIContainer/UIViewport"]
+[node name="Margins" type="MarginContainer" parent="UI/UIViewport"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Chat" parent="UIContainer/UIViewport/Margins" instance=ExtResource("15_hb504")]
+[node name="Chat" parent="UI/UIViewport/Margins" instance=ExtResource("15_hb504")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="MainMenu" parent="UIContainer/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
+[node name="MainMenu" parent="UI/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
 _game = NodePath("../../..")
 
-[node name="HUD" parent="UIContainer/UIViewport" instance=ExtResource("6_dakft")]
+[node name="HUD" parent="UI/UIViewport" instance=ExtResource("6_dakft")]
 visible = false
+mouse_filter = 2
 
-[node name="InventoryPanel" parent="UIContainer/UIViewport" instance=ExtResource("9_l8g03")]
+[node name="InventoryPanel" parent="UI/UIViewport" instance=ExtResource("9_l8g03")]
 visible = false
 offset_bottom = -78.0
 
-[node name="PauseMenu" parent="UIContainer/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
+[node name="PauseMenu" parent="UI/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
 unique_name_in_owner = true
 visible = false
+mouse_filter = 1
 _game = NodePath("../../..")
 
-[node name="Blackout" parent="UIContainer/UIViewport" instance=ExtResource("16_ee6o4")]
+[node name="Blackout" parent="UI/UIViewport" instance=ExtResource("16_ee6o4")]
 unique_name_in_owner = true
+
+[editable path="World/WorldViewport/World"]

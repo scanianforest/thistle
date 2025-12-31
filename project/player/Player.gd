@@ -26,6 +26,7 @@ var data: PlayerData = PlayerData.new():
 		global_position = data.position
 		inventory.data = data.inventory_data
 		actionbar.load(data.actionbar_data)
+		$Nameplate.text = data.metadata.name
 
 
 func _ready() -> void:
@@ -59,8 +60,6 @@ func _ready() -> void:
 	hsm.add_transition(inventory_state, moving_state, &"to_moving")
 
 	hsm.add_transition(interacting_state, idle_state, &"to_idle")
-
-	$Nameplate.text = name
 
 
 #region Base
@@ -123,4 +122,4 @@ func _on_actionbar_slot_selected(index: int) -> void:
 	var item = actionbar.slots[index]
 	equipment.equip_item(item)
 
-#endregion
+#endregion Signal Handlers

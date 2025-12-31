@@ -1,7 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwbps7xbx2u6l"]
+[gd_scene load_steps=11 format=3 uid="uid://dwbps7xbx2u6l"]
 
 [ext_resource type="Script" uid="uid://bnb3xke3v8kyc" path="res://hud/HUD.gd" id="1_6ca3a"]
 [ext_resource type="PackedScene" uid="uid://clmkfdsfpboj7" path="res://action_bar/action_bar_ui/action_bar_ui.tscn" id="2_2gk58"]
+[ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="2_svhta"]
+[ext_resource type="Texture2D" uid="uid://es12bba6kadu" path="res://aseprite/campfire.aseprite" id="2_w8tcp"]
+[ext_resource type="Texture2D" uid="uid://drbres68topwc" path="res://aseprite/leaf_fibre.aseprite" id="3_svhta"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2gk58"]
+bg_color = Color(0.4855364, 0.009381598, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_318vg"]
+bg_color = Color(0.68718094, 0.5347319, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8tcp"]
+bg_color = Color(0, 0.41735634, 0.6591169, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svhta"]
+bg_color = Color(0, 0, 0, 0.49411765)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_svhta"]
+font_size = 8
 
 [node name="HUD" type="Control" node_paths=PackedStringArray("health_bar")]
 layout_mode = 3
@@ -10,9 +44,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
 script = ExtResource("1_6ca3a")
-health_bar = NodePath("HUDMargins/PlayerHealthBox/ProgressBar")
+health_bar = NodePath("HUDMargins/Character/Vitals/PlayerHealthBox/ProgressBar")
 
 [node name="HUDMargins" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -21,55 +55,151 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="PlayerHealthBox" type="HBoxContainer" parent="HUDMargins"]
+[node name="Character" type="HBoxContainer" parent="HUDMargins"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="HealthLabel" type="Label" parent="HUDMargins/PlayerHealthBox"]
+[node name="TextureRect" type="TextureRect" parent="HUDMargins/Character"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("2_svhta")
+expand_mode = 1
+
+[node name="Vitals" type="VBoxContainer" parent="HUDMargins/Character"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="PlayerHealthBox" type="HBoxContainer" parent="HUDMargins/Character/Vitals"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="HealthLabel" type="Label" parent="HUDMargins/Character/Vitals/PlayerHealthBox"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 text = "HP"
 
-[node name="ProgressBar" type="ProgressBar" parent="HUDMargins/PlayerHealthBox"]
+[node name="ProgressBar" type="ProgressBar" parent="HUDMargins/Character/Vitals/PlayerHealthBox"]
 clip_contents = true
-custom_minimum_size = Vector2(100, 20)
+custom_minimum_size = Vector2(100, 24)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_2gk58")
+value = 80.0
 show_percentage = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUDMargins/PlayerHealthBox/ProgressBar"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -26.5
-offset_top = -11.5
-offset_right = 26.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HealthValue" type="Label" parent="HUDMargins/PlayerHealthBox/ProgressBar/HBoxContainer"]
+[node name="StaminaBox" type="HBoxContainer" parent="HUDMargins/Character/Vitals"]
 layout_mode = 2
-text = "0"
+size_flags_horizontal = 3
+size_flags_vertical = 0
 
-[node name="Slash" type="Label" parent="HUDMargins/PlayerHealthBox/ProgressBar/HBoxContainer"]
+[node name="StaminaLabel" type="Label" parent="HUDMargins/Character/Vitals/StaminaBox"]
+visible = false
 layout_mode = 2
-text = "/"
+size_flags_horizontal = 4
+text = "STA"
 
-[node name="MaxHealthValue" type="Label" parent="HUDMargins/PlayerHealthBox/ProgressBar/HBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="HUDMargins/Character/Vitals/StaminaBox"]
+clip_contents = true
+custom_minimum_size = Vector2(100, 16)
 layout_mode = 2
-text = "100"
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_318vg")
+value = 70.0
+show_percentage = false
+
+[node name="ManaBox" type="HBoxContainer" parent="HUDMargins/Character/Vitals"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="ManaLabel" type="Label" parent="HUDMargins/Character/Vitals/ManaBox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+text = "MP"
+
+[node name="ProgressBar" type="ProgressBar" parent="HUDMargins/Character/Vitals/ManaBox"]
+clip_contents = true
+custom_minimum_size = Vector2(100, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_w8tcp")
+value = 35.0
+show_percentage = false
 
 [node name="ActionBar" parent="HUDMargins" instance=ExtResource("2_2gk58")]
 layout_mode = 2
+
+[node name="StatusEffects" type="HBoxContainer" parent="HUDMargins"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="StatusEffectUI" type="VBoxContainer" parent="HUDMargins/StatusEffects"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="HUDMargins/StatusEffects/StatusEffectUI"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_svhta")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUDMargins/StatusEffects/StatusEffectUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="HUDMargins/StatusEffects/StatusEffectUI/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_w8tcp")
+expand_mode = 4
+
+[node name="Label" type="Label" parent="HUDMargins/StatusEffects/StatusEffectUI"]
+layout_mode = 2
+text = "1m"
+label_settings = SubResource("LabelSettings_svhta")
+horizontal_alignment = 1
+
+[node name="StatusEffectUI2" type="VBoxContainer" parent="HUDMargins/StatusEffects"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="HUDMargins/StatusEffects/StatusEffectUI2"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_svhta")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUDMargins/StatusEffects/StatusEffectUI2/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="HUDMargins/StatusEffects/StatusEffectUI2/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("3_svhta")
+expand_mode = 4
+
+[node name="Label" type="Label" parent="HUDMargins/StatusEffects/StatusEffectUI2"]
+layout_mode = 2
+text = "32s"
+label_settings = SubResource("LabelSettings_svhta")
+horizontal_alignment = 1

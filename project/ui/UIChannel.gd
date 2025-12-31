@@ -30,6 +30,7 @@ func close_container() -> void:
 
 
 func on_input_event(event: InputEvent) -> void:
+	Log.debug("UIChannel received input event: %s" % event)
 	input_event.emit(event)
 
 

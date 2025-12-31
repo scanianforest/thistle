@@ -14,7 +14,6 @@ class DragData:
 	var source: InventoryItemUI
 	var item: ItemData
 	var count: int
-	var mode: DragMode
 
 
 var item: ItemData:

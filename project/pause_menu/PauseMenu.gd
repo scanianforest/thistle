@@ -20,6 +20,7 @@ func _ready() -> void:
 func _on_input_event(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		visible = !visible
+		Log.debug("Toggling pause menu visibility", visible)
 
 
 func _on_resume_pressed() -> void:
