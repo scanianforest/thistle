@@ -15,7 +15,8 @@ func _setup() -> void:
 
 func _enter() -> void:
 	sprite.animate("idle")
-	if input.move_direction != Vector2.ZERO:
+
+	if is_multiplayer_authority() and input.move_direction != Vector2.ZERO:
 		dispatch("to_moving")
 
 
@@ -32,6 +33,10 @@ func _on_input(event: InputEvent) -> bool:
 		or event.is_action("down")
 	):
 		dispatch("to_moving")
+		return true
+
+	if event.is_action_pressed("ui_accept"):
+		dispatch("to_attacking")
 		return true
 
 	if event.is_action_pressed("toggle_inventory"):

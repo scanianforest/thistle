@@ -71,12 +71,6 @@ unique_name_in_owner = true
 process_mode = 4
 visible = false
 
-[node name="FloatingItem" parent="World/WorldViewport/World/PickupManager" index="0"]
-monitorable = true
-
-[node name="FloatingItem2" parent="World/WorldViewport/World/PickupManager" index="1"]
-monitorable = true
-
 [node name="UI" type="SubViewportContainer" parent="."]
 z_index = 1000
 anchors_preset = 15
@@ -93,24 +87,25 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="Margins" type="MarginContainer" parent="UI/UIViewport"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Chat" parent="UI/UIViewport/Margins" instance=ExtResource("15_hb504")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-
 [node name="MainMenu" parent="UI/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
 _game = NodePath("../../..")
 
 [node name="HUD" parent="UI/UIViewport" instance=ExtResource("6_dakft")]
 visible = false
 mouse_filter = 2
+
+[node name="Margins" type="MarginContainer" parent="UI/UIViewport"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -260.0
+offset_right = 340.0
+grow_vertical = 0
+
+[node name="Chat" parent="UI/UIViewport/Margins" instance=ExtResource("15_hb504")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
 
 [node name="InventoryPanel" parent="UI/UIViewport" instance=ExtResource("9_l8g03")]
 visible = false

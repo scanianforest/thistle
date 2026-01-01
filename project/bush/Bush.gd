@@ -26,3 +26,14 @@ func _on_body_exited(body: Node) -> void:
 	if body is Player:
 		_tween = create_tween()
 		_tween.tween_property($Sprite, "modulate:a", 1.0, 0.5)
+
+
+func damage(amount: int) -> void:
+	if not %DestroyParticles.emitting:
+		destroy()
+
+
+func destroy() -> void:
+	%DestroyParticles.emitting = true
+	await %DestroyParticles.finished
+	queue_free()

@@ -1,10 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://n4luadymtrl"]
-
-[ext_resource type="Texture2D" uid="uid://es12bba6kadu" path="res://aseprite/campfire.aseprite" id="1_qw3k3"]
+[gd_scene load_steps=6 format=4 uid="uid://n4luadymtrl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e6u7l"]
 radius = 6.0
 height = 16.0
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_e6u7l"]
+_data = PackedByteArray("AAADAAUAAAABAAAAIAAAABAAAAAOAQAAUklGRgYBAABXRUJQVlA4TPoAAAAvH8ADEF+gppEU6KorAfl/hUMEoENRAJCR60sCCfzlE1iEYzNT28ZL8D+7HGJprYDRRCBpY/Px5A8A8DmQ3XQrxxMWj11U0/sSk6kBp9q2rcnH32gucRuet0Zybc4BOM2hOt8RzBJuFdqOzncKEf1X27YNI6WM+gOsdIOdabctOYcB3mnAlcv6dM79j/FzrA4lf58S0T+rQgCu0ojvJwE8HJvK0kCJ0lPml4QKcT8lOyFbHH2l/jG+xbSiVDfxWucpf8YYr3UC/6oP49PDSxqtMaEFyl09gCgc8RQ1B5gTrhHbjDlA1Q546ESJOQBMrVmLMmARoBhNYg4A")
+size_override = Vector2(32, 16)
+
+[sub_resource type="Animation" id="Animation_qw3k3"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_6rc7x"]
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 0, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0g46y"]
+_data = {
+&"fire": SubResource("Animation_6rc7x"),
+&"idle": SubResource("Animation_qw3k3")
+}
 
 [node name="Campfire" type="Area2D"]
 
@@ -13,7 +53,35 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_e6u7l")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
 position = Vector2(0, -3)
-texture = ExtResource("1_qw3k3")
+texture = SubResource("PortableCompressedTexture2D_e6u7l")
+hframes = 2
+frame = 1
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "Sprite/AnimationPlayer",
+"scale": "1.0",
+"slice": "",
+"source": "res://aseprite/campfire.aseprite",
+"source_uid": 319541086482539898
+}
+metadata/_aseprite_wizard_source_file_hash_ = "84ecee45a6c60e32b4d0d9f511c42a2e"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+libraries = {
+&"": SubResource("AnimationLibrary_0g46y")
+}

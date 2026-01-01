@@ -17,6 +17,8 @@ signal dropped_item(item: ItemData, count: int)
 @onready var moving_state: MovingState = $HSM/Moving
 @onready var inventory_state: InventoryState = $HSM/Inventory
 @onready var interacting_state: InteractingState = $HSM/Interacting
+@onready var attacking_state: Player_State_Attacking = $HSM/Attacking
+@onready var damaged_state: Player_State_Damaged = $HSM/Damaged
 
 var data: PlayerData = PlayerData.new():
 	set(value):
@@ -51,19 +53,31 @@ func _ready() -> void:
 	hsm.add_transition(idle_state, moving_state, &"to_moving")
 	hsm.add_transition(idle_state, inventory_state, &"to_inventory")
 	hsm.add_transition(idle_state, interacting_state, &"to_interacting")
+	hsm.add_transition(idle_state, attacking_state, &"to_attacking")
 
 	hsm.add_transition(moving_state, idle_state, &"to_idle")
 	hsm.add_transition(moving_state, inventory_state, &"to_inventory")
 	hsm.add_transition(moving_state, interacting_state, &"to_interacting")
+	hsm.add_transition(moving_state, attacking_state, &"to_attacking")
 
 	hsm.add_transition(inventory_state, idle_state, &"to_idle")
 	hsm.add_transition(inventory_state, moving_state, &"to_moving")
 
 	hsm.add_transition(interacting_state, idle_state, &"to_idle")
+	hsm.add_transition(attacking_state, idle_state, &"to_idle")
+
+	hsm.add_transition(hsm.ANYSTATE, damaged_state, &"to_damaged")
+	hsm.add_transition(damaged_state, idle_state, &"to_idle")
+
+	hsm.add_event_handler(&"animate", _on_animate)
 
 
 #region Base
 func handle_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		hsm.dispatch("to_attacking")
+		return
+
 	if hsm.dispatch("input", event):
 		get_viewport().set_input_as_handled()
 	else:
@@ -72,7 +86,21 @@ func handle_input(event: InputEvent) -> void:
 
 #endregion
 
+#region Public
+
+
+#endregion Public
+func damage(amount: int) -> void:
+	rpc_damage.rpc(amount)
+
+
 #region RPCs
+@rpc("any_peer", "call_local", "reliable")
+func rpc_damage(amount: int) -> void:
+	hsm.blackboard.set_var("damage_amount", amount)
+	hsm.dispatch("to_damaged")
+
+
 @rpc("any_peer", "call_local", "reliable")
 func rpc_add_item_to_inventory(item_data_dict: Dictionary, count: int) -> void:
 	var item_data = ItemData.from_dict(item_data_dict)
@@ -95,7 +123,7 @@ func save_to_data() -> PlayerData:
 
 
 func _on_health_died() -> void:
-	Log.info("Player has died")
+	Log.info("%s has died" % data.metadata.name)
 
 
 func _on_health_changed(new_health: int) -> void:
@@ -121,5 +149,10 @@ func _on_inventory_new_stack_created(item: ItemData) -> void:
 func _on_actionbar_slot_selected(index: int) -> void:
 	var item = actionbar.slots[index]
 	equipment.equip_item(item)
+
+
+func _on_animate(animation_name: String) -> bool:
+	sprite.animate(animation_name)
+	return true
 
 #endregion Signal Handlers

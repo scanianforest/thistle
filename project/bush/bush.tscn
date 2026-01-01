@@ -77,6 +77,17 @@ one_shot = true
 explosiveness = 0.8
 process_material = SubResource("ParticleProcessMaterial_2at75")
 
+[node name="DestroyParticles" type="GPUParticles2D" parent="Sprite"]
+unique_name_in_owner = true
+position = Vector2(0, -5)
+emitting = false
+amount = 72
+texture = ExtResource("7_fofbo")
+lifetime = 0.75
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_2at75")
+
 [node name="OutlineComponent" type="Node" parent="Sprite"]
 script = ExtResource("4_eoij5")
 metadata/_custom_type_script = "uid://l0xqguyksine"

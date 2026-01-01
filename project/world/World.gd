@@ -1,6 +1,6 @@
 class_name World extends Node2D
 
-@onready var ground: Terrain = %Ground
+@onready var grass: Terrain = %Grass
 @onready var entity_manager: EntityManager = %EntityManager
 @onready var pickup_manager: PickupManager = %PickupManager
 
@@ -10,13 +10,13 @@ var data: WorldData:
 		if not data:
 			return
 
-		Log.info("Setting ground tiles")
+		Log.info("Setting grass tiles")
 		for coord_string in data.ground_tiles.keys():
 			var tile = data.ground_tiles[coord_string]
 			var coord: PackedStringArray = coord_string.split(",")
 			var x = int(coord[0])
 			var y = int(coord[1])
-			ground.draw_cell(Vector2i(x, y), tile)
+			grass.draw_cell(Vector2i(x, y), tile)
 
 		entity_manager.load(data.entities)
 		pickup_manager.load(data.pickups)
@@ -27,12 +27,12 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	ground.tile_changed.connect(_on_ground_tile_changed)
+	grass.tile_changed.connect(_on_ground_tile_changed)
 	clear()
 
 
 func clear() -> void:
-	ground.clear_terrain()
+	grass.clear_terrain()
 	entity_manager.clear()
 	#pickup_manager.clear()
 

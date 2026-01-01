@@ -1,5 +1,10 @@
 class_name TerrainCursor extends CursorDual
 
+@export var size: Vector2i = Vector2(1, 1)
+@export var origin: Vector2i = Vector2(0, 0)
+
+var _marked_cells: Array = []
+
 
 func _ready() -> void:
 	if tilemap_dual != null:
@@ -14,6 +19,13 @@ func _process(_delta: float) -> void:
 		return
 	cell = tilemap_dual.local_to_map(tilemap_dual.get_local_mouse_position())
 	global_position = tilemap_dual.to_global(tilemap_dual.map_to_local(cell))
+
+	_marked_cells.clear()
+	for x in size.x:
+		for y in size.y:
+			var offset_cell: Vector2i = cell + Vector2i(x - origin.x, y - origin.y)
+			_marked_cells.append(offset_cell)
+
 	# Clicking the 1 key activates the first terrain
 	if Input.is_action_pressed("quick_action_1"):
 		terrain = 1
