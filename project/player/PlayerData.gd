@@ -1,34 +1,27 @@
 class_name PlayerData extends SaveData
 
-
-class Metadata:
-	var name: String = "Unnamed Player"
-	var version: String = "1"
-	var last_loaded: float = Time.get_unix_time_from_system()
-
-	func to_dict() -> Dictionary:
-		return {
-			"name": name,
-			"version": version,
-			"last_played": last_loaded,
-		}
-
-	static func from_dict(dict: Dictionary) -> Metadata:
-		var metadata = Metadata.new()
-		metadata.name = dict.get("name", "Unnamed Player")
-		metadata.version = dict.get("version", "1")
-		metadata.last_loaded = dict.get("last_loaded", Time.get_unix_time_from_system())
-		return metadata
-
-
-var metadata: Metadata = Metadata.new()
+var metadata: SaveMetadata = SaveMetadata.new()
 var position: Vector2 = Vector2.ZERO
 var inventory_data: InventoryData = InventoryData.new()
 var actionbar_data: ActionBarData = ActionBarData.new()
 
-var name:
-	get:
-		return metadata.name
+static var SAVE_DIR: String = "user://characters/"
+
+
+func get_save_path() -> String:
+	return (SAVE_DIR + get_name()).to_lower()
+
+
+func get_name() -> String:
+	return metadata.name
+
+
+func get_metadata() -> SaveMetadata:
+	return metadata
+
+
+func get_display_lines() -> PackedStringArray:
+	return []
 
 
 func to_dict() -> Dictionary:
@@ -43,7 +36,7 @@ func to_dict() -> Dictionary:
 static func from_dict(dict: Dictionary) -> PlayerData:
 	var data = PlayerData.new()
 
-	data.metadata = Metadata.from_dict(dict.get("metadata", Metadata.new().to_dict()))
+	data.metadata = SaveMetadata.from_dict(dict.get(SaveMetadata.KEY))
 	data.position = dict.get("position", Vector2.ZERO)
 	data.inventory_data = InventoryData.from_dict(
 		dict.get("inventory_data", InventoryData.new().to_dict())

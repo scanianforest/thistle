@@ -4,7 +4,7 @@ class_name WorldSlot extends Button
 @export var _name_label: Label
 @export var _days_passed_label: Label
 
-var data: WorldData:
+var data: SaveData:
 	get:
 		return data
 	set(value):
@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func _update_ui() -> void:
 	if data != null:
-		_name_label.text = data.metadata.name
+		_name_label.text = data.get_name()
 		_days_passed_label.text = "Day %s" % str(4)
 	else:
 		_name_label.text = "ERROR NO DATA"
@@ -26,5 +26,5 @@ func _update_ui() -> void:
 
 
 func _on_delete_button_pressed() -> void:
-	if WorldSaveFileAccess.delete(data.metadata.name):
+	if SaveFileAccess.delete(data):
 		queue_free()

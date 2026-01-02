@@ -16,7 +16,7 @@ func _enter() -> void:
 func _on_new_player(player_name: String) -> bool:
 	var player_data = PlayerData.new()
 	player_data.name = player_name
-	PlayerSaveFileAccess.save(player_name, player_data)
+	SaveFileAccess.save(player_data)
 	dispatch("player_created", player_data)
 	return true
 
@@ -24,24 +24,20 @@ func _on_new_player(player_name: String) -> bool:
 func _on_new_world(world_name: String) -> bool:
 	var world_data = WorldData.new()
 	world_data.name = world_name
-	WorldSaveFileAccess.save(world_name, world_data)
+	SaveFileAccess.save(world_data)
 	dispatch("world_created", world_data)
 	return true
 
 
 func _on_load_player(player_name: String) -> bool:
-	if PlayerSaveFileAccess.exists(player_name):
-		var player_data = PlayerSaveFileAccess.load(player_name)
-		dispatch(&"player_loaded", player_data)
-	else:
-		Log.warn("Player save file does not exist: %s" % player_name)
+	var player_data: PlayerData = SaveFileAccess.load(
+		PlayerData.SAVE_DIR, player_name, PlayerData.from_dict
+	)
+	dispatch(&"player_loaded", player_data)
 	return true
 
 
 func _on_load_world(world_name: String) -> bool:
-	if WorldSaveFileAccess.exists(world_name):
-		var world_data = WorldSaveFileAccess.load(world_name)
-		dispatch(&"world_loaded", world_data)
-	else:
-		Log.warn("World save file does not exist: %s" % world_name)
+	var world_data = SaveFileAccess.load(WorldData.SAVE_DIR, world_name, WorldData.from_dict)
+	dispatch(&"world_loaded", world_data)
 	return true

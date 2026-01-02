@@ -19,7 +19,7 @@ func refresh() -> void:
 	for c in grid.get_children():
 		c.queue_free()
 
-	for world in WorldSaveFileAccess.get_saves():
+	for world in SaveFileAccess.get_saves(WorldData.SAVE_DIR, WorldData.from_dict):
 		var slot: WorldSlot = (
 			preload("res://ui/world_selection_panel/world_slot.tscn").instantiate()
 		)
@@ -36,12 +36,12 @@ func _on_button_group_pressed(world_slot: WorldSlot) -> void:
 func _on_new_world_button_pressed() -> void:
 	var world_name: String = %NameEdit.text.strip_edges()
 	if world_name == "":
-		Log.error("World name cannot be empty")
+		Log.error("TopDownWorld2D name cannot be empty")
 		return
 
 	var new_world_data: WorldData = WorldData.new()
 	new_world_data.metadata.name = world_name
 
-	WorldSaveFileAccess.save(world_name, new_world_data)
+	SaveFileAccess.save(new_world_data)
 
 	refresh.call_deferred()

@@ -19,7 +19,7 @@ func refresh() -> void:
 	for c in grid.get_children():
 		c.queue_free()
 
-	for player in PlayerSaveFileAccess.get_saves():
+	for player in SaveFileAccess.get_saves(PlayerData.SAVE_DIR, PlayerData.from_dict):
 		var slot: CharacterSlot = _slot_scene.instantiate()
 		slot.data = player
 		slot.button_group = button_group
@@ -41,5 +41,5 @@ func _on_new_character_button_pressed() -> void:
 
 	new_character_data.metadata.name = character_name
 
-	PlayerSaveFileAccess.save(character_name, new_character_data)
+	SaveFileAccess.save(new_character_data)
 	refresh.call_deferred()

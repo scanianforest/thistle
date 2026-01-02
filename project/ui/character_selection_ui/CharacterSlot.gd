@@ -2,7 +2,7 @@ class_name CharacterSlot extends Button
 
 @export var _name: Label
 
-var data: PlayerData:
+var data: SaveData:
 	get:
 		return data
 	set(value):
@@ -12,11 +12,11 @@ var data: PlayerData:
 
 func _update_ui() -> void:
 	if data != null:
-		_name.text = data.name
+		_name.text = data.get_name()
 	else:
 		_name.text = "ERROR NO DATA"
 
 
 func _on_delete_button_pressed() -> void:
-	if PlayerSaveFileAccess.delete(data.metadata.name):
+	if SaveFileAccess.delete(data):
 		queue_free()

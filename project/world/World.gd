@@ -4,9 +4,12 @@ class_name World extends Node2D
 @onready var entity_manager: EntityManager = %EntityManager
 @onready var pickup_manager: PickupManager = %PickupManager
 
+@onready var comp: WorldComponent = $WorldComponent
+
 var data: WorldData:
 	set(value):
-		data = value
+		comp.data = value
+
 		if not data:
 			return
 
@@ -20,6 +23,8 @@ var data: WorldData:
 
 		entity_manager.load(data.entities)
 		pickup_manager.load(data.pickups)
+	get:
+		return comp.data
 
 
 func _enter_tree() -> void:
@@ -35,12 +40,6 @@ func clear() -> void:
 	grass.clear_terrain()
 	entity_manager.clear()
 	#pickup_manager.clear()
-
-
-func unload() -> void:
-	hide()
-	pause()
-	clear()
 
 
 func create_new(world_name: String) -> void:
@@ -61,6 +60,12 @@ func load() -> void:
 	unpause()
 
 
+func unload() -> void:
+	hide()
+	pause()
+	clear()
+
+
 func save() -> void:
 	if not is_multiplayer_authority():
 		Log.warn("%d is not authority, skipping world save" % multiplayer.get_unique_id())
@@ -73,7 +78,7 @@ func save() -> void:
 	pickup_manager.save(data)
 	entity_manager.save(data)
 
-	WorldSaveFileAccess.save(data.metadata.name, data)
+	SaveFileAccess.save(data)
 	Log.info("World %s saved." % data.metadata.name)
 	Log.debug(data.to_dict())
 

@@ -24,14 +24,16 @@ var _info: PlayerInfo = PlayerInfo.new({"name": OS.get_environment("USERNAME")})
 var _players: Dictionary[int, PlayerInfo] = {}
 
 
+func _enter_tree() -> void:
+	_setup_console_commands()
+
+
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
-
-	_setup_console_commands()
 
 
 #region Public

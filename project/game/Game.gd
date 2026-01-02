@@ -3,32 +3,41 @@ class_name Game extends CanvasLayer
 signal started
 signal stopped
 
-@onready var hsm: LimboHSM = $HSM
-@onready var main_menu_state: Game_State_InMainMenu = $HSM/InMainMenu
-@onready var starting_state: Game_State_Starting = $HSM/Starting
-@onready var joining_state: Game_State_Joining = $HSM/Joining
-@onready var ingame_state: Game_State_InGame = $HSM/InGame
-@onready var quitting_state: Game_State_Quitting = $HSM/Quitting
+@export_group("Nodes")
 
-@onready var world: World = %World
-@onready var player_manager: PlayerManager = %PlayerManager
-@onready var blackout: Blackout = %Blackout
+@export_subgroup("Managers")
+@export var player_manager: PlayerManager
+@export var world_node: Node
+@export var blackout: Blackout
+
+@export_subgroup("States")
+@export var hsm: LimboHSM
+@export var main_menu_state: LimboState
+@export var starting_state: LimboState
+@export var joining_state: LimboState
+@export var ingame_state: LimboState
+@export var quitting_state: LimboState
+
+var world: WorldComponent
 
 
 func _enter_tree() -> void:
 	_register_console_commands()
 
-	WorldSaveFileAccess.create_world_save_directory()
-	PlayerSaveFileAccess.create_player_save_directory()
-
 
 func _ready() -> void:
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
+	if not world_node.has_node("WorldComponent"):
+		Log.err("World node does not have a WorldComponent child node")
+		return
+
+	world = world_node.get_node("WorldComponent")
+
 	hsm.initial_state = main_menu_state
 
 	hsm.blackboard.bind_var_to_property("player_data", player_manager, "character_data", true)
-	hsm.blackboard.bind_var_to_property("world_data", world, "data", true)
+	hsm.blackboard.bind_var_to_property("world_data", world_node, "data", true)
 
 	hsm.add_transition(main_menu_state, starting_state, &"to_starting")
 	hsm.add_transition(main_menu_state, joining_state, &"to_joining")
@@ -59,7 +68,7 @@ func _ready() -> void:
 
 
 func ready_for_start() -> bool:
-	return player_manager.character_data != null and world.data != null
+	return player_manager.character_data != null and world_node.data != null
 
 
 func start() -> void:
@@ -70,11 +79,11 @@ func start() -> void:
 func create_character(player_name: String) -> void:
 	var data = PlayerData.new()
 	data.metadata.name = player_name
-	PlayerSaveFileAccess.save(player_name, data)
+	SaveFileAccess.save(data)
 
 
 func create_world(world_name: String) -> void:
-	world.create_new(world_name)
+	world_node.create_new(world_name)
 
 
 func load_player(player_name: String) -> void:
@@ -86,16 +95,16 @@ func load_world(world_name: String) -> void:
 
 
 func start_game() -> void:
-	world.show()
-	world.unpause()
+	world_node.show()
+	world_node.unpause()
 
 	started.emit()
 
 
 func stop_game() -> void:
-	world.pause()
-	world.hide()
-	world.clear()
+	world_node.pause()
+	world_node.hide()
+	world_node.clear()
 
 	player_manager.save()
 
@@ -115,8 +124,8 @@ func save() -> void:
 	Log.info("Saving game...")
 	player_manager.save()
 
-	if world.is_multiplayer_authority():
-		world.save()
+	if world_node.is_multiplayer_authority():
+		world_node.save()
 
 
 func quit(to_desktop: bool, save_on_quit: bool = true) -> void:
@@ -154,9 +163,9 @@ func _on_player_data_loaded(data: PlayerData) -> bool:
 
 
 func _on_world_data_loaded(data: WorldData) -> bool:
-	world.data = data
+	world_node.data = data
 
-	Log.info("World data set: %s" % data.metadata.name)
+	Log.info("TopDownWorld2D data set: %s" % data.metadata.name)
 	return true
 
 

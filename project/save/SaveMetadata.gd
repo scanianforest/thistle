@@ -1,8 +1,10 @@
-class_name SaveMetadata extends SaveData
+class_name SaveMetadata
+
+static var KEY: String = "metadata"
 
 var name: String = "Default"
-var version: String = "0.1.0"
-var last_saved: String = Time.get_datetime_string_from_system(true)
+var version: String = "1"
+var last_saved: float = Time.get_unix_time_from_system()
 
 
 func to_dict() -> Dictionary:
@@ -10,8 +12,11 @@ func to_dict() -> Dictionary:
 
 
 static func from_dict(dict: Dictionary) -> SaveMetadata:
+	if dict == null:
+		return SaveMetadata.new()
+
 	var metadata = SaveMetadata.new()
 	metadata.name = dict.get("name", "Default")
 	metadata.version = dict.get("version", "0.1.0")
-	metadata.last_saved = dict.get("last_saved", Time.get_date_string_from_system(true))
+	metadata.last_saved = dict.get("last_saved", Time.get_unix_time_from_system())
 	return metadata

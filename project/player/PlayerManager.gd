@@ -1,12 +1,10 @@
-class_name PlayerManager extends Node
+class_name PlayerManager extends MultiplayerSpawner
 
-var _player_scene = preload("res://player/player.tscn")
-var _player_node: Player
+@export var _player_scene: PackedScene
+@export var _player_world: Node
 
-@export var _player_spawner: MultiplayerSpawner
-@export var _player_world: World
-
-var character_data: PlayerData
+var _player_node: Node
+var character_data: RefCounted
 
 
 func _ready() -> void:
@@ -14,8 +12,8 @@ func _ready() -> void:
 	Lobby.player_disconnected.connect(_on_player_disconnected)
 	Lobby.server_disconnected.connect(_on_server_disconnected)
 
-	_player_spawner.spawn_function = spawn
-	_player_spawner.spawned.connect(_on_player_spawned)
+	spawn_function = _spawn
+	spawned.connect(_on_player_spawned)
 
 
 func despawn(id: int) -> void:
@@ -36,13 +34,13 @@ func save(emergency: bool = false) -> void:
 	if not emergency and not _player_node.is_multiplayer_authority():
 		return
 
-	var saved_data = _player_node.save_to_data()
-	PlayerSaveFileAccess.save(saved_data.metadata.name, saved_data)
-	Log.info("Local player %s saved" % saved_data.metadata.name)
+	var data_to_save = _player_node.save_to_data()
+	SaveFileAccess.save(data_to_save)
+	Log.info("Local player %s saved" % data_to_save.metadata.name)
 
 
-func spawn(id: int) -> Player:
-	var player_node: Player = _player_scene.instantiate()
+func _spawn(id: int) -> Node:
+	var player_node: Node = _player_scene.instantiate()
 	var node_name = "Player_%d" % id
 
 	player_node.name = node_name
@@ -56,7 +54,7 @@ func _on_player_connected(id: int, _info: Lobby.PlayerInfo) -> void:
 	if not multiplayer.is_server():
 		return
 
-	var player = _player_spawner.spawn(id)
+	var player = spawn(id)
 	_on_player_spawned(player)
 
 

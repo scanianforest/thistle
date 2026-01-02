@@ -1,7 +1,8 @@
-[gd_scene load_steps=27 format=4 uid="uid://gx2ryayaffn8"]
+[gd_scene load_steps=28 format=4 uid="uid://gx2ryayaffn8"]
 
 [ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/World.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
+[ext_resource type="Script" uid="uid://buijbnaxum62v" path="res://world/WorldComponent.gd" id="2_m0cxt"]
 [ext_resource type="Texture2D" uid="uid://daf1t10bijrak" path="res://aseprite/tiles_dirt.aseprite" id="3_b2suy"]
 [ext_resource type="Texture2D" uid="uid://dunu2k50qd8vb" path="res://aseprite/water.aseprite" id="3_dqqhb"]
 [ext_resource type="Script" uid="uid://dh8wyajr7wh3" path="res://terrain/Terrain.gd" id="3_mmdvd"]
@@ -462,9 +463,9 @@ sources/0 = SubResource("TileSetAtlasSource_mad0u")
 y_sort_enabled = true
 script = ExtResource("1_mmdvd")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
-color = Color(0.074525245, 0.03592672, 0.29329038, 1)
+[node name="WorldComponent" type="Node" parent="."]
+script = ExtResource("2_m0cxt")
+metadata/_custom_type_script = "uid://buijbnaxum62v"
 
 [node name="EntitySpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../EntityManager")

@@ -62,11 +62,13 @@ func trigger():
 	match mode:
 		Mode.DIRECTIONAL:
 			PlaceableSpawner.spawn(
-				highlighter.debug_placeable, find_parent("World"), get_direction_tile_center()
+				highlighter.debug_placeable,
+				find_parent("TopDownWorld2D"),
+				get_direction_tile_center()
 			)
 		Mode.FREE:
 			PlaceableSpawner.spawn(
-				highlighter.debug_placeable, find_parent("World"), get_mouse_tile_center()
+				highlighter.debug_placeable, find_parent("TopDownWorld2D"), get_mouse_tile_center()
 			)
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c446o4raiy6f0"]
+[gd_scene load_steps=16 format=3 uid="uid://c446o4raiy6f0"]
 
 [ext_resource type="Script" uid="uid://c245vawn22817" path="res://game/Game.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://bwf6mbp1fiqjk" path="res://player/PlayerManager.gd" id="1_vasa2"]
@@ -11,12 +11,22 @@
 [ext_resource type="Script" uid="uid://g43m5le85ash" path="res://game/states/Game.State.Quitting.gd" id="6_pxxsx"]
 [ext_resource type="PackedScene" uid="uid://dofr2shxk3w7y" path="res://pause_menu/pause_menu.tscn" id="7_j8tme"]
 [ext_resource type="PackedScene" uid="uid://dabvnpoxo3xoe" path="res://main_menu/main_menu.tscn" id="7_u5opy"]
+[ext_resource type="PackedScene" uid="uid://cbe5o8ii1in3w" path="res://player/player.tscn" id="8_hb504"]
 [ext_resource type="PackedScene" uid="uid://bvyxea5kvytl1" path="res://ui/inventory_panel/inventory_panel.tscn" id="9_l8g03"]
 [ext_resource type="PackedScene" uid="uid://cr0qpmi06o5u7" path="res://ui/chat/chat.tscn" id="15_hb504"]
 [ext_resource type="PackedScene" uid="uid://dlpgem2hg4gay" path="res://blackout/blackout.tscn" id="16_ee6o4"]
 
-[node name="Game" type="CanvasLayer"]
+[node name="Game" type="CanvasLayer" node_paths=PackedStringArray("player_manager", "world_node", "blackout", "hsm", "main_menu_state", "starting_state", "joining_state", "ingame_state", "quitting_state")]
 script = ExtResource("1_h7iqs")
+player_manager = NodePath("PlayerManager")
+world_node = NodePath("World/WorldViewport/ThistleWorld")
+blackout = NodePath("UI/Blackout")
+hsm = NodePath("HSM")
+main_menu_state = NodePath("HSM/InMainMenu")
+starting_state = NodePath("HSM/Starting")
+joining_state = NodePath("HSM/Joining")
+ingame_state = NodePath("HSM/InGame")
+quitting_state = NodePath("HSM/Quitting")
 
 [node name="HSM" type="LimboHSM" parent="."]
 
@@ -40,15 +50,12 @@ metadata/_custom_type_script = "uid://cpy7sqlphkoj2"
 script = ExtResource("6_pxxsx")
 metadata/_custom_type_script = "uid://g43m5le85ash"
 
-[node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("_player_spawner", "_player_world")]
-unique_name_in_owner = true
-script = ExtResource("1_vasa2")
-_player_spawner = NodePath("PlayerSpawner")
-_player_world = NodePath("../World/WorldViewport/World")
-
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="PlayerManager"]
+[node name="PlayerManager" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("_player_world")]
 _spawnable_scenes = PackedStringArray("uid://cbe5o8ii1in3w")
-spawn_path = NodePath("../../World/WorldViewport/World/EntityManager")
+spawn_path = NodePath("../World/WorldViewport/ThistleWorld/EntityManager")
+script = ExtResource("1_vasa2")
+_player_scene = ExtResource("8_hb504")
+_player_world = NodePath("../World/WorldViewport/ThistleWorld")
 
 [node name="World" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -66,35 +73,31 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="World" parent="World/WorldViewport" instance=ExtResource("5_dxrkv")]
+[node name="ThistleWorld" parent="World/WorldViewport" instance=ExtResource("5_dxrkv")]
 unique_name_in_owner = true
 process_mode = 4
 visible = false
 
-[node name="UI" type="SubViewportContainer" parent="."]
-z_index = 1000
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-stretch = true
+mouse_filter = 1
 
-[node name="UIViewport" type="SubViewport" parent="UI"]
-transparent_bg = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-size = Vector2i(1152, 648)
-render_target_update_mode = 4
+[node name="MainMenu" parent="UI" node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
+layout_mode = 1
+_game = NodePath("../..")
 
-[node name="MainMenu" parent="UI/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
-_game = NodePath("../../..")
-
-[node name="HUD" parent="UI/UIViewport" instance=ExtResource("6_dakft")]
+[node name="HUD" parent="UI" instance=ExtResource("6_dakft")]
 visible = false
+layout_mode = 1
 mouse_filter = 2
 
-[node name="Margins" type="MarginContainer" parent="UI/UIViewport"]
+[node name="ChatContainer" type="MarginContainer" parent="UI"]
+layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -102,22 +105,23 @@ offset_top = -260.0
 offset_right = 340.0
 grow_vertical = 0
 
-[node name="Chat" parent="UI/UIViewport/Margins" instance=ExtResource("15_hb504")]
+[node name="Chat" parent="UI/ChatContainer" instance=ExtResource("15_hb504")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="InventoryPanel" parent="UI/UIViewport" instance=ExtResource("9_l8g03")]
+[node name="InventoryPanel" parent="UI" instance=ExtResource("9_l8g03")]
 visible = false
-offset_bottom = -78.0
+layout_mode = 1
+offset_bottom = -58.0
 
-[node name="PauseMenu" parent="UI/UIViewport" node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
+[node name="PauseMenu" parent="UI" node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
 unique_name_in_owner = true
 visible = false
+layout_mode = 1
 mouse_filter = 1
-_game = NodePath("../../..")
+_game = NodePath("../..")
 
-[node name="Blackout" parent="UI/UIViewport" instance=ExtResource("16_ee6o4")]
+[node name="Blackout" parent="UI" instance=ExtResource("16_ee6o4")]
 unique_name_in_owner = true
-
-[editable path="World/WorldViewport/World"]
+layout_mode = 1
