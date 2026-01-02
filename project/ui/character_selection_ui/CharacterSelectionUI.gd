@@ -1,6 +1,6 @@
 extends MarginContainer
 
-signal character_selected(character_data: PlayerData)
+signal character_selected(character_data: CharacterData)
 
 @onready var grid: GridContainer = %CharacterGrid
 @export var button_group: ButtonGroup
@@ -19,7 +19,7 @@ func refresh() -> void:
 	for c in grid.get_children():
 		c.queue_free()
 
-	for player in SaveFileAccess.get_saves(PlayerData.SAVE_DIR, PlayerData.from_dict):
+	for player in SaveFileAccess.get_saves(CharacterData.SAVE_DIR, CharacterData.from_dict):
 		var slot: CharacterSlot = _slot_scene.instantiate()
 		slot.data = player
 		slot.button_group = button_group
@@ -31,7 +31,7 @@ func _on_button_group_pressed(character_slot: CharacterSlot) -> void:
 
 
 func _on_new_character_button_pressed() -> void:
-	var new_character_data: PlayerData = PlayerData.new()
+	var new_character_data: CharacterData = CharacterData.new()
 
 	var character_name: String = %NameEdit.text.strip_edges()
 

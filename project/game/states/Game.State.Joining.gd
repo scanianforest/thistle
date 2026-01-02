@@ -10,10 +10,10 @@ func _enter() -> void:
 	var port = blackboard.get_var("port", 7890)
 	var address = blackboard.get_var("ip", "127.0.0.1")
 
-	var player_data: PlayerData = blackboard.get_var("player_data")
+	var character: CharacterData = blackboard.get_var("character_data")
 
-	if player_data == null:
-		Log.err("No player data found in blackboard!")
+	if character == null:
+		Log.err("No character data found in blackboard!")
 		dispatch(&"to_main_menu")
 		return
 

@@ -75,6 +75,7 @@ alignment = 1
 [node name="JoinButton" type="Button" parent="Margins/VBoxContainer/JoinContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "JOIN"
 
 [node name="QuitButton" type="Button" parent="Margins/VBoxContainer"]

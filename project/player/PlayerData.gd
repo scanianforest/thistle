@@ -1,4 +1,4 @@
-class_name PlayerData extends SaveData
+class_name CharacterData extends SaveData
 
 var metadata: SaveMetadata = SaveMetadata.new()
 var position: Vector2 = Vector2.ZERO
@@ -33,8 +33,8 @@ func to_dict() -> Dictionary:
 	}
 
 
-static func from_dict(dict: Dictionary) -> PlayerData:
-	var data = PlayerData.new()
+static func from_dict(dict: Dictionary) -> CharacterData:
+	var data = CharacterData.new()
 
 	data.metadata = SaveMetadata.from_dict(dict.get(SaveMetadata.KEY))
 	data.position = dict.get("position", Vector2.ZERO)

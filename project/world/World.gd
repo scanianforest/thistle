@@ -6,23 +6,7 @@ class_name World extends Node2D
 
 @onready var comp: WorldComponent = $WorldComponent
 
-var data: WorldData:
-	set(value):
-		comp.data = value
-
-		if not data:
-			return
-
-		Log.info("Setting grass tiles")
-		for coord_string in data.ground_tiles.keys():
-			var tile = data.ground_tiles[coord_string]
-			var coord: PackedStringArray = coord_string.split(",")
-			var x = int(coord[0])
-			var y = int(coord[1])
-			grass.draw_cell(Vector2i(x, y), tile)
-
-		entity_manager.load(data.entities)
-		pickup_manager.load(data.pickups)
+var _data: WorldData:
 	get:
 		return comp.data
 
@@ -42,20 +26,21 @@ func clear() -> void:
 	#pickup_manager.clear()
 
 
-func create_new(world_name: String) -> void:
-	data = WorldData.new()
-	data.metadata.name = world_name
-	Log.info("World %s created." % world_name)
-	Log.debug(data.to_dict())
-
-
 func load() -> void:
-	if not data:
+	if not _data:
 		Log.err("No world data set to load from")
 		return
 
-	# TODO a bit hacky, make this more robust later
-	self.data = data
+	for coord_string in comp.data.ground_tiles.keys():
+		var tile = _data.ground_tiles[coord_string]
+		var coord: PackedStringArray = coord_string.split(",")
+		var x = int(coord[0])
+		var y = int(coord[1])
+		grass.draw_cell(Vector2i(x, y), tile)
+
+		entity_manager.load(_data.entities)
+		pickup_manager.load(_data.pickups)
+
 	show()
 	unpause()
 
@@ -71,16 +56,16 @@ func save() -> void:
 		Log.warn("%d is not authority, skipping world save" % multiplayer.get_unique_id())
 		return
 
-	if data == null:
+	if _data == null:
 		Log.warn("No world data to save")
 		return
 
-	pickup_manager.save(data)
-	entity_manager.save(data)
+	pickup_manager.save(_data)
+	entity_manager.save(_data)
 
-	SaveFileAccess.save(data)
-	Log.info("World %s saved." % data.metadata.name)
-	Log.debug(data.to_dict())
+	SaveFileAccess.save(_data)
+	Log.info("World %s saved." % _data.metadata.name)
+	Log.debug(_data.to_dict())
 
 
 func pause() -> void:
@@ -99,5 +84,5 @@ func _register_console_commands() -> void:
 
 func _on_ground_tile_changed(x: int, y: int, new_tile: int) -> void:
 	var coord = "%d,%d" % [x, y]
-	data.ground_tiles[coord] = new_tile
+	_data.ground_tiles[coord] = new_tile
 	Log.debug("Ground tile changed at ", coord, " to ", new_tile)

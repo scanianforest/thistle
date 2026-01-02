@@ -36,8 +36,8 @@ func _ready() -> void:
 
 	hsm.initial_state = main_menu_state
 
-	hsm.blackboard.bind_var_to_property("player_data", player_manager, "character_data", true)
-	hsm.blackboard.bind_var_to_property("world_data", world_node, "data", true)
+	hsm.blackboard.bind_var_to_property("character_data", player_manager, "character_data", true)
+	hsm.blackboard.bind_var_to_property("world_data", world, "data", true)
 
 	hsm.add_transition(main_menu_state, starting_state, &"to_starting")
 	hsm.add_transition(main_menu_state, joining_state, &"to_joining")
@@ -68,7 +68,11 @@ func _ready() -> void:
 
 
 func ready_for_start() -> bool:
-	return player_manager.character_data != null and world_node.data != null
+	return player_manager.character_data != null and world.data != null
+
+
+func ready_for_join() -> bool:
+	return player_manager.character_data != null
 
 
 func start() -> void:
@@ -76,18 +80,8 @@ func start() -> void:
 	hsm.dispatch(&"to_starting")
 
 
-func create_character(player_name: String) -> void:
-	var data = PlayerData.new()
-	data.metadata.name = player_name
-	SaveFileAccess.save(data)
-
-
-func create_world(world_name: String) -> void:
-	world_node.create_new(world_name)
-
-
-func load_player(player_name: String) -> void:
-	hsm.dispatch(&"load_player", player_name)
+func load_character(character_name: String) -> void:
+	hsm.dispatch(&"load_character", character_name)
 
 
 func load_world(world_name: String) -> void:
@@ -155,7 +149,7 @@ func _register_console_commands() -> void:
 	)
 
 
-func _on_player_data_loaded(data: PlayerData) -> bool:
+func _on_player_data_loaded(data: CharacterData) -> bool:
 	player_manager.character_data = data
 
 	Log.info("Player data set: %s" % data.metadata.name)
@@ -163,7 +157,7 @@ func _on_player_data_loaded(data: PlayerData) -> bool:
 
 
 func _on_world_data_loaded(data: WorldData) -> bool:
-	world_node.data = data
+	world.data = data
 
 	Log.info("TopDownWorld2D data set: %s" % data.metadata.name)
 	return true

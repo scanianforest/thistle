@@ -459,7 +459,7 @@ sources/0 = SubResource("TileSetAtlasSource_mad0u")
 
 [sub_resource type="TileSet" id="TileSet_m0cxt"]
 
-[node name="World" type="Node2D"]
+[node name="ThistleWorld" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_mmdvd")
 

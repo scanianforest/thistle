@@ -19,7 +19,7 @@
 [node name="Game" type="CanvasLayer" node_paths=PackedStringArray("player_manager", "world_node", "blackout", "hsm", "main_menu_state", "starting_state", "joining_state", "ingame_state", "quitting_state")]
 script = ExtResource("1_h7iqs")
 player_manager = NodePath("PlayerManager")
-world_node = NodePath("World/WorldViewport/ThistleWorld")
+world_node = NodePath("World/WorldViewport/World")
 blackout = NodePath("UI/Blackout")
 hsm = NodePath("HSM")
 main_menu_state = NodePath("HSM/InMainMenu")
@@ -52,10 +52,10 @@ metadata/_custom_type_script = "uid://g43m5le85ash"
 
 [node name="PlayerManager" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("_player_world")]
 _spawnable_scenes = PackedStringArray("uid://cbe5o8ii1in3w")
-spawn_path = NodePath("../World/WorldViewport/ThistleWorld/EntityManager")
+spawn_path = NodePath("../World/WorldViewport/World/EntityManager")
 script = ExtResource("1_vasa2")
 _player_scene = ExtResource("8_hb504")
-_player_world = NodePath("../World/WorldViewport/ThistleWorld")
+_player_world = NodePath("../World/WorldViewport/World")
 
 [node name="World" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -73,7 +73,7 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="ThistleWorld" parent="World/WorldViewport" instance=ExtResource("5_dxrkv")]
+[node name="World" parent="World/WorldViewport" instance=ExtResource("5_dxrkv")]
 unique_name_in_owner = true
 process_mode = 4
 visible = false

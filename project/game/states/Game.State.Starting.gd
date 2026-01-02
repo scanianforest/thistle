@@ -2,7 +2,7 @@ class_name Game_State_Starting extends LimboState
 
 
 func _enter() -> void:
-	var player_data = blackboard.get_var("player_data") as PlayerData
+	var player_data = blackboard.get_var("character_data") as CharacterData
 	var world_data = blackboard.get_var("world_data") as WorldData
 
 	if player_data == null or world_data == null:

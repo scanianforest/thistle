@@ -20,7 +20,7 @@ signal dropped_item(item: ItemData, count: int)
 @onready var attacking_state: Player_State_Attacking = $HSM/Attacking
 @onready var damaged_state: Player_State_Damaged = $HSM/Damaged
 
-var data: PlayerData = PlayerData.new():
+var data: CharacterData = CharacterData.new():
 	set(value):
 		if value == null:
 			return
@@ -111,11 +111,11 @@ func rpc_add_item_to_inventory(item_data_dict: Dictionary, count: int) -> void:
 
 
 #region Signal Handlers
-func load_from_data(player_data: PlayerData) -> void:
+func load_from_data(player_data: CharacterData) -> void:
 	data = player_data
 
 
-func save_to_data() -> PlayerData:
+func save_to_data() -> CharacterData:
 	data.position = global_position
 	data.inventory_data = inventory.data
 	data.actionbar_data = actionbar.save()
