@@ -5,7 +5,14 @@ class_name PlayerManager extends MultiplayerSpawner
 var _player_node: Node
 
 # TODO generalize this, put elsewhere? Not all games will have character data in the player manager.
-var character_data: SaveData
+var character_data: SaveData:
+	get:
+		return character_data
+	set(value):
+		character_data = value
+		Log.debug("Character data set to:")
+		Log.debug(value.to_dict())
+		print_stack()
 
 
 func _ready() -> void:
@@ -36,8 +43,10 @@ func save(emergency: bool = false) -> void:
 	if not emergency and not _player_node.is_multiplayer_authority():
 		return
 
-	var data_to_save = _player_node.save_to_data()
+	var data_to_save = _player_node.save()
+
 	SaveFileAccess.save(data_to_save)
+
 	Log.info("Local player %s saved" % data_to_save.metadata.name)
 
 
@@ -61,24 +70,28 @@ func _on_player_connected(id: int, _info: Lobby.PlayerInfo) -> void:
 
 
 func _on_player_disconnected(id: int, _info: Lobby.PlayerInfo) -> void:
-	if not multiplayer.is_server():
-		return
-
 	despawn(id)
 
 
 # NOTE: this is called for all clients
 func _on_player_spawned(player: Node) -> void:
 	if player.is_multiplayer_authority():
-		Log.info("Local player spawned with name %s" % player.name)
 		_player_node = player
 		_player_node.data = character_data
+		Log.info("Local player spawned with name %s" % player.name)
+		Log.debug(character_data.to_dict())
 	else:
 		Log.info("Remote player spawned with name %s" % player.name)
 
 
-func _on_server_disconnected() -> void:
-	Log.err("Disconnected from server, performing emergency save...")
+func _on_lobby_closing() -> void:
 	save(true)
+
+
+# TODO host leaving causes lingering player nodes, FIX ME
+func _on_server_disconnected() -> void:
+	save(true)
+	Log.err("Disconnected from server")
+	_player_node.queue_free()
 
 #endregion Signals

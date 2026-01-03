@@ -5,6 +5,13 @@ const JUMP_VELOCITY = 4.5
 
 var data: SaveData
 
+var input_dir: Vector2
+
+
+func _ready() -> void:
+	if is_multiplayer_authority():
+		$PhantomCamera3D.priority = 1
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -17,13 +24,27 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
+		var rot_y = atan2(direction.x, direction.z)
+		$Dummy.rotation.y = lerp_angle($Dummy.rotation.y, rot_y, 0.4)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+
+func handle_input(event: InputEvent) -> void:
+	if (
+		event.is_action("left")
+		or event.is_action("right")
+		or event.is_action("up")
+		or event.is_action("down")
+	):
+		input_dir = Input.get_vector("left", "right", "up", "down")
+
+	else:
+		UIChannel.on_input_event(event)

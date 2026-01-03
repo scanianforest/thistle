@@ -1,27 +1,38 @@
 class_name ThistleWorld2D extends Node2D
 
-## Provide your own player parent node to spawn players into.
-@export var _players: Node2D
+signal finished_loading
 
-@onready var grass: Terrain = %Grass
+@onready var terrains: Array[Terrain]
+
 @onready var entity_manager: EntityManager = %EntityManager
 @onready var pickup_manager: PickupManager = %PickupManager
 
 var data: WorldData
 
+static var COMMANDS_LOADED: bool = false
+
 
 func _enter_tree() -> void:
-	_register_console_commands()
+	if not COMMANDS_LOADED:
+		_register_console_commands()
+		COMMANDS_LOADED = true
 
 
 func _ready() -> void:
-	grass.tile_changed.connect(_on_ground_tile_changed)
-	_players.child_entered_tree.connect(_on_entity_entered_tree)
+	for child in $Terrain.get_children():
+		terrains.push_back(child)
+
 	clear()
+
+	show()
+	unpause()
+	for terrain in terrains:
+		terrain._changed()
+
+	finished_loading.emit()
 
 
 func clear() -> void:
-	grass.clear_terrain()
 	entity_manager.clear()
 	#pickup_manager.clear()
 
@@ -36,7 +47,7 @@ func load() -> void:
 		var coord: PackedStringArray = coord_string.split(",")
 		var x = int(coord[0])
 		var y = int(coord[1])
-		grass.draw_cell(Vector2i(x, y), tile)
+#		grass.draw_cell(Vector2i(x, y), tile)
 
 		entity_manager.load(data.entities)
 		pickup_manager.load(data.pickups)

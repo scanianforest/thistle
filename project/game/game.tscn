@@ -1,26 +1,26 @@
-[gd_scene load_steps=17 format=3 uid="uid://c446o4raiy6f0"]
+[gd_scene format=3 uid="uid://c446o4raiy6f0"]
 
 [ext_resource type="Script" uid="uid://c245vawn22817" path="res://game/Game.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://bwf6mbp1fiqjk" path="res://player/PlayerManager.gd" id="1_vasa2"]
 [ext_resource type="Script" uid="uid://dy80hb0dkwhts" path="res://game/states/Game.State.InMainMenu.gd" id="2_hb504"]
 [ext_resource type="Script" uid="uid://jk8q6fot0xmn" path="res://game/states/Game.State.Starting.gd" id="3_ee6o4"]
 [ext_resource type="Script" uid="uid://c5ugphstcptwe" path="res://game/states/Game.State.Joining.gd" id="4_4cobl"]
-[ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world_2d/world_2d.tscn" id="5_dxrkv"]
 [ext_resource type="Script" uid="uid://cpy7sqlphkoj2" path="res://game/states/Game.State.InGame.gd" id="5_ln7ps"]
 [ext_resource type="PackedScene" uid="uid://dwbps7xbx2u6l" path="res://hud/hud.tscn" id="6_dakft"]
 [ext_resource type="Script" uid="uid://g43m5le85ash" path="res://game/states/Game.State.Quitting.gd" id="6_pxxsx"]
 [ext_resource type="Script" uid="uid://d1f5728jkri3t" path="res://world/WorldManager.gd" id="7_4cobl"]
 [ext_resource type="PackedScene" uid="uid://dofr2shxk3w7y" path="res://pause_menu/pause_menu.tscn" id="7_j8tme"]
 [ext_resource type="PackedScene" uid="uid://dabvnpoxo3xoe" path="res://main_menu/main_menu.tscn" id="7_u5opy"]
-[ext_resource type="PackedScene" uid="uid://cbe5o8ii1in3w" path="res://player/player_2d/player.tscn" id="8_hb504"]
+[ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world_2d/world_2d.tscn" id="8_ee6o4"]
 [ext_resource type="PackedScene" uid="uid://bvyxea5kvytl1" path="res://ui/inventory_panel/inventory_panel.tscn" id="9_l8g03"]
+[ext_resource type="PackedScene" uid="uid://cbe5o8ii1in3w" path="res://player/player_2d/player.tscn" id="10_4cobl"]
 [ext_resource type="PackedScene" uid="uid://cr0qpmi06o5u7" path="res://ui/chat/chat.tscn" id="15_hb504"]
 [ext_resource type="PackedScene" uid="uid://dlpgem2hg4gay" path="res://blackout/blackout.tscn" id="16_ee6o4"]
 
-[node name="Game" type="CanvasLayer" node_paths=PackedStringArray("player_manager", "world", "blackout", "hsm", "main_menu_state", "starting_state", "joining_state", "ingame_state", "quitting_state")]
+[node name="Game" type="CanvasLayer" unique_id=200892962 node_paths=PackedStringArray("player_manager", "world_manager", "blackout", "hsm", "main_menu_state", "starting_state", "joining_state", "ingame_state", "quitting_state")]
 script = ExtResource("1_h7iqs")
 player_manager = NodePath("PlayerManager")
-world = NodePath("World/WorldViewport/ThistleWorld2D")
+world_manager = NodePath("WorldManager")
 blackout = NodePath("UI/Blackout")
 hsm = NodePath("HSM")
 main_menu_state = NodePath("HSM/InMainMenu")
@@ -29,65 +29,57 @@ joining_state = NodePath("HSM/Joining")
 ingame_state = NodePath("HSM/InGame")
 quitting_state = NodePath("HSM/Quitting")
 
-[node name="HSM" type="LimboHSM" parent="."]
+[node name="HSM" type="LimboHSM" parent="." unique_id=1062156908]
 
-[node name="InMainMenu" type="LimboState" parent="HSM"]
+[node name="InMainMenu" type="LimboState" parent="HSM" unique_id=180772162]
 script = ExtResource("2_hb504")
 metadata/_custom_type_script = "uid://dy80hb0dkwhts"
 
-[node name="Starting" type="LimboState" parent="HSM"]
+[node name="Starting" type="LimboState" parent="HSM" unique_id=1209325171]
 script = ExtResource("3_ee6o4")
 metadata/_custom_type_script = "uid://jk8q6fot0xmn"
 
-[node name="Joining" type="LimboState" parent="HSM"]
+[node name="Joining" type="LimboState" parent="HSM" unique_id=1345161123]
 script = ExtResource("4_4cobl")
 metadata/_custom_type_script = "uid://c5ugphstcptwe"
 
-[node name="InGame" type="LimboState" parent="HSM"]
+[node name="InGame" type="LimboState" parent="HSM" unique_id=246997333]
 script = ExtResource("5_ln7ps")
 metadata/_custom_type_script = "uid://cpy7sqlphkoj2"
 
-[node name="Quitting" type="LimboState" parent="HSM"]
+[node name="Quitting" type="LimboState" parent="HSM" unique_id=550780582]
 script = ExtResource("6_pxxsx")
 metadata/_custom_type_script = "uid://g43m5le85ash"
 
-[node name="WorldManager" type="MultiplayerSpawner" parent="."]
+[node name="WorldManager" type="MultiplayerSpawner" parent="." unique_id=1314763980]
 spawn_path = NodePath("../World/WorldViewport")
 spawn_limit = 1
 script = ExtResource("7_4cobl")
-_world_scene = ExtResource("5_dxrkv")
+_world_scene = ExtResource("8_ee6o4")
 
-[node name="PlayerManager" type="MultiplayerSpawner" parent="."]
+[node name="PlayerManager" type="MultiplayerSpawner" parent="." unique_id=356156424]
 spawn_path = NodePath("../World/WorldViewport")
 script = ExtResource("1_vasa2")
-_player_scene = ExtResource("8_hb504")
+_player_scene = ExtResource("10_4cobl")
 
-[node name="World" type="SubViewportContainer" parent="."]
+[node name="World" type="SubViewportContainer" parent="." unique_id=1425465795]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+stretch_shrink = 2
 
-[node name="WorldViewport" type="SubViewport" parent="World"]
+[node name="WorldViewport" type="SubViewport" parent="World" unique_id=701390780]
 unique_name_in_owner = true
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1152, 648)
+size = Vector2i(576, 324)
 render_target_update_mode = 4
 
-[node name="ThistleWorld2D" parent="World/WorldViewport" node_paths=PackedStringArray("_players") instance=ExtResource("5_dxrkv")]
-unique_name_in_owner = true
-process_mode = 4
-visible = false
-_players = NodePath("Players")
-
-[node name="Players" type="Node2D" parent="World/WorldViewport/ThistleWorld2D"]
-y_sort_enabled = true
-
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=1994483051]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,16 +88,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="MainMenu" parent="UI" node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
+[node name="MainMenu" parent="UI" unique_id=719550285 node_paths=PackedStringArray("_game") instance=ExtResource("7_u5opy")]
 layout_mode = 1
 _game = NodePath("../..")
 
-[node name="HUD" parent="UI" instance=ExtResource("6_dakft")]
+[node name="HUD" parent="UI" unique_id=1678206116 instance=ExtResource("6_dakft")]
 visible = false
 layout_mode = 1
 mouse_filter = 2
 
-[node name="ChatContainer" type="MarginContainer" parent="UI"]
+[node name="ChatContainer" type="MarginContainer" parent="UI" unique_id=1812212170]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -114,23 +106,23 @@ offset_top = -260.0
 offset_right = 340.0
 grow_vertical = 0
 
-[node name="Chat" parent="UI/ChatContainer" instance=ExtResource("15_hb504")]
+[node name="Chat" parent="UI/ChatContainer" unique_id=1068492468 instance=ExtResource("15_hb504")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="InventoryPanel" parent="UI" instance=ExtResource("9_l8g03")]
+[node name="InventoryPanel" parent="UI" unique_id=282067388 instance=ExtResource("9_l8g03")]
 visible = false
 layout_mode = 1
 offset_bottom = -58.0
 
-[node name="PauseMenu" parent="UI" node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
+[node name="PauseMenu" parent="UI" unique_id=1916581323 node_paths=PackedStringArray("_game") instance=ExtResource("7_j8tme")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
 mouse_filter = 1
 _game = NodePath("../..")
 
-[node name="Blackout" parent="UI" instance=ExtResource("16_ee6o4")]
+[node name="Blackout" parent="UI" unique_id=2041057441 instance=ExtResource("16_ee6o4")]
 unique_name_in_owner = true
 layout_mode = 1

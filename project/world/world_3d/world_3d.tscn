@@ -1,18 +1,33 @@
-[gd_scene load_steps=8 format=3 uid="uid://beb1amkmfmqew"]
+[gd_scene load_steps=12 format=3 uid="uid://beb1amkmfmqew"]
 
 [ext_resource type="Script" uid="uid://c4q85nmurlgcs" path="res://world/world_3d/ThistleWorld3D.gd" id="1_rbamw"]
-[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_lt2p0"]
-[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_2a78d"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_lt2p0"]
 [ext_resource type="Script" uid="uid://c82uabm26dwgc" path="res://sun/Sun.gd" id="4_2a78d"]
-
-[sub_resource type="Resource" id="Resource_lt2p0"]
-script = ExtResource("3_2a78d")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_lt2p0"]
 size = Vector2(20, 20)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lt2p0"]
 points = PackedVector3Array(-10, 0, -10, -10, 0, 10, 10, 0, -10, 10, 0, 10)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lt2p0"]
+properties/0/path = NodePath(".:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_2a78d"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_2a78d"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n6o4h"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_n6o4h"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="Environment" id="Environment_2a78d"]
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.1
 
 [node name="ThistleWorld3D" type="Node3D"]
 script = ExtResource("1_rbamw")
@@ -22,14 +37,16 @@ script = ExtResource("1_rbamw")
 [node name="PickupsManager" type="Node3D" parent="."]
 
 [node name="MainCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 4.82642, 6.5641975)
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 6, 6)
 projection = 1
-size = 10.711555
+size = 15.0
+far = 200.0
 
-[node name="PhantomCamera3D" type="Node3D" parent="MainCamera"]
+[node name="PhantomCameraHost" type="Node" parent="MainCamera"]
+process_priority = 300
+process_physics_priority = 300
 script = ExtResource("2_lt2p0")
-tween_resource = SubResource("Resource_lt2p0")
-metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="Terrain" type="Node3D" parent="."]
 
@@ -45,4 +62,30 @@ shape = SubResource("ConvexPolygonShape3D_lt2p0")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.70710677, 0.35355338, -0.6123724, 0, 0.8660254, 0.5, 0.70710677, 0.35355338, -0.6123724, 0, 0, 0)
+light_volumetric_fog_energy = 1.633
+shadow_enabled = true
 script = ExtResource("4_2a78d")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Sun"]
+replication_config = SubResource("SceneReplicationConfig_lt2p0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.21988034, 0, 0.9755269, 0, 1, 0, -0.9755269, 0, -0.21988034, -1.783835, 0.5, -0.25630474)
+mesh = SubResource("BoxMesh_2a78d")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_2a78d")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.82143795, 0, 0.5702979, 0, 2.7445474, 0, -0.5702979, 0, 0.82143795, -0.95269763, 0.5, -2.135388)
+mesh = SubResource("BoxMesh_n6o4h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_n6o4h")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2a78d")

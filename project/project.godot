@@ -21,17 +21,21 @@ resources_spreadsheet_view/fold_docks=true
 resources_spreadsheet_view/resource_cell_label_mode=1
 resources_spreadsheet_view/freeze_first_column=true
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="thistle"
 run/main_scene="uid://c446o4raiy6f0"
-config/features=PackedStringArray("4.5", "GL Compatibility")
+config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
-LimboConsole="*res://addons/limbo_console/limbo_console.gd"
+PhantomCameraManager="*uid://duq6jhf6unyis"
+LimboConsole="*uid://dyxornv8vwibg"
 WorldChannel="*res://world/WorldChannel.gd"
 PlayerChannel="*res://player/player_2d/PlayerChannel.gd"
 UIChannel="*res://ui/UIChannel.gd"
@@ -48,7 +52,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/TileMapDual/plugin.cfg", "res://addons/gdUnit4/plugin.cfg", "res://addons/limbo_console/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/TileMapDual/plugin.cfg", "res://addons/limbo_console/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [gdunit4]
 
@@ -186,6 +190,7 @@ camera_zoom_out={
 [log_gd]
 
 config/show_log_level_selector=true
+config/log_level=0
 
 [physics]
 
@@ -194,5 +199,3 @@ common/physics_interpolation=true
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"

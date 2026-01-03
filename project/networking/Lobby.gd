@@ -5,6 +5,7 @@ signal player_disconnected(id: int, info: PlayerInfo)
 signal server_disconnected
 signal connected
 signal disconnected
+signal closing
 
 
 class PlayerInfo:
@@ -69,6 +70,9 @@ func join(address: String = "127.0.0.1", port: int = 7890) -> int:
 
 
 func leave() -> void:
+	if multiplayer.is_server():
+		closing.emit()
+
 	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
 		Log.warn("Not connected to any server")
 		return

@@ -20,7 +20,7 @@ signal dropped_item(item: ItemData, count: int)
 @onready var attacking_state: Player_State_Attacking = $HSM/Attacking
 @onready var damaged_state: Player_State_Damaged = $HSM/Damaged
 
-var data: CharacterData = CharacterData.new():
+var data: CharacterData:
 	set(value):
 		if value == null:
 			return
@@ -115,7 +115,7 @@ func load_from_data(player_data: CharacterData) -> void:
 	data = player_data
 
 
-func save_to_data() -> CharacterData:
+func save() -> CharacterData:
 	data.position = global_position
 	data.inventory_data = inventory.data
 	data.actionbar_data = actionbar.save()

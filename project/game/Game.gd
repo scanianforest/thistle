@@ -7,7 +7,7 @@ signal stopped
 
 @export_subgroup("Managers")
 @export var player_manager: PlayerManager
-@export var world: Node
+@export var world_manager: WorldManager
 @export var blackout: Blackout
 
 @export_subgroup("States")
@@ -29,7 +29,7 @@ func _ready() -> void:
 	hsm.initial_state = main_menu_state
 
 	hsm.blackboard.bind_var_to_property("character_data", player_manager, "character_data", true)
-	hsm.blackboard.bind_var_to_property("world_data", world, "data", true)
+	hsm.blackboard.bind_var_to_property("world_data", world_manager, "data", true)
 
 	hsm.add_transition(main_menu_state, starting_state, &"to_starting")
 	hsm.add_transition(main_menu_state, joining_state, &"to_joining")
@@ -56,11 +56,13 @@ func _ready() -> void:
 	multiplayer.connected_to_server.connect(func() -> void: hsm.dispatch(&"connected_to_server"))
 	multiplayer.connection_failed.connect(func() -> void: hsm.dispatch(&"connection_failed"))
 
+	world_manager.world_ready.connect(func() -> void: Log.debug("World is ready"))
+
 	Lobby.set_lobby_player_name("Andreas")
 
 
 func ready_for_start() -> bool:
-	return player_manager.character_data != null and world.data != null
+	return player_manager.character_data != null and world_manager.data != null
 
 
 func ready_for_join() -> bool:
@@ -81,16 +83,16 @@ func load_world(world_name: String) -> void:
 
 
 func start_game() -> void:
-	world.show()
-	world.unpause()
+	#world.show()
+	#world.unpause()
 
 	started.emit()
 
 
 func stop_game() -> void:
-	world.pause()
-	world.hide()
-	world.clear()
+	#world.pause()
+	#world.hide()
+	#world.clear()
 
 	player_manager.save()
 
@@ -110,8 +112,9 @@ func save() -> void:
 	Log.info("Saving game...")
 	player_manager.save()
 
-	if world.is_multiplayer_authority():
-		world.save()
+	if world_manager.is_multiplayer_authority():
+		#world_manager.save()
+		pass
 
 
 func quit(to_desktop: bool, save_on_quit: bool = true) -> void:
@@ -145,13 +148,14 @@ func _on_player_data_loaded(data: SaveData) -> bool:
 	player_manager.character_data = data
 
 	Log.info("Player data set: %s" % data.metadata.name)
+	Log.debug(data.to_dict())
 	return true
 
 
 func _on_world_data_loaded(data: SaveData) -> bool:
-	world.data = data
+	world_manager.data = data
 
-	Log.info("%s data set: %s" % [world.name, data.metadata.name])
+	Log.info("World data set: %s" % [data.metadata.name])
 	return true
 
 

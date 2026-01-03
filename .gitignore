@@ -3,5 +3,5 @@
 /android/
 
 bin/
-assets/
+project/_assets/
 project/reports/**

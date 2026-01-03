@@ -12,6 +12,10 @@ func _enter_tree() -> void:
 	)
 
 
+func _exit_tree() -> void:
+	LimboConsole.unregister_command(_command_spawn_container)
+
+
 func _ready() -> void:
 	clear()
 

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemResource" load_steps=6 format=3 uid="uid://5r105pyybowx"]
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://5r105pyybowx"]
 
 [ext_resource type="Script" uid="uid://dtyvn28yerghq" path="res://itemization/components/ItemComponentResource.gd" id="1_gkp7q"]
 [ext_resource type="Script" uid="uid://dgdru8sn2myct" path="res://itemization/ItemResource.gd" id="2_iwjqd"]
@@ -13,7 +13,6 @@ class_name ItemStackComponent extends ItemComponentResource
 
 [sub_resource type="Resource" id="Resource_juums"]
 script = SubResource("GDScript_iwjqd")
-metadata/_custom_type_script = "uid://6qdb4x4osrln"
 
 [resource]
 script = ExtResource("2_iwjqd")

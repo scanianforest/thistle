@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://gx2ryayaffn8"]
+[gd_scene load_steps=29 format=4 uid="uid://gx2ryayaffn8"]
 
 [ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/world_2d/ThistleWorld2D.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
@@ -18,6 +18,8 @@
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_b2suy"]
 [ext_resource type="PackedScene" uid="uid://2d6wwf70r8jc" path="res://pickup/item_pickup/item_pickup.tscn" id="14_dqqhb"]
 [ext_resource type="Resource" uid="uid://5r105pyybowx" path="res://itemization/items/item_stone.tres" id="15_b2suy"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wyt1j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h8lre"]
 texture = ExtResource("3_dqqhb")
@@ -462,6 +464,9 @@ sources/0 = SubResource("TileSetAtlasSource_mad0u")
 [node name="ThistleWorld2D" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_mmdvd")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wyt1j")
 
 [node name="WorldComponent" type="Node" parent="."]
 script = ExtResource("2_m0cxt")

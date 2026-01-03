@@ -1,28 +1,56 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdydsch15vhsc"]
+[gd_scene format=3 uid="uid://bdydsch15vhsc"]
 
 [ext_resource type="Script" uid="uid://c1egc7bna0q5e" path="res://player/player_3d/Player3D.gd" id="1_ghftf"]
+[ext_resource type="Script" uid="uid://i3ure5y75cj2" path="res://player/PlayerInput.gd" id="2_d8ih2"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_rq2ci"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_lfqgh"]
+[ext_resource type="PackedScene" uid="uid://ciofqvnasmaeb" path="res://_assets/Prototype Bits/Character/Dummy.glb" id="5_lfqgh"]
+[ext_resource type="AnimationLibrary" uid="uid://bj3r18lbl4bf0" path="res://_assets/Prototype Bits/Animations/gltf/Rig_Medium/Rig_Medium_General.glb" id="6_bdnky"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ghftf"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_krf5q"]
+properties/1/path = NodePath("Dummy:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_krf5q"]
 
-[node name="Player3D" type="CharacterBody3D"]
+[sub_resource type="Resource" id="Resource_bdnky"]
+script = ExtResource("4_lfqgh")
+
+[node name="Player3D" type="CharacterBody3D" unique_id=1344186779]
 script = ExtResource("1_ghftf")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=971555686]
 replication_config = SubResource("SceneReplicationConfig_ghftf")
 
-[node name="CharacterComponent" type="Node" parent="."]
+[node name="CharacterComponent" type="Node" parent="." unique_id=1521998835]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_krf5q")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1847354984]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_krf5q")
+
+[node name="PlayerInput" type="Node" parent="." unique_id=822981179]
+script = ExtResource("2_d8ih2")
+metadata/_custom_type_script = "uid://i3ure5y75cj2"
+
+[node name="PhantomCamera3D" type="Node3D" parent="." unique_id=852433867 node_paths=PackedStringArray("follow_targets")]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710665, 0, -0.70710665, 0.70710677, 0, 6.7071066, 6.7071066)
+top_level = true
+script = ExtResource("3_rq2ci")
+follow_mode = 3
+follow_targets = [NodePath("..")]
+tween_resource = SubResource("Resource_bdnky")
+follow_offset = Vector3(0, 6, 6)
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="LookAhead" type="Node3D" parent="." unique_id=410030327]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="Dummy" parent="." unique_id=1591346376 instance=ExtResource("5_lfqgh")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Dummy" unique_id=363389852]
+libraries/Rig_Medium_General = ExtResource("6_bdnky")
+autoplay = &"Rig_Medium_General/Idle_A"
