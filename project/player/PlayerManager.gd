@@ -68,7 +68,7 @@ func _on_player_disconnected(id: int, _info: Lobby.PlayerInfo) -> void:
 
 
 # NOTE: this is called for all clients
-func _on_player_spawned(player: Player) -> void:
+func _on_player_spawned(player: Node) -> void:
 	if player.is_multiplayer_authority():
 		Log.info("Local player spawned with name %s" % player.name)
 		_player_node = player

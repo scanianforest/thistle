@@ -1,7 +1,7 @@
 [gd_scene load_steps=46 format=4 uid="uid://cbe5o8ii1in3w"]
 
-[ext_resource type="Script" uid="uid://daao54ylb0umw" path="res://player/Player.gd" id="1_rkbax"]
-[ext_resource type="Script" uid="uid://dsv8gc8clg4qj" path="res://player/PawnSprite.gd" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://daao54ylb0umw" path="res://player/player_2d/Player.gd" id="1_rkbax"]
+[ext_resource type="Script" uid="uid://dsv8gc8clg4qj" path="res://player/player_2d/PawnSprite.gd" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://cy57k20t1sml" path="res://hsm/IdleState.gd" id="2_yllr7"]
 [ext_resource type="Script" uid="uid://b7t1weje48a6q" path="res://hsm/MovingState.gd" id="3_kb6p2"]
 [ext_resource type="Script" uid="uid://bvg8jeoi2fbiq" path="res://pawn/HealthComponent.gd" id="4_g6k8r"]
@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://drvye4jjikvfs" path="res://item_spawner/ItemSpawnerComponent.gd" id="12_ebec5"]
 [ext_resource type="Script" uid="uid://bjjrpmumplsd0" path="res://equipment/EquipmentComponent.gd" id="12_tqiix"]
 [ext_resource type="PackedScene" uid="uid://b6j5qkam4tqni" path="res://attacker/attacker_component.tscn" id="13_yllr7"]
-[ext_resource type="Script" uid="uid://bb3bq03hwbha5" path="res://player/DirectionRotatorComponent.gd" id="14_32hag"]
+[ext_resource type="Script" uid="uid://bb3bq03hwbha5" path="res://player/player_2d/DirectionRotatorComponent.gd" id="14_32hag"]
 [ext_resource type="PackedScene" uid="uid://dsvnwjkbetlma" path="res://item_vacuum/item_vacuum_component.tscn" id="18_e7oew"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="19_65viv"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="20_x7c3f"]

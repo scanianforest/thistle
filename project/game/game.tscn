@@ -9,18 +9,18 @@
 [ext_resource type="Script" uid="uid://cpy7sqlphkoj2" path="res://game/states/Game.State.InGame.gd" id="5_ln7ps"]
 [ext_resource type="PackedScene" uid="uid://dwbps7xbx2u6l" path="res://hud/hud.tscn" id="6_dakft"]
 [ext_resource type="Script" uid="uid://g43m5le85ash" path="res://game/states/Game.State.Quitting.gd" id="6_pxxsx"]
+[ext_resource type="Script" uid="uid://d1f5728jkri3t" path="res://world/WorldManager.gd" id="7_4cobl"]
 [ext_resource type="PackedScene" uid="uid://dofr2shxk3w7y" path="res://pause_menu/pause_menu.tscn" id="7_j8tme"]
 [ext_resource type="PackedScene" uid="uid://dabvnpoxo3xoe" path="res://main_menu/main_menu.tscn" id="7_u5opy"]
-[ext_resource type="PackedScene" uid="uid://cbe5o8ii1in3w" path="res://player/player.tscn" id="8_hb504"]
+[ext_resource type="PackedScene" uid="uid://cbe5o8ii1in3w" path="res://player/player_2d/player.tscn" id="8_hb504"]
 [ext_resource type="PackedScene" uid="uid://bvyxea5kvytl1" path="res://ui/inventory_panel/inventory_panel.tscn" id="9_l8g03"]
-[ext_resource type="PackedScene" uid="uid://beb1amkmfmqew" path="res://world/world_3d/world_3d.tscn" id="10_ee6o4"]
 [ext_resource type="PackedScene" uid="uid://cr0qpmi06o5u7" path="res://ui/chat/chat.tscn" id="15_hb504"]
 [ext_resource type="PackedScene" uid="uid://dlpgem2hg4gay" path="res://blackout/blackout.tscn" id="16_ee6o4"]
 
 [node name="Game" type="CanvasLayer" node_paths=PackedStringArray("player_manager", "world", "blackout", "hsm", "main_menu_state", "starting_state", "joining_state", "ingame_state", "quitting_state")]
 script = ExtResource("1_h7iqs")
 player_manager = NodePath("PlayerManager")
-world = NodePath("World/WorldViewport/ThistleWorld3D")
+world = NodePath("World/WorldViewport/ThistleWorld2D")
 blackout = NodePath("UI/Blackout")
 hsm = NodePath("HSM")
 main_menu_state = NodePath("HSM/InMainMenu")
@@ -51,8 +51,14 @@ metadata/_custom_type_script = "uid://cpy7sqlphkoj2"
 script = ExtResource("6_pxxsx")
 metadata/_custom_type_script = "uid://g43m5le85ash"
 
+[node name="WorldManager" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../World/WorldViewport")
+spawn_limit = 1
+script = ExtResource("7_4cobl")
+_world_scene = ExtResource("5_dxrkv")
+
 [node name="PlayerManager" type="MultiplayerSpawner" parent="."]
-spawn_path = NodePath("../World/WorldViewport/ThistleWorld3D/Players")
+spawn_path = NodePath("../World/WorldViewport")
 script = ExtResource("1_vasa2")
 _player_scene = ExtResource("8_hb504")
 
@@ -80,10 +86,6 @@ _players = NodePath("Players")
 
 [node name="Players" type="Node2D" parent="World/WorldViewport/ThistleWorld2D"]
 y_sort_enabled = true
-
-[node name="ThistleWorld3D" parent="World/WorldViewport" instance=ExtResource("10_ee6o4")]
-
-[node name="Players" type="Node3D" parent="World/WorldViewport/ThistleWorld3D"]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
