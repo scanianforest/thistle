@@ -127,7 +127,7 @@ func _on_health_died() -> void:
 
 
 func _on_health_changed(new_health: int) -> void:
-	print("Player health changed to %d" % new_health)
+	Log.info("Player health changed to %d" % new_health)
 
 
 func _on_inventory_item_removed(item: ItemData) -> void:

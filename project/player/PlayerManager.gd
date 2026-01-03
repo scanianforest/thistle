@@ -1,10 +1,11 @@
 class_name PlayerManager extends MultiplayerSpawner
 
 @export var _player_scene: PackedScene
-@export var _player_world: Node
 
 var _player_node: Node
-var character_data: RefCounted
+
+# TODO generalize this, put elsewhere? Not all games will have character data in the player manager.
+var character_data: SaveData
 
 
 func _ready() -> void:
@@ -14,10 +15,11 @@ func _ready() -> void:
 
 	spawn_function = _spawn
 	spawned.connect(_on_player_spawned)
+	add_spawnable_scene(_player_scene.resource_path)
 
 
 func despawn(id: int) -> void:
-	var player = _player_world.entity_manager.get_node("Player_%d" % id)
+	var player = get_node(spawn_path).get_node("Player_%d" % id)
 
 	if player:
 		Log.info("Despawning player with ID %d" % [id])
@@ -71,7 +73,6 @@ func _on_player_spawned(player: Player) -> void:
 		Log.info("Local player spawned with name %s" % player.name)
 		_player_node = player
 		_player_node.data = character_data
-		_player_node.dropped_item.connect(_on_player_dropped_item)
 	else:
 		Log.info("Remote player spawned with name %s" % player.name)
 
@@ -79,9 +80,5 @@ func _on_player_spawned(player: Player) -> void:
 func _on_server_disconnected() -> void:
 	Log.err("Disconnected from server, performing emergency save...")
 	save(true)
-
-
-func _on_player_dropped_item(item: ItemData, count: int) -> void:
-	_player_world.pickup_manager.spawn_from_item_data(item, count, _player_node.global_position)
 
 #endregion Signals

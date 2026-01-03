@@ -78,3 +78,7 @@ func pick_up(player_path: NodePath, pickup_path: NodePath) -> void:
 
 	player.rpc_add_item_to_inventory.rpc_id(rid, pickup.item.to_dict(), pickup.count)
 	pickup.queue_free()
+
+
+func on_entity_dropped_item(item: ItemData, count: int, at: Vector2) -> void:
+	spawn_from_item_data(item, count, at)

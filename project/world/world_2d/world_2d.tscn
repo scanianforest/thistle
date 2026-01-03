@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=4 uid="uid://gx2ryayaffn8"]
 
-[ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/World.gd" id="1_mmdvd"]
+[ext_resource type="Script" uid="uid://bkfh8abd8uwod" path="res://world/world_2d/ThistleWorld2D.gd" id="1_mmdvd"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_fn3g3"]
 [ext_resource type="Script" uid="uid://buijbnaxum62v" path="res://world/WorldComponent.gd" id="2_m0cxt"]
 [ext_resource type="Texture2D" uid="uid://daf1t10bijrak" path="res://aseprite/tiles_dirt.aseprite" id="3_b2suy"]
@@ -459,7 +459,7 @@ sources/0 = SubResource("TileSetAtlasSource_mad0u")
 
 [sub_resource type="TileSet" id="TileSet_m0cxt"]
 
-[node name="ThistleWorld" type="Node2D"]
+[node name="ThistleWorld2D" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_mmdvd")
 

@@ -1,11 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://c446o4raiy6f0"]
+[gd_scene load_steps=17 format=3 uid="uid://c446o4raiy6f0"]
 
 [ext_resource type="Script" uid="uid://c245vawn22817" path="res://game/Game.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://bwf6mbp1fiqjk" path="res://player/PlayerManager.gd" id="1_vasa2"]
 [ext_resource type="Script" uid="uid://dy80hb0dkwhts" path="res://game/states/Game.State.InMainMenu.gd" id="2_hb504"]
 [ext_resource type="Script" uid="uid://jk8q6fot0xmn" path="res://game/states/Game.State.Starting.gd" id="3_ee6o4"]
 [ext_resource type="Script" uid="uid://c5ugphstcptwe" path="res://game/states/Game.State.Joining.gd" id="4_4cobl"]
-[ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world.tscn" id="5_dxrkv"]
+[ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world_2d/world_2d.tscn" id="5_dxrkv"]
 [ext_resource type="Script" uid="uid://cpy7sqlphkoj2" path="res://game/states/Game.State.InGame.gd" id="5_ln7ps"]
 [ext_resource type="PackedScene" uid="uid://dwbps7xbx2u6l" path="res://hud/hud.tscn" id="6_dakft"]
 [ext_resource type="Script" uid="uid://g43m5le85ash" path="res://game/states/Game.State.Quitting.gd" id="6_pxxsx"]
@@ -13,13 +13,14 @@
 [ext_resource type="PackedScene" uid="uid://dabvnpoxo3xoe" path="res://main_menu/main_menu.tscn" id="7_u5opy"]
 [ext_resource type="PackedScene" uid="uid://cbe5o8ii1in3w" path="res://player/player.tscn" id="8_hb504"]
 [ext_resource type="PackedScene" uid="uid://bvyxea5kvytl1" path="res://ui/inventory_panel/inventory_panel.tscn" id="9_l8g03"]
+[ext_resource type="PackedScene" uid="uid://beb1amkmfmqew" path="res://world/world_3d/world_3d.tscn" id="10_ee6o4"]
 [ext_resource type="PackedScene" uid="uid://cr0qpmi06o5u7" path="res://ui/chat/chat.tscn" id="15_hb504"]
 [ext_resource type="PackedScene" uid="uid://dlpgem2hg4gay" path="res://blackout/blackout.tscn" id="16_ee6o4"]
 
-[node name="Game" type="CanvasLayer" node_paths=PackedStringArray("player_manager", "world_node", "blackout", "hsm", "main_menu_state", "starting_state", "joining_state", "ingame_state", "quitting_state")]
+[node name="Game" type="CanvasLayer" node_paths=PackedStringArray("player_manager", "world", "blackout", "hsm", "main_menu_state", "starting_state", "joining_state", "ingame_state", "quitting_state")]
 script = ExtResource("1_h7iqs")
 player_manager = NodePath("PlayerManager")
-world_node = NodePath("World/WorldViewport/World")
+world = NodePath("World/WorldViewport/ThistleWorld3D")
 blackout = NodePath("UI/Blackout")
 hsm = NodePath("HSM")
 main_menu_state = NodePath("HSM/InMainMenu")
@@ -50,12 +51,10 @@ metadata/_custom_type_script = "uid://cpy7sqlphkoj2"
 script = ExtResource("6_pxxsx")
 metadata/_custom_type_script = "uid://g43m5le85ash"
 
-[node name="PlayerManager" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("_player_world")]
-_spawnable_scenes = PackedStringArray("uid://cbe5o8ii1in3w")
-spawn_path = NodePath("../World/WorldViewport/World/EntityManager")
+[node name="PlayerManager" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../World/WorldViewport/ThistleWorld3D/Players")
 script = ExtResource("1_vasa2")
 _player_scene = ExtResource("8_hb504")
-_player_world = NodePath("../World/WorldViewport/World")
 
 [node name="World" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -73,10 +72,18 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="World" parent="World/WorldViewport" instance=ExtResource("5_dxrkv")]
+[node name="ThistleWorld2D" parent="World/WorldViewport" node_paths=PackedStringArray("_players") instance=ExtResource("5_dxrkv")]
 unique_name_in_owner = true
 process_mode = 4
 visible = false
+_players = NodePath("Players")
+
+[node name="Players" type="Node2D" parent="World/WorldViewport/ThistleWorld2D"]
+y_sort_enabled = true
+
+[node name="ThistleWorld3D" parent="World/WorldViewport" instance=ExtResource("10_ee6o4")]
+
+[node name="Players" type="Node3D" parent="World/WorldViewport/ThistleWorld3D"]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

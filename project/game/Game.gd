@@ -7,7 +7,7 @@ signal stopped
 
 @export_subgroup("Managers")
 @export var player_manager: PlayerManager
-@export var world_node: Node
+@export var world: Node
 @export var blackout: Blackout
 
 @export_subgroup("States")
@@ -18,8 +18,6 @@ signal stopped
 @export var ingame_state: LimboState
 @export var quitting_state: LimboState
 
-var world: WorldComponent
-
 
 func _enter_tree() -> void:
 	_register_console_commands()
@@ -27,12 +25,6 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
-
-	if not world_node.has_node("WorldComponent"):
-		Log.err("World node does not have a WorldComponent child node")
-		return
-
-	world = world_node.get_node("WorldComponent")
 
 	hsm.initial_state = main_menu_state
 
@@ -89,16 +81,16 @@ func load_world(world_name: String) -> void:
 
 
 func start_game() -> void:
-	world_node.show()
-	world_node.unpause()
+	world.show()
+	world.unpause()
 
 	started.emit()
 
 
 func stop_game() -> void:
-	world_node.pause()
-	world_node.hide()
-	world_node.clear()
+	world.pause()
+	world.hide()
+	world.clear()
 
 	player_manager.save()
 
@@ -118,8 +110,8 @@ func save() -> void:
 	Log.info("Saving game...")
 	player_manager.save()
 
-	if world_node.is_multiplayer_authority():
-		world_node.save()
+	if world.is_multiplayer_authority():
+		world.save()
 
 
 func quit(to_desktop: bool, save_on_quit: bool = true) -> void:
@@ -149,17 +141,17 @@ func _register_console_commands() -> void:
 	)
 
 
-func _on_player_data_loaded(data: CharacterData) -> bool:
+func _on_player_data_loaded(data: SaveData) -> bool:
 	player_manager.character_data = data
 
 	Log.info("Player data set: %s" % data.metadata.name)
 	return true
 
 
-func _on_world_data_loaded(data: WorldData) -> bool:
+func _on_world_data_loaded(data: SaveData) -> bool:
 	world.data = data
 
-	Log.info("TopDownWorld2D data set: %s" % data.metadata.name)
+	Log.info("%s data set: %s" % [world.name, data.metadata.name])
 	return true
 
 

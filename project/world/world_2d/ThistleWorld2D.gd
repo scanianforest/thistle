@@ -1,14 +1,13 @@
-class_name World extends Node2D
+class_name ThistleWorld2D extends Node2D
+
+## Provide your own player parent node to spawn players into.
+@export var _players: Node2D
 
 @onready var grass: Terrain = %Grass
 @onready var entity_manager: EntityManager = %EntityManager
 @onready var pickup_manager: PickupManager = %PickupManager
 
-@onready var comp: WorldComponent = $WorldComponent
-
-var _data: WorldData:
-	get:
-		return comp.data
+var data: WorldData
 
 
 func _enter_tree() -> void:
@@ -17,6 +16,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	grass.tile_changed.connect(_on_ground_tile_changed)
+	_players.child_entered_tree.connect(_on_entity_entered_tree)
 	clear()
 
 
@@ -27,19 +27,19 @@ func clear() -> void:
 
 
 func load() -> void:
-	if not _data:
+	if not data:
 		Log.err("No world data set to load from")
 		return
 
-	for coord_string in comp.data.ground_tiles.keys():
-		var tile = _data.ground_tiles[coord_string]
+	for coord_string in data.ground_tiles.keys():
+		var tile = data.ground_tiles[coord_string]
 		var coord: PackedStringArray = coord_string.split(",")
 		var x = int(coord[0])
 		var y = int(coord[1])
 		grass.draw_cell(Vector2i(x, y), tile)
 
-		entity_manager.load(_data.entities)
-		pickup_manager.load(_data.pickups)
+		entity_manager.load(data.entities)
+		pickup_manager.load(data.pickups)
 
 	show()
 	unpause()
@@ -56,16 +56,16 @@ func save() -> void:
 		Log.warn("%d is not authority, skipping world save" % multiplayer.get_unique_id())
 		return
 
-	if _data == null:
+	if data == null:
 		Log.warn("No world data to save")
 		return
 
-	pickup_manager.save(_data)
-	entity_manager.save(_data)
+	pickup_manager.save(data)
+	entity_manager.save(data)
 
-	SaveFileAccess.save(_data)
-	Log.info("World %s saved." % _data.metadata.name)
-	Log.debug(_data.to_dict())
+	SaveFileAccess.save(data)
+	Log.info("World2D %s saved." % data.metadata.name)
+	Log.debug(data.to_dict())
 
 
 func pause() -> void:
@@ -82,7 +82,15 @@ func _register_console_commands() -> void:
 	LimboConsole.register_command(save, "world_save", "Saves the current world.")
 
 
+func _on_entity_entered_tree(entity: Node) -> void:
+	if entity.has_signal("dropped_item"):
+		entity.dropped_item.connect(
+			func(item: ItemData, count: int) -> void:
+				pickup_manager.spawn_from_item_data(item, count, entity.global_position)
+		)
+
+
 func _on_ground_tile_changed(x: int, y: int, new_tile: int) -> void:
 	var coord = "%d,%d" % [x, y]
-	_data.ground_tiles[coord] = new_tile
+	data.ground_tiles[coord] = new_tile
 	Log.debug("Ground tile changed at ", coord, " to ", new_tile)

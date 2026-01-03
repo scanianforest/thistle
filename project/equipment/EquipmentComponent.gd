@@ -10,4 +10,4 @@ func equip_item(item: ItemData) -> void:
 	item_equipped.emit(item)
 
 	if item:
-		print("Equipped item: %s" % item.resource.item_name)
+		Log.todo("Equipped item: %s" % item.resource.item_name)

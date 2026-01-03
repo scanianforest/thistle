@@ -38,8 +38,8 @@ func test_add_non_stackable_item_increases_size():
 	var item_data: ItemData = ItemData.new(non_stackable_item_res)
 	var other_item_data: ItemData = ItemData.new(non_stackable_item_res)
 
-	inventory_comp._add_item_to_new_stack(item_data)
-	inventory_comp._add_item_to_new_stack(other_item_data)
+	inventory_comp._add_item_to_new_stack(item_data, 1)
+	inventory_comp._add_item_to_new_stack(other_item_data, 1)
 
 	assert_int(inventory_comp.items.size()).is_equal(2)
 
@@ -63,7 +63,6 @@ func test_add_stackable_item_increases_count():
 
 	assert_int(inventory_comp.items.size()).is_equal(1)
 	assert_int(item_count).is_equal(5)
-	print(item_data)
 
 
 func test_remove_stackable_item_decreases_size():

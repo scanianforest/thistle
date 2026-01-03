@@ -186,7 +186,6 @@ camera_zoom_out={
 [log_gd]
 
 config/show_log_level_selector=true
-config/log_level=0
 
 [physics]
 

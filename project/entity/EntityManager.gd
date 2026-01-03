@@ -4,13 +4,15 @@ class_name EntityManager extends Node2D
 var chest_container_scene: PackedScene = preload("res://placeables/item_container/chest/chest.tscn")
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	LimboConsole.register_command(
 		_command_spawn_container,
 		"entities_spawn_container",
 		"Spawns an item container at the player's position."
 	)
 
+
+func _ready() -> void:
 	clear()
 
 

@@ -32,7 +32,7 @@ func _on_world_data_selected(data: WorldData) -> void:
 
 func _update_start_button_state() -> void:
 	_start_button.disabled = (
-		_game.player_manager.character_data == null or _game.world_node.data == null
+		_game.player_manager.character_data == null or _game.world.data == null
 	)
 
 

@@ -38,7 +38,7 @@ func _on_actionbar_set(action_bar: ActionBarComponent) -> void:
 
 
 func _on_action_bar_slot_selected(index: int) -> void:
-	print("Action bar slot %d selected" % index)
+	Log.debug("Action bar slot %d selected" % index)
 	for i in range(slots.size()):
 		if i == index:
 			slots[i].activate()
