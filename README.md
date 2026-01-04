@@ -18,4 +18,4 @@ To manage addons, [godam](https://github.com/nilsiker/godam) is used. In additio
 
 Thistle is using the following third-party licensed assets:
 
-- [Righteous font by Otter and Bench](https://otter-and-bench.itch.io/righteous) under [C.C. BY 4.0](https://creativecommons.org/licenses/by/4.0/) (no changed made)
+- [Press Start 2P by CodeMan38](https://fonts.google.com/specimen/Press+Start+2P) under the [Open Font License](https://openfontlicense.org/) (no changes made)
