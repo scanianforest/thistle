@@ -10,9 +10,6 @@ var character_data: SaveData:
 		return character_data
 	set(value):
 		character_data = value
-		Log.debug("Character data set to:")
-		Log.debug(value.to_dict())
-		print_stack()
 
 
 func _ready() -> void:
@@ -25,7 +22,18 @@ func _ready() -> void:
 	add_spawnable_scene(_player_scene.resource_path)
 
 
+func despawn_all() -> void:
+	var players = get_node(spawn_path).get_children()
+
+	for player in players:
+		Log.info("Despawning player with name %s" % player.name)
+		player.queue_free()
+
+
 func despawn(id: int) -> void:
+	if not multiplayer.is_server():
+		return
+
 	var player = get_node(spawn_path).get_node("Player_%d" % id)
 
 	if player:
@@ -35,19 +43,25 @@ func despawn(id: int) -> void:
 		Log.warn("Failed to despawn: player with ID %d not found" % [id])
 
 
-func save(emergency: bool = false) -> void:
-	if _player_node == null:
-		Log.warn("No local player to save")
+func save() -> void:
+	if not _player_node:
+		Log.warn("[%s] No local player to save" % multiplayer.get_unique_id())
 		return
 
-	if not emergency and not _player_node.is_multiplayer_authority():
-		return
-
-	var data_to_save = _player_node.save()
-
-	SaveFileAccess.save(data_to_save)
-
-	Log.info("Local player %s saved" % data_to_save.metadata.name)
+	if _player_node.has_method("save"):
+		var data_to_save = _player_node.save()
+		SaveFileAccess.save(data_to_save)
+		Log.info("Local player %s saved" % data_to_save.metadata.name)
+	else:
+		(
+			Log
+			. warn(
+				(
+					"[%s] Local player node %s does not support saving. To implement, add a 'save' method returning SaveData to the player node."
+					% [multiplayer.get_unique_id(), _player_node.name]
+				)
+			)
+		)
 
 
 func _spawn(id: int) -> Node:
@@ -78,20 +92,21 @@ func _on_player_spawned(player: Node) -> void:
 	if player.is_multiplayer_authority():
 		_player_node = player
 		_player_node.data = character_data
+		$PlayerInput.input_event.connect(_player_node.handle_input)
+
 		Log.info("Local player spawned with name %s" % player.name)
 		Log.debug(character_data.to_dict())
 	else:
 		Log.info("Remote player spawned with name %s" % player.name)
 
-
-func _on_lobby_closing() -> void:
-	save(true)
+	Log.debug(player.position)
 
 
-# TODO host leaving causes lingering player nodes, FIX ME
 func _on_server_disconnected() -> void:
-	save(true)
-	Log.err("Disconnected from server")
-	_player_node.queue_free()
+	Log.warn("Disconnected from server, performing emergency save.")
+	save()
+	# NOTE: this flow is a bit awkward, since the stopping of game also prompts a save.
+	# At that point however, the player node is already despawned, and the method will throw a warning.
+	# Keeping it like this for now, but may want to refactor later.
 
 #endregion Signals

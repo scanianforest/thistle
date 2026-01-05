@@ -5,7 +5,7 @@ var position: Vector2 = Vector2.ZERO
 var inventory_data: InventoryData = InventoryData.new()
 var actionbar_data: ActionBarData = ActionBarData.new()
 
-static var SAVE_DIR: String = "user://characters/"
+const SAVE_DIR = "user://characters/"
 
 
 func get_save_path() -> String:

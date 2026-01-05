@@ -52,11 +52,10 @@ func _ready() -> void:
 	hsm.add_event_handler(&"started", _on_started)
 	hsm.add_event_handler(&"stopped", _on_stopped)
 	hsm.add_event_handler(&"reveal", _on_reveal)
+	hsm.add_event_handler(&"save", save)
 
 	multiplayer.connected_to_server.connect(func() -> void: hsm.dispatch(&"connected_to_server"))
 	multiplayer.connection_failed.connect(func() -> void: hsm.dispatch(&"connection_failed"))
-
-	world_manager.world_ready.connect(func() -> void: Log.debug("World is ready"))
 
 	Lobby.set_lobby_player_name("Andreas")
 
@@ -74,27 +73,22 @@ func start() -> void:
 	hsm.dispatch(&"to_starting")
 
 
-func load_character(character_name: String) -> void:
-	hsm.dispatch(&"load_character", character_name)
+func load_character(save_data: SaveData) -> void:
+	hsm.dispatch(&"load_character", save_data)
 
 
-func load_world(world_name: String) -> void:
-	hsm.dispatch(&"load_world", world_name)
+func load_world(save_data: SaveData) -> void:
+	hsm.dispatch(&"load_world", save_data)
 
 
 func start_game() -> void:
-	#world.show()
-	#world.unpause()
-
+	# World manager spawns world on host joining lobby.
 	started.emit()
 
 
 func stop_game() -> void:
-	#world.pause()
-	#world.hide()
-	#world.clear()
-
-	player_manager.save()
+	player_manager.despawn_all()
+	world_manager.despawn()
 
 	Lobby.leave()
 
@@ -108,20 +102,22 @@ func join(ip: String, port: int = 7890) -> void:
 	hsm.dispatch(&"to_joining")
 
 
-func save() -> void:
+func save() -> bool:
 	Log.info("Saving game...")
 	player_manager.save()
 
 	if world_manager.is_multiplayer_authority():
-		#world_manager.save()
+		world_manager.save()
 		pass
+
+	return true
 
 
 func quit(to_desktop: bool, save_on_quit: bool = true) -> void:
 	await blackout.blackout()
 
-	if save_on_quit:
-		save()
+	#if save_on_quit:
+	#save()
 
 	if to_desktop:
 		hsm.dispatch(&"to_quitting")
@@ -175,4 +171,4 @@ func _on_reveal() -> bool:
 
 
 func _on_server_disconnected() -> void:
-	quit(false)
+	quit(false, false)

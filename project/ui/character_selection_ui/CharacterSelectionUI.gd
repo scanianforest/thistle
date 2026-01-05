@@ -3,16 +3,18 @@ extends MarginContainer
 signal character_selected(character_data: CharacterData)
 
 @onready var grid: GridContainer = %CharacterGrid
-@export var button_group: ButtonGroup
 
+var _button_group: ButtonGroup
 var _slot_scene: PackedScene = preload("res://ui/character_selection_ui/character_slot.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	refresh()
-	button_group.pressed.connect(_on_button_group_pressed)
+	_button_group = ButtonGroup.new()
+	_button_group.pressed.connect(_on_button_group_pressed)
 	%NewCharacterButton.pressed.connect(_on_new_character_button_pressed)
+
+	refresh()
 
 
 func refresh() -> void:
@@ -22,7 +24,7 @@ func refresh() -> void:
 	for player in SaveFileAccess.get_saves(CharacterData.SAVE_DIR, CharacterData.from_dict):
 		var slot: CharacterSlot = _slot_scene.instantiate()
 		slot.data = player
-		slot.button_group = button_group
+		slot.button_group = _button_group
 		grid.add_child(slot)
 
 

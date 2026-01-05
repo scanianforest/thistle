@@ -3,7 +3,13 @@ extends CharacterBody3D
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-var data: SaveData
+var data: Player3D_Data:
+	get:
+		return data
+	set(value):
+		data = value
+		global_position = data.position
+		rotation = data.rotation
 
 var input_dir: Vector2
 
@@ -11,6 +17,8 @@ var input_dir: Vector2
 func _ready() -> void:
 	if is_multiplayer_authority():
 		$PhantomCamera3D.priority = 1
+
+	global_position += Vector3.RIGHT.rotated(Vector3.UP, randf_range(0, TAU)) * 0.2
 
 
 func _physics_process(delta: float) -> void:
@@ -29,12 +37,19 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 		var rot_y = atan2(direction.x, direction.z)
-		$Dummy.rotation.y = lerp_angle($Dummy.rotation.y, rot_y, 0.4)
+		$Model.rotation.y = lerp_angle($Model.rotation.y, rot_y, 0.4)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+
+func save() -> SaveData:
+	var saved_data = Player3D_Data.new()
+	data.position = global_position
+	data.rotation = rotation
+	return saved_data
 
 
 func handle_input(event: InputEvent) -> void:

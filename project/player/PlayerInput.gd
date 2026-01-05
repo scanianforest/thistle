@@ -1,5 +1,7 @@
 class_name PlayerInput extends Node
 
+signal input_event(event: InputEvent)
+
 var move_direction: Vector2
 
 
@@ -18,4 +20,4 @@ func _unhandled_input(event: InputEvent) -> void:
 	):
 		move_direction = Input.get_vector("left", "right", "up", "down")
 
-	get_parent().handle_input(event)
+	input_event.emit(event)

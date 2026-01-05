@@ -11,11 +11,22 @@
 [ext_resource type="Script" uid="uid://d1f5728jkri3t" path="res://world/WorldManager.gd" id="7_4cobl"]
 [ext_resource type="PackedScene" uid="uid://dofr2shxk3w7y" path="res://pause_menu/pause_menu.tscn" id="7_j8tme"]
 [ext_resource type="PackedScene" uid="uid://dabvnpoxo3xoe" path="res://main_menu/main_menu.tscn" id="7_u5opy"]
-[ext_resource type="PackedScene" uid="uid://gx2ryayaffn8" path="res://world/world_2d/world_2d.tscn" id="8_ee6o4"]
+[ext_resource type="PackedScene" uid="uid://beb1amkmfmqew" path="res://world/world_3d/world_3d.tscn" id="8_ee6o4"]
 [ext_resource type="PackedScene" uid="uid://bvyxea5kvytl1" path="res://ui/inventory_panel/inventory_panel.tscn" id="9_l8g03"]
-[ext_resource type="PackedScene" uid="uid://cbe5o8ii1in3w" path="res://player/player_2d/player.tscn" id="10_4cobl"]
+[ext_resource type="PackedScene" uid="uid://bdydsch15vhsc" path="res://player/player_3d/player_3d.tscn" id="10_4cobl"]
+[ext_resource type="Script" uid="uid://i3ure5y75cj2" path="res://player/PlayerInput.gd" id="11_4cobl"]
+[ext_resource type="Shader" uid="uid://45odp6j1tw0x" path="res://core/edge_detection.gdshader" id="12_ln7ps"]
 [ext_resource type="PackedScene" uid="uid://cr0qpmi06o5u7" path="res://ui/chat/chat.tscn" id="15_hb504"]
 [ext_resource type="PackedScene" uid="uid://dlpgem2hg4gay" path="res://blackout/blackout.tscn" id="16_ee6o4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pxxsx"]
+render_priority = 0
+shader = ExtResource("12_ln7ps")
+shader_parameter/lightIntensity = 1.25
+shader_parameter/lineAlpha = 0.7
+shader_parameter/useLighting = true
+shader_parameter/lineHighlight = 0.2
+shader_parameter/lineShadow = 0.55
 
 [node name="Game" type="CanvasLayer" unique_id=200892962 node_paths=PackedStringArray("player_manager", "world_manager", "blackout", "hsm", "main_menu_state", "starting_state", "joining_state", "ingame_state", "quitting_state")]
 script = ExtResource("1_h7iqs")
@@ -58,11 +69,17 @@ script = ExtResource("7_4cobl")
 _world_scene = ExtResource("8_ee6o4")
 
 [node name="PlayerManager" type="MultiplayerSpawner" parent="." unique_id=356156424]
-spawn_path = NodePath("../World/WorldViewport")
+spawn_path = NodePath("../World/WorldViewport/Players")
 script = ExtResource("1_vasa2")
 _player_scene = ExtResource("10_4cobl")
 
+[node name="PlayerInput" type="Node" parent="PlayerManager" unique_id=1800062578]
+script = ExtResource("11_4cobl")
+metadata/_custom_type_script = "uid://i3ure5y75cj2"
+
 [node name="World" type="SubViewportContainer" parent="." unique_id=1425465795]
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_pxxsx")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -78,6 +95,8 @@ handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(576, 324)
 render_target_update_mode = 4
+
+[node name="Players" type="Node3D" parent="World/WorldViewport" unique_id=217393018]
 
 [node name="UI" type="Control" parent="." unique_id=1994483051]
 layout_mode = 3

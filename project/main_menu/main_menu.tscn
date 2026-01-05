@@ -1,15 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://dabvnpoxo3xoe"]
+[gd_scene format=3 uid="uid://dabvnpoxo3xoe"]
 
 [ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_d3a7t"]
 [ext_resource type="Script" uid="uid://dbg7cpvypx7u4" path="res://main_menu/MainMenu.gd" id="1_oa53l"]
-[ext_resource type="PackedScene" uid="uid://cxvnurm1t6utv" path="res://ui/character_selection_ui/character_selection_ui.tscn" id="3_3shxk"]
-[ext_resource type="PackedScene" uid="uid://b37ngff6pm6em" path="res://ui/world_selection_panel/world_selection_ui.tscn" id="4_bws42"]
+[ext_resource type="Script" uid="uid://dj8mbl4l63dt" path="res://player/player_3d/Player3D.Data.gd" id="4_3f7m4"]
+[ext_resource type="PackedScene" uid="uid://by57q3pjbge26" path="res://ui/save_selection_ui/save_selection_ui.tscn" id="5_3f7m4"]
+[ext_resource type="Script" uid="uid://8dcn5mbnpgjk" path="res://world/WorldData.gd" id="6_6tl50"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_d3a7t"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_3shxk"]
-
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=1075969881]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,7 +19,7 @@ mouse_filter = 1
 theme = ExtResource("1_d3a7t")
 script = ExtResource("1_oa53l")
 
-[node name="Margins" type="MarginContainer" parent="."]
+[node name="Margins" type="MarginContainer" parent="." unique_id=7797469]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,33 +37,33 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margins"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Margins" unique_id=43896950]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 12
 
-[node name="GameTitle" type="Label" parent="Margins/VBoxContainer"]
+[node name="GameTitle" type="Label" parent="Margins/VBoxContainer" unique_id=1558567707]
 layout_mode = 2
 text = "THISTLE"
 label_settings = SubResource("LabelSettings_d3a7t")
 horizontal_alignment = 1
 
-[node name="Separator" type="HSeparator" parent="Margins/VBoxContainer"]
+[node name="Separator" type="HSeparator" parent="Margins/VBoxContainer" unique_id=100495909]
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="Margins/VBoxContainer"]
+[node name="StartButton" type="Button" parent="Margins/VBoxContainer" unique_id=633953251]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 disabled = true
 text = "START"
 
-[node name="JoinContainer" type="HBoxContainer" parent="Margins/VBoxContainer"]
+[node name="JoinContainer" type="HBoxContainer" parent="Margins/VBoxContainer" unique_id=1810177843]
 layout_mode = 2
 
-[node name="JoinEdit" type="LineEdit" parent="Margins/VBoxContainer/JoinContainer"]
+[node name="JoinEdit" type="LineEdit" parent="Margins/VBoxContainer/JoinContainer" unique_id=386438656]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -72,25 +71,35 @@ text = "127.0.0.1:9339"
 placeholder_text = "127.0.0.1:9339"
 alignment = 1
 
-[node name="JoinButton" type="Button" parent="Margins/VBoxContainer/JoinContainer"]
+[node name="JoinButton" type="Button" parent="Margins/VBoxContainer/JoinContainer" unique_id=2133289517]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
 text = "JOIN"
 
-[node name="QuitButton" type="Button" parent="Margins/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="Margins/VBoxContainer" unique_id=992899394]
 unique_name_in_owner = true
 layout_mode = 2
 text = "QUIT"
 
-[node name="CharacterSelectionUI" parent="." instance=ExtResource("3_3shxk")]
-layout_mode = 1
-offset_right = 380.0
-button_group = SubResource("ButtonGroup_3shxk")
+[node name="CharacterSaveSelectionUI" parent="." unique_id=1472437916 instance=ExtResource("5_3f7m4")]
+layout_mode = 0
+anchors_preset = 0
+anchor_bottom = 0.0
+grow_vertical = 1
+_title = "Characters"
+_save_data = ExtResource("4_3f7m4")
 
-[node name="WorldSelectionUI" parent="." instance=ExtResource("4_bws42")]
+[node name="WorldSaveSelectionUI" parent="." unique_id=1235833887 instance=ExtResource("5_3f7m4")]
 layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
 offset_left = -380.0
+offset_right = 0.0
+grow_horizontal = 0
+_title = "Worlds"
+_save_data = ExtResource("6_6tl50")
 
-[connection signal="character_selected" from="CharacterSelectionUI" to="." method="_on_character_data_selected"]
-[connection signal="world_selected" from="WorldSelectionUI" to="." method="_on_world_data_selected"]
+[connection signal="save_selected" from="CharacterSaveSelectionUI" to="." method="_on_character_data_selected"]
+[connection signal="save_selected" from="WorldSaveSelectionUI" to="." method="_on_world_data_selected"]

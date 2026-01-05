@@ -10,7 +10,7 @@ func _enter() -> void:
 	var port = blackboard.get_var("port", 7890)
 	var address = blackboard.get_var("ip", "127.0.0.1")
 
-	var character: CharacterData = blackboard.get_var("character_data")
+	var character: SaveData = blackboard.get_var("character_data")
 
 	if character == null:
 		Log.err("No character data found in blackboard!")

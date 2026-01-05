@@ -4,14 +4,13 @@
 [ext_resource type="Script" uid="uid://i3ure5y75cj2" path="res://player/PlayerInput.gd" id="2_d8ih2"]
 [ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_rq2ci"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_lfqgh"]
-[ext_resource type="PackedScene" uid="uid://ciofqvnasmaeb" path="res://_assets/Prototype Bits/Character/Dummy.glb" id="5_lfqgh"]
-[ext_resource type="AnimationLibrary" uid="uid://bj3r18lbl4bf0" path="res://_assets/Prototype Bits/Animations/gltf/Rig_Medium/Rig_Medium_General.glb" id="6_bdnky"]
+[ext_resource type="PackedScene" uid="uid://bum7yqfrs8o1" path="res://blockbench/character.gltf" id="5_lfqgh"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ghftf"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("Dummy:rotation")
+properties/0/replication_mode = 2
+properties/1/path = NodePath("Model:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
@@ -44,13 +43,13 @@ follow_mode = 3
 follow_targets = [NodePath("..")]
 tween_resource = SubResource("Resource_bdnky")
 follow_offset = Vector3(0, 6, 6)
+follow_damping = true
+follow_damping_value = Vector3(0.3, 0.3, 0.3)
 metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
 [node name="LookAhead" type="Node3D" parent="." unique_id=410030327]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="Dummy" parent="." unique_id=1591346376 instance=ExtResource("5_lfqgh")]
+[node name="Model" parent="." unique_id=434021861 instance=ExtResource("5_lfqgh")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Dummy" unique_id=363389852]
-libraries/Rig_Medium_General = ExtResource("6_bdnky")
-autoplay = &"Rig_Medium_General/Idle_A"
+[editable path="Model"]

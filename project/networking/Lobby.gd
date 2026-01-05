@@ -74,7 +74,6 @@ func leave() -> void:
 		closing.emit()
 
 	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
-		Log.warn("Not connected to any server")
 		return
 
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()

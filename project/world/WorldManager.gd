@@ -1,7 +1,5 @@
 class_name WorldManager extends MultiplayerSpawner
 
-signal world_ready
-
 @export var _world_scene: PackedScene
 
 var data: SaveData
@@ -19,6 +17,33 @@ func _ready() -> void:
 	add_spawnable_scene(_world_scene.resource_path)
 
 
+func save() -> void:
+	if world_node == null:
+		Log.warn("No world to save")
+		return
+
+	if world_node.has_method("save"):
+		var data_to_save: SaveData = world_node.save()
+		SaveFileAccess.save(data_to_save)
+		Log.info("World %s saved" % data_to_save.metadata.name)
+	else:
+		(
+			Log
+			. warn(
+				"World node does not support saving. To implement, add a 'save' method returning SaveData to the world node."
+			)
+		)
+
+
+func despawn() -> void:
+	if world_node == null:
+		return
+
+	Log.info("Despawning world node: %s" % world_node)
+	world_node.queue_free()
+	world_node = null
+
+
 func _spawn(_data) -> Node:
 	Log.debug("Instantiating world")
 	var node = _world_scene.instantiate()
@@ -26,7 +51,12 @@ func _spawn(_data) -> Node:
 	Log.debug("Setting world data: %s" % data)
 	node.data = data
 
-	Log.debug("Spawning world node: %s" % node)
+	if is_multiplayer_authority():
+		Log.debug("World spawned on server")
+		world_node = node
+	else:
+		Log.debug("World spawned on client")
+
 	return node
 
 

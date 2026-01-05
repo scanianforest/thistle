@@ -62,7 +62,7 @@ func unload() -> void:
 	clear()
 
 
-func save() -> void:
+func save() -> SaveData:
 	if not is_multiplayer_authority():
 		Log.warn("%d is not authority, skipping world save" % multiplayer.get_unique_id())
 		return
@@ -74,9 +74,7 @@ func save() -> void:
 	pickup_manager.save(data)
 	entity_manager.save(data)
 
-	SaveFileAccess.save(data)
-	Log.info("World2D %s saved." % data.metadata.name)
-	Log.debug(data.to_dict())
+	return data
 
 
 func pause() -> void:

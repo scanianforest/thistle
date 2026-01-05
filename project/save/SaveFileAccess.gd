@@ -36,7 +36,7 @@ static func save(data: SaveData) -> void:
 	if file:
 		file.store_var(data.to_dict())
 		file.close()
-		Log.info("Player data saved successfully: %s" % data.to_dict())
+		Log.info("%s saved successfully: %s" % [data.script.get_global_name(), data.to_dict()])
 		Log.debug(data.to_dict())
 	else:
 		Log.err("Failed to open file for saving: %s" % path)

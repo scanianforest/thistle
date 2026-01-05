@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bpewxmoufrw3h"]
+
+[ext_resource type="Script" uid="uid://yphpybscfnh3" path="res://ui/save_selection_ui/SaveSlotUI.gd" id="1_mbrtn"]
+[ext_resource type="Texture2D" uid="uid://dy6xh6jseh2hg" path="res://icon.svg" id="2_kvfkj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj6wf"]
+bg_color = Color(0.20392157, 0.20392157, 0.20392157, 0.33333334)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xttcy"]
+font_color = Color(0.60933006, 0.6093302, 0.6093298, 1)
+
+[node name="SaveSlotUI" type="Button" unique_id=1245303933 node_paths=PackedStringArray("_name_label", "_description_label", "_icon")]
+custom_minimum_size = Vector2(340, 72)
+theme_override_styles/normal = SubResource("StyleBoxFlat_mj6wf")
+toggle_mode = true
+script = ExtResource("1_mbrtn")
+_name_label = NodePath("MarginContainer/HBoxContainer/SaveInfo/Name")
+_description_label = NodePath("MarginContainer/HBoxContainer/SaveInfo/Description")
+_icon = NodePath("MarginContainer/HBoxContainer/Icon")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1060089612]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=578161994]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1732612716]
+layout_mode = 2
+texture = ExtResource("2_kvfkj")
+expand_mode = 2
+
+[node name="SaveInfo" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1662660869]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Name" type="Label" parent="MarginContainer/HBoxContainer/SaveInfo" unique_id=1084625730]
+layout_mode = 2
+text = "Name"
+
+[node name="Description" type="Label" parent="MarginContainer/HBoxContainer/SaveInfo" unique_id=1024117034]
+layout_mode = 2
+text = "Description"
+label_settings = SubResource("LabelSettings_xttcy")
+
+[node name="DeleteButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=1655137530]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "X"

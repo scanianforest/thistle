@@ -19,14 +19,14 @@ func _ready() -> void:
 	join_button.pressed.connect(_on_join_button_pressed)
 
 
-func _on_character_data_selected(data: CharacterData) -> void:
-	_game.load_character(data.metadata.name)
+func _on_character_data_selected(data: SaveData) -> void:
+	_game.load_character(data)
 	_start_button.disabled = not _game.ready_for_start()
 	join_button.disabled = not _game.ready_for_join() or join_edit.text.strip_edges() == ""
 
 
-func _on_world_data_selected(data: WorldData) -> void:
-	_game.load_world(data.metadata.name)
+func _on_world_data_selected(data: SaveData) -> void:
+	_game.load_world(data)
 	_start_button.disabled = not _game.ready_for_start()
 
 

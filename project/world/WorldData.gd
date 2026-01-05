@@ -5,7 +5,7 @@ var ground_tiles: Dictionary = Dictionary()
 var pickups := PickupsData.new()
 var entities := EntitiesData.new()
 
-static var SAVE_DIR: String = "user://worlds/"
+const SAVE_DIR: String = "user://worlds/"
 
 
 func get_save_path() -> String:

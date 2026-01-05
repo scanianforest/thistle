@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://by57q3pjbge26"]
+
+[ext_resource type="Theme" uid="uid://8hao7e54tpil" path="res://ui/default_theme.tres" id="1_4l8bq"]
+[ext_resource type="Script" uid="uid://dyiicydi5d6u6" path="res://ui/save_selection_ui/SaveSelectionUI.gd" id="2_4l8bq"]
+[ext_resource type="PackedScene" uid="uid://bpewxmoufrw3h" path="res://ui/save_selection_ui/save_slot_ui.tscn" id="4_4l8bq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qyiqi"]
+
+[node name="SaveSelectionUI" type="MarginContainer" unique_id=1472437916]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 380.0
+grow_vertical = 2
+focus_mode = 2
+theme = ExtResource("1_4l8bq")
+script = ExtResource("2_4l8bq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1264889706]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=481473332]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Select a Save"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=555489054]
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="VBoxContainer" unique_id=1524542998]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SaveSlotUI" parent="VBoxContainer/Grid" unique_id=1245303933 instance=ExtResource("4_4l8bq")]
+layout_mode = 2
+
+[node name="SaveSlotUI2" parent="VBoxContainer/Grid" unique_id=1312793462 instance=ExtResource("4_4l8bq")]
+layout_mode = 2
+
+[node name="SaveSlotUI3" parent="VBoxContainer/Grid" unique_id=74101144 instance=ExtResource("4_4l8bq")]
+layout_mode = 2
+
+[node name="NameEdit" type="LineEdit" parent="VBoxContainer" unique_id=1701659191]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="NewButton" type="Button" parent="VBoxContainer" unique_id=1396349025]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qyiqi")
+text = "+ New Character"
