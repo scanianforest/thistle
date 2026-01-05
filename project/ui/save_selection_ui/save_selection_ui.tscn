@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qyiqi"]
 
-[node name="SaveSelectionUI" type="MarginContainer" unique_id=1472437916]
+[node name="SaveSelectionUI" type="MarginContainer" unique_id=1472437916 node_paths=PackedStringArray("_title_label", "_new_button")]
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 380.0
@@ -14,12 +14,14 @@ grow_vertical = 2
 focus_mode = 2
 theme = ExtResource("1_4l8bq")
 script = ExtResource("2_4l8bq")
+_title_label = NodePath("VBoxContainer/Title")
+_new_button = NodePath("VBoxContainer/NewButton")
+_new_text = "+ New Save"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1264889706]
 layout_mode = 2
 
 [node name="Title" type="Label" parent="VBoxContainer" unique_id=481473332]
-unique_name_in_owner = true
 layout_mode = 2
 text = "Select a Save"
 
@@ -44,8 +46,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="NewButton" type="Button" parent="VBoxContainer" unique_id=1396349025]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_qyiqi")
-text = "+ New Character"
+text = "+ New Save"

@@ -46,10 +46,10 @@ func _physics_process(delta: float) -> void:
 
 
 func save() -> SaveData:
-	var saved_data = Player3D_Data.new()
+	assert(data)
 	data.position = global_position
 	data.rotation = rotation
-	return saved_data
+	return data
 
 
 func handle_input(event: InputEvent) -> void:

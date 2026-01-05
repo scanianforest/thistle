@@ -5,10 +5,21 @@ signal save_selected(save_data: SaveData)
 
 const _slot_ui_scene: PackedScene = preload("res://ui/save_selection_ui/save_slot_ui.tscn")
 
+@export var _title_label: Label
+@export var _new_button: Button
+
 @export var _title: String = "Select a Save":
 	set(value):
 		_title = value
-		%Title.text = _title
+		if _title_label:
+			_title_label.text = _title
+
+@export var _new_text: String = "Create New Save":
+	set(value):
+		_new_text = value
+		if _new_button:
+			_new_button.text = _new_text
+
 @export var _save_data: Script:
 	set(value):
 		if not value:
@@ -35,11 +46,14 @@ func _setup(save_data_script: Script) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+
 	_setup(_save_data)
 
 	_button_group.pressed.connect(_on_button_group_pressed)
 
-	%NewButton.pressed.connect(_on_new_button_pressed)
+	_new_button.pressed.connect(_on_new_button_pressed)
 
 	_refresh()
 
@@ -69,7 +83,7 @@ func _on_button_group_pressed(save_slot: SaveSlotUI) -> void:
 func _on_new_button_pressed() -> void:
 	var save_name: String = %NameEdit.text.strip_edges()
 	if save_name == "":
-		Log.error("TopDownWorld2D name cannot be empty")
+		Log.error("Failed to create new save: name cannot be empty")
 		return
 
 	var data: SaveData = _new_func.call()
