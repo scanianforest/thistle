@@ -31,6 +31,7 @@ const _slot_ui_scene: PackedScene = preload("res://ui/save_selection_ui/save_slo
 
 @onready var _grid: GridContainer = %Grid
 
+var _save_data_type: String
 var _save_dir: String
 var _from_dict_func: Callable
 var _new_func: Callable
@@ -39,6 +40,7 @@ var _button_group: ButtonGroup = ButtonGroup.new()
 
 
 func _setup(save_data_script: Script) -> void:
+	_save_data_type = save_data_script.get_global_name()
 	_save_dir = save_data_script.get_script_constant_map().SAVE_DIR
 	_from_dict_func = save_data_script.from_dict
 	_new_func = save_data_script.new
@@ -76,14 +78,14 @@ func _refresh() -> void:
 
 func _on_button_group_pressed(save_slot: SaveSlotUI) -> void:
 	save_selected.emit(save_slot.data)
-	Log.info("Selected save: %s" % save_slot.data.get_name())
+	Log.info("Selected save: %s (%s)" % [save_slot.data.get_name(), _save_data_type])
 	Log.debug(save_slot.data.to_dict())
 
 
 func _on_new_button_pressed() -> void:
 	var save_name: String = %NameEdit.text.strip_edges()
 	if save_name == "":
-		Log.error("Failed to create new save: name cannot be empty")
+		Log.error("%s: Failed to create new save: name cannot be empty" % _save_data_type)
 		return
 
 	var data: SaveData = _new_func.call()
