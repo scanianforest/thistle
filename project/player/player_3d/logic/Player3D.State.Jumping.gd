@@ -1,10 +1,12 @@
 extends ThistleState
 
 var vertical_velocity: float = 0.0
+var input: PlayerInput
 
 
 func _setup() -> void:
 	add_to(hsm.falling)
+	input = blackboard.get_var("input")
 
 
 func _enter() -> void:

@@ -1,10 +1,14 @@
 extends ThistleState
 
 var vertical_velocity: float = 0.0
+var input: PlayerInput
 
 
 func _setup() -> void:
 	add_to(hsm.idling)
+	add_to(hsm.moving)
+
+	input = blackboard.get_var("input")
 
 
 func _enter() -> void:
@@ -17,4 +21,4 @@ func _update(_delta: float) -> void:
 	dispatch("set_vertical_velocity", vertical_velocity)
 
 	if agent.is_on_floor():
-		to(hsm.idling)
+		to(hsm.moving)

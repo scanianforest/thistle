@@ -14,4 +14,5 @@ func _ready() -> void:
 
 func _on_active_state_changed(current: LimboState, old: LimboState) -> void:
 	if logging:
-		Log.pr("%s -> %s" % [current.name, old.name])
+		var old_name: String = old.name if old != null else &"None"
+		Log.pr("%s -> %s" % [old_name, current.name])

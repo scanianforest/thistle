@@ -33,6 +33,12 @@ func _update(delta: float) -> void:
 	_velocity = _velocity.move_toward(_direction * speed, acc * delta)
 	dispatch("set_velocity", _velocity)
 
+	if not agent.is_on_floor():
+		return to(hsm.falling)
+
+	if _velocity.is_zero_approx():
+		return to(hsm.idling)
+
 
 func _on_input_event(event: InputEvent) -> bool:
 	if event.is_action_pressed("jump"):

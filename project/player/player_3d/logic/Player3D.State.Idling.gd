@@ -21,7 +21,7 @@ func _enter() -> void:
 
 func _update(_delta: float) -> void:
 	if not input.move_direction.is_zero_approx():
-		return to(hsm.moving)
+		to(hsm.moving)
 
 
 func _on_input_event(event: InputEvent) -> bool:
