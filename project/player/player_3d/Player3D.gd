@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@export var hsm: Player3D_HSM
+
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
@@ -20,28 +22,15 @@ func _ready() -> void:
 
 	global_position += Vector3.RIGHT.rotated(Vector3.UP, randf_range(0, TAU)) * 0.2
 
+	hsm.initialize(self)
+	hsm.set_active(true)
 
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+	hsm.add_event_handler(&"set_velocity", _on_set_velocity)
+	hsm.add_event_handler(&"set_vertical_velocity", _on_set_vertical_velocity)
+	hsm.add_event_handler(&"animate", _on_animate)
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-		var rot_y = atan2(direction.x, direction.z)
-		$Model.rotation.y = lerp_angle($Model.rotation.y, rot_y, 0.4)
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 
@@ -53,6 +42,7 @@ func save() -> SaveData:
 
 
 func handle_input(event: InputEvent) -> void:
+	hsm.dispatch("input_event", event)
 	if (
 		event.is_action("left")
 		or event.is_action("right")
@@ -63,3 +53,18 @@ func handle_input(event: InputEvent) -> void:
 
 	else:
 		UIChannel.on_input_event(event)
+
+
+func _on_set_velocity(new_velocity: Vector3) -> bool:
+	velocity = new_velocity
+	return true
+
+
+func _on_set_vertical_velocity(new_vertical_velocity: float) -> bool:
+	velocity.y = new_vertical_velocity
+	return true
+
+
+func _on_animate(animation_name: String) -> bool:
+	$AnimationPlayer.play(animation_name)
+	return true

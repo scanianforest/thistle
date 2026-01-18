@@ -113,11 +113,8 @@ func save() -> bool:
 	return true
 
 
-func quit(to_desktop: bool, save_on_quit: bool = true) -> void:
+func quit(to_desktop: bool) -> void:
 	await blackout.blackout()
-
-	#if save_on_quit:
-	#save()
 
 	if to_desktop:
 		hsm.dispatch(&"to_quitting")
@@ -171,4 +168,4 @@ func _on_reveal() -> bool:
 
 
 func _on_server_disconnected() -> void:
-	quit(false, false)
+	quit(false)
